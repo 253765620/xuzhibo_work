@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.0.4 (Python 3.7.0 on linux)" generated="20190524 23:30:16.441">
+<suite id="s1" name="Production Case" source="/home/pi/production/case/production_case.txt">
+<test id="s1-t1" name="GET_Ready">
+<kw name="Get Local Time" library="Utils">
+<assign>
+<var>${time1}</var>
+</assign>
+<msg timestamp="20190524 23:30:16.931" level="INFO">${time1} = 1558711816.9306693</msg>
+<status status="PASS" starttime="20190524 23:30:16.929" endtime="20190524 23:30:16.932"></status>
+</kw>
+<kw name="Get Local Time1" library="Utils">
+<assign>
+<var>${time11}</var>
+</assign>
+<msg timestamp="20190524 23:30:16.935" level="INFO">${time11} = 2019-05-24 23:30:16</msg>
+<status status="PASS" starttime="20190524 23:30:16.933" endtime="20190524 23:30:16.935"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${time1}</arg>
+</arguments>
+<msg timestamp="20190524 23:30:16.939" level="INFO">${time1} = 1558711816.9306693</msg>
+<status status="PASS" starttime="20190524 23:30:16.937" endtime="20190524 23:30:16.940"></status>
+</kw>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>开始时间:${time11}</arg>
+</arguments>
+<status status="PASS" starttime="20190524 23:30:16.941" endtime="20190524 23:30:16.944"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM INFO</arg>
+<arg>(CESHI)MODEM</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190524 23:30:17.149" level="INFO">发送串口数据: (CESHI)MODEM INFO
+应该收到串口数据: (CESHI)MODEM
+实际接收到的数据:  (CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,26;COPS:1|7,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID:214416149;BID:0;LOCALIP:10.223.105.42;BOARD:Ready,Tim506;PPP:Ready,Con2,ITIM460;MAINLNK0:Tcp,UseMajor,Ready,Con5,ITIM434;MAINLNK1:Tcp,UseMajor,Error,Try18,OTIM479;MAINLNK2:None,UseMajor,Error,Try0,OTIM479;TCPFST:Close;UDPFST:Close;RFTEST:0;CONFAIL:0;EDISCNT:9;ANT0:2|1785|0;ANT1:2|1789|1;QX:1,Try0;</msg>
+<msg timestamp="20190524 23:30:17.150" level="INFO">${a} = (CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,26;COPS:1|7,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID...</msg>
+<status status="PASS" starttime="20190524 23:30:16.945" endtime="20190524 23:30:17.151"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>ICCID</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190524 23:30:17.154" level="INFO">['(CESHI)MODEM', '0', '0', '33', 'EC20F_CEFAGR06A01M4G_HL_BETA0404', 'DRV', 'V0.2', '2018-2-8', 'Gprs', 'USIM', 'Ready', '26', 'COPS', '1|7', 'CHN-UNICOM', 'ICCID', '89860918710006540682', 'IMSI', '460099501781395', 'IMEI', '861529043679022', 'LAC_SID', '22291', 'CID_NID', '214416149', 'BID', '0', 'LOCALIP', '10.223.105.42', 'BOARD', 'Ready', 'Tim506', 'PPP', 'Ready', 'Con2', 'ITIM460', 'MAINLNK0', 'Tcp', 'UseMajor', 'Ready', 'Con5', 'ITIM434', 'MAINLNK1', 'Tcp', 'UseMajor', 'Error', 'Try18', 'OTIM479', 'MAINLNK2', 'None', 'UseMajor', 'Error', 'Try0', 'OTIM479', 'TCPFST', 'Close', 'UDPFST', 'Close', 'RFTEST', '0', 'CONFAIL', '0', 'EDISCNT', '9', 'ANT0', '2|1785|0', 'ANT1', '2|1789|1', 'QX', '1', 'Try0', '']</msg>
+<msg timestamp="20190524 23:30:17.155" level="INFO">${b} = 89860918710006540682</msg>
+<status status="PASS" starttime="20190524 23:30:17.152" endtime="20190524 23:30:17.155"></status>
+</kw>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>ICCID:${b}</arg>
+</arguments>
+<status status="PASS" starttime="20190524 23:30:17.156" endtime="20190524 23:30:17.158"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>${wifi_change}</arg>
+<arg>(CESHI)WIFI FACTORY DONE;</arg>
+</arguments>
+<msg timestamp="20190524 23:30:17.451" level="INFO">发送串口数据: (CESHI)WIFI FACTORY-W005
+应该收到串口数据: (CESHI)WIFI FACTORY DONE;
+实际接收到的数据:  (CESHI)WIFI FACTORY DONE;</msg>
+<status status="PASS" starttime="20190524 23:30:17.159" endtime="20190524 23:30:17.452"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN=3</arg>
+<arg>(CESHI)BLE OK</arg>
+</arguments>
+<msg timestamp="20190524 23:30:28.570" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN=3
+应该收到串口数据: (CESHI)BLE OK
+num 0, time: 2019-05-24 23:30:21</msg>
+<msg timestamp="20190524 23:30:28.578" level="FAIL">接收到错误的串口数据: timeout</msg>
+<status status="FAIL" starttime="20190524 23:30:17.453" endtime="20190524 23:30:28.579"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<kw name="Fatal Error" library="BuiltIn">
+<doc>Stops the whole test execution.</doc>
+<msg timestamp="20190524 23:30:28.585" level="FAIL">AssertionError</msg>
+<status status="FAIL" starttime="20190524 23:30:28.583" endtime="20190524 23:30:28.585"></status>
+</kw>
+<status status="FAIL" starttime="20190524 23:30:28.581" endtime="20190524 23:30:28.586">AssertionError</status>
+</kw>
+<status status="FAIL" starttime="20190524 23:30:16.925" endtime="20190524 23:30:28.586" critical="yes">接收到错误的串口数据: timeout
+
+Also teardown failed:
+AssertionError</status>
+</test>
+<test id="s1-t2" name="TS01_终端自检">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190524 23:30:28.600" endtime="20190524 23:30:28.607" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t3" name="TS02_代码校验">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190524 23:30:28.613" endtime="20190524 23:30:28.621" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t4" name="TS04_BLE蓝牙">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190524 23:30:28.624" endtime="20190524 23:30:28.631" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t5" name="TS06_GPRS信号">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190524 23:30:28.635" endtime="20190524 23:30:28.642" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t6" name="TS05_GPS定位">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190524 23:30:28.646" endtime="20190524 23:30:28.653" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t7" name="TS03_WIFI测试">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190524 23:30:28.656" endtime="20190524 23:30:28.662" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t8" name="TS08_ECM">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190524 23:30:28.666" endtime="20190524 23:30:28.671" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t9" name="TS10_电容测试">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190524 23:30:28.677" endtime="20190524 23:30:28.685" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t10" name="GET_END">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190524 23:30:28.689" endtime="20190524 23:30:28.692" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<kw name="关机" type="teardown">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SHUTDOWN=1</arg>
+<arg>(CESHI)MODEM SHUTDOWN DONE</arg>
+</arguments>
+<msg timestamp="20190524 23:30:28.908" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SHUTDOWN=1
+应该收到串口数据: (CESHI)MODEM SHUTDOWN DONE
+实际接收到的数据:  (CESHI)MODEM SHUTDOWN DONE.</msg>
+<status status="PASS" starttime="20190524 23:30:28.703" endtime="20190524 23:30:28.909"></status>
+</kw>
+<status status="PASS" starttime="20190524 23:30:28.700" endtime="20190524 23:30:28.910"></status>
+</kw>
+<status status="FAIL" starttime="20190524 23:30:16.461" endtime="20190524 23:30:28.910"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="10">Critical Tests</stat>
+<stat pass="0" fail="10">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" info="combined" combined="NOT robot-exit">NOT robot-exit</stat>
+<stat pass="0" fail="9">robot-exit</stat>
+</tag>
+<suite>
+<stat pass="0" fail="10" id="s1" name="Production Case">Production Case</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -1,0 +1,2107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.0.4 (Python 3.7.0 on linux)" generated="20190525 00:40:25.135">
+<suite id="s1" name="Production Case" source="/home/pi/production/case/production_case.txt">
+<test id="s1-t1" name="GET_Ready">
+<kw name="Get Local Time" library="Utils">
+<assign>
+<var>${time1}</var>
+</assign>
+<msg timestamp="20190525 00:40:25.618" level="INFO">${time1} = 1558716025.6172318</msg>
+<status status="PASS" starttime="20190525 00:40:25.616" endtime="20190525 00:40:25.618"></status>
+</kw>
+<kw name="Get Local Time1" library="Utils">
+<assign>
+<var>${time11}</var>
+</assign>
+<msg timestamp="20190525 00:40:25.620" level="INFO">${time11} = 2019-05-25 00:40:25</msg>
+<status status="PASS" starttime="20190525 00:40:25.619" endtime="20190525 00:40:25.621"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${time1}</arg>
+</arguments>
+<msg timestamp="20190525 00:40:25.624" level="INFO">${time1} = 1558716025.6172318</msg>
+<status status="PASS" starttime="20190525 00:40:25.622" endtime="20190525 00:40:25.625"></status>
+</kw>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>开始时间:${time11}</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:25.626" endtime="20190525 00:40:25.629"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM INFO</arg>
+<arg>(CESHI)MODEM</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:25.833" level="INFO">发送串口数据: (CESHI)MODEM INFO
+应该收到串口数据: (CESHI)MODEM
+实际接收到的数据:  (CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,26;COPS:1|7,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID:214416149;BID:0;LOCALIP:10.195.52.10;BOARD:Ready,Tim491;PPP:Ready,Con3,ITIM445;MAINLNK0:Tcp,UseMajor,Error,Try27,OTIM465;MAINLNK1:Tcp,UseMajor,Error,Try18,OTIM465;MAINLNK2:None,UseMajor,Error,Try0,OTIM465;TCPFST:Close;UDPFST:Close;RFTEST:0;CONFAIL:0;EDISCNT:10;ANT0:2|1785|0;ANT1:2|1788|1;QX:1,Try0;</msg>
+<msg timestamp="20190525 00:40:25.834" level="INFO">${a} = (CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,26;COPS:1|7,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID...</msg>
+<status status="PASS" starttime="20190525 00:40:25.630" endtime="20190525 00:40:25.834"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>ICCID</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:25.838" level="INFO">['(CESHI)MODEM', '0', '0', '33', 'EC20F_CEFAGR06A01M4G_HL_BETA0404', 'DRV', 'V0.2', '2018-2-8', 'Gprs', 'USIM', 'Ready', '26', 'COPS', '1|7', 'CHN-UNICOM', 'ICCID', '89860918710006540682', 'IMSI', '460099501781395', 'IMEI', '861529043679022', 'LAC_SID', '22291', 'CID_NID', '214416149', 'BID', '0', 'LOCALIP', '10.195.52.10', 'BOARD', 'Ready', 'Tim491', 'PPP', 'Ready', 'Con3', 'ITIM445', 'MAINLNK0', 'Tcp', 'UseMajor', 'Error', 'Try27', 'OTIM465', 'MAINLNK1', 'Tcp', 'UseMajor', 'Error', 'Try18', 'OTIM465', 'MAINLNK2', 'None', 'UseMajor', 'Error', 'Try0', 'OTIM465', 'TCPFST', 'Close', 'UDPFST', 'Close', 'RFTEST', '0', 'CONFAIL', '0', 'EDISCNT', '10', 'ANT0', '2|1785|0', 'ANT1', '2|1788|1', 'QX', '1', 'Try0', '']</msg>
+<msg timestamp="20190525 00:40:25.839" level="INFO">${b} = 89860918710006540682</msg>
+<status status="PASS" starttime="20190525 00:40:25.836" endtime="20190525 00:40:25.840"></status>
+</kw>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>ICCID:${b}</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:25.841" endtime="20190525 00:40:25.843"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>${wifi_change}</arg>
+<arg>(CESHI)WIFI FACTORY DONE;</arg>
+</arguments>
+<msg timestamp="20190525 00:40:26.135" level="INFO">发送串口数据: (CESHI)WIFI FACTORY-W005
+应该收到串口数据: (CESHI)WIFI FACTORY DONE;
+实际接收到的数据:  (CESHI)WIFI FACTORY DONE;</msg>
+<status status="PASS" starttime="20190525 00:40:25.844" endtime="20190525 00:40:26.136"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN=3</arg>
+<arg>(CESHI)BLE OK</arg>
+</arguments>
+<msg timestamp="20190525 00:40:26.637" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN=3
+应该收到串口数据: (CESHI)BLE OK
+实际接收到的数据:  (CESHI)BLE OK</msg>
+<status status="PASS" starttime="20190525 00:40:26.137" endtime="20190525 00:40:26.638"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:26.640" endtime="20190525 00:40:26.641"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:25.612" endtime="20190525 00:40:26.641" critical="yes"></status>
+</test>
+<test id="s1-t2" name="TS01_终端自检">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${prduction_TS01}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:26.653" endtime="20190525 00:40:26.655"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)DEV</arg>
+<arg>(CESHI)DEV</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:26.939" level="INFO">发送串口数据: (CESHI)DEV
+应该收到串口数据: (CESHI)DEV
+实际接收到的数据:  (CESHI)DEV BOARD:HL685,HW:15,RAM:1,NAND:1(C2F18095),SPIFI:1(C216),BAT:1|LI,RTC:1,USB:1(V91),CPS:2(V0),RCY:1(V39),RDN:1(V54),SLP:1(V211),CC936:1(V10),CLK:1|16|96|48|0,WDG:1,ACCE:1(0098),BLE:1(V131),MFU:1(V27),DEBUG:0;</msg>
+<msg timestamp="20190525 00:40:26.940" level="INFO">${a} = (CESHI)DEV BOARD:HL685,HW:15,RAM:1,NAND:1(C2F18095),SPIFI:1(C216),BAT:1|LI,RTC:1,USB:1(V91),CPS:2(V0),RCY:1(V39),RDN:1(V54),SLP:1(V211),CC936:1(V10),CLK:1|16|96|48|0,WDG:1,ACCE:1(0098),BLE:1(V131),MFU...</msg>
+<status status="PASS" starttime="20190525 00:40:26.656" endtime="20190525 00:40:26.940"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${a}'=='${zijian}'</arg>
+<arg>write_mid_file</arg>
+<arg>TS01_终端自检</arg>
+<arg>PASS</arg>
+<arg>(CESHI)DEV</arg>
+<arg>${a}</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>TS01_终端自检</arg>
+<arg>PASS</arg>
+<arg>(CESHI)DEV</arg>
+<arg>${a}</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:26.944" endtime="20190525 00:40:26.946"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:26.941" endtime="20190525 00:40:26.947"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${a}'!='${zijian}'</arg>
+<arg>fail</arg>
+<arg>自检错误</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:26.948" endtime="20190525 00:40:26.950"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:26.951" endtime="20190525 00:40:26.953"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:26.645" endtime="20190525 00:40:26.953" critical="yes"></status>
+</test>
+<test id="s1-t3" name="TS02_代码校验">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${prduction_TS02}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:26.963" endtime="20190525 00:40:26.966"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;CHKSIZE=${chksize}</arg>
+<arg>(CESHI)MODEM CHKSIZE DONE.</arg>
+</arguments>
+<msg timestamp="20190525 00:40:27.241" level="INFO">发送串口数据: (CESHI)MODEM COM=1;CHKSIZE=495288
+应该收到串口数据: (CESHI)MODEM CHKSIZE DONE.
+实际接收到的数据:  (CESHI)MODEM CHKSIZE DONE.</msg>
+<status status="PASS" starttime="20190525 00:40:26.967" endtime="20190525 00:40:27.242"></status>
+</kw>
+<kw name="${i} IN RANGE [ 30 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:27.546" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:626,GPSADC:3266,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190525 00:40:27.547" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:626,GPSADC:3266,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190525 00:40:27.244" endtime="20190525 00:40:27.547"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:27.550" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '626', 'GPSADC', '3266', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '495288', 'CHKSUM', '', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190525 00:40:27.550" level="INFO">${b} = </msg>
+<status status="PASS" starttime="20190525 00:40:27.548" endtime="20190525 00:40:27.550"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:27.551" endtime="20190525 00:40:27.553"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:28.555" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:27.554" endtime="20190525 00:40:28.557"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:27.243" endtime="20190525 00:40:28.557"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:28.765" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:628,GPSADC:3265,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190525 00:40:28.766" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:628,GPSADC:3265,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190525 00:40:28.560" endtime="20190525 00:40:28.766"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:28.769" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '628', 'GPSADC', '3265', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '495288', 'CHKSUM', '', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190525 00:40:28.770" level="INFO">${b} = </msg>
+<status status="PASS" starttime="20190525 00:40:28.767" endtime="20190525 00:40:28.770"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:28.771" endtime="20190525 00:40:28.773"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:29.775" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:28.774" endtime="20190525 00:40:29.777"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:28.558" endtime="20190525 00:40:29.777"></status>
+</kw>
+<kw name="${i} = 2" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:29.985" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:629,GPSADC:3265,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190525 00:40:29.986" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:629,GPSADC:3265,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190525 00:40:29.780" endtime="20190525 00:40:29.986"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:29.989" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '629', 'GPSADC', '3265', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '495288', 'CHKSUM', '', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190525 00:40:29.990" level="INFO">${b} = </msg>
+<status status="PASS" starttime="20190525 00:40:29.987" endtime="20190525 00:40:29.990"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:29.991" endtime="20190525 00:40:29.993"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:30.995" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:29.994" endtime="20190525 00:40:30.996"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:29.778" endtime="20190525 00:40:30.997"></status>
+</kw>
+<kw name="${i} = 3" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:31.205" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:630,GPSADC:3264,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190525 00:40:31.206" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:630,GPSADC:3264,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190525 00:40:30.999" endtime="20190525 00:40:31.207"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:31.209" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '630', 'GPSADC', '3264', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '495288', 'CHKSUM', '', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190525 00:40:31.210" level="INFO">${b} = </msg>
+<status status="PASS" starttime="20190525 00:40:31.208" endtime="20190525 00:40:31.210"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:31.211" endtime="20190525 00:40:31.213"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:32.215" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:31.213" endtime="20190525 00:40:32.216"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:30.998" endtime="20190525 00:40:32.217"></status>
+</kw>
+<kw name="${i} = 4" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:32.425" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:631,GPSADC:3264,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190525 00:40:32.426" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:631,GPSADC:3264,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190525 00:40:32.219" endtime="20190525 00:40:32.426"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:32.429" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '631', 'GPSADC', '3264', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '495288', 'CHKSUM', '', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190525 00:40:32.429" level="INFO">${b} = </msg>
+<status status="PASS" starttime="20190525 00:40:32.427" endtime="20190525 00:40:32.430"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:32.430" endtime="20190525 00:40:32.433"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:33.435" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:32.433" endtime="20190525 00:40:33.436"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:32.218" endtime="20190525 00:40:33.437"></status>
+</kw>
+<kw name="${i} = 5" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:33.645" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:632,GPSADC:3264,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190525 00:40:33.646" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:632,GPSADC:3264,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190525 00:40:33.439" endtime="20190525 00:40:33.646"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:33.650" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '632', 'GPSADC', '3264', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '495288', 'CHKSUM', '', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190525 00:40:33.650" level="INFO">${b} = </msg>
+<status status="PASS" starttime="20190525 00:40:33.647" endtime="20190525 00:40:33.651"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:33.651" endtime="20190525 00:40:33.653"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:34.655" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:33.654" endtime="20190525 00:40:34.657"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:33.438" endtime="20190525 00:40:34.657"></status>
+</kw>
+<kw name="${i} = 6" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:34.867" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:634,GPSADC:3264,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190525 00:40:34.868" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:634,GPSADC:3264,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190525 00:40:34.660" endtime="20190525 00:40:34.868"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:34.871" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '634', 'GPSADC', '3264', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '495288', 'CHKSUM', '', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190525 00:40:34.871" level="INFO">${b} = </msg>
+<status status="PASS" starttime="20190525 00:40:34.869" endtime="20190525 00:40:34.871"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:34.872" endtime="20190525 00:40:34.874"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:35.876" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:34.875" endtime="20190525 00:40:35.878"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:34.658" endtime="20190525 00:40:35.879"></status>
+</kw>
+<kw name="${i} = 7" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:36.087" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:635,GPSADC:3265,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190525 00:40:36.088" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:635,GPSADC:3265,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190525 00:40:35.881" endtime="20190525 00:40:36.089"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:36.091" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '635', 'GPSADC', '3265', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '495288', 'CHKSUM', '', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190525 00:40:36.092" level="INFO">${b} = </msg>
+<status status="PASS" starttime="20190525 00:40:36.089" endtime="20190525 00:40:36.092"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:36.093" endtime="20190525 00:40:36.095"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:37.097" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:36.096" endtime="20190525 00:40:37.098"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:35.880" endtime="20190525 00:40:37.099"></status>
+</kw>
+<kw name="${i} = 8" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:37.307" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:636,GPSADC:3265,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190525 00:40:37.308" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:636,GPSADC:3265,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190525 00:40:37.101" endtime="20190525 00:40:37.308"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:37.311" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '636', 'GPSADC', '3265', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '495288', 'CHKSUM', '', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190525 00:40:37.311" level="INFO">${b} = </msg>
+<status status="PASS" starttime="20190525 00:40:37.309" endtime="20190525 00:40:37.311"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:37.312" endtime="20190525 00:40:37.314"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:38.317" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:37.315" endtime="20190525 00:40:38.318"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:37.100" endtime="20190525 00:40:38.319"></status>
+</kw>
+<kw name="${i} = 9" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:38.527" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:637,GPSADC:3266,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190525 00:40:38.528" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:637,GPSADC:3266,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190525 00:40:38.321" endtime="20190525 00:40:38.528"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:38.531" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '637', 'GPSADC', '3266', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '495288', 'CHKSUM', '', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190525 00:40:38.532" level="INFO">${b} = </msg>
+<status status="PASS" starttime="20190525 00:40:38.529" endtime="20190525 00:40:38.532"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:38.533" endtime="20190525 00:40:38.536"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:39.539" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:38.537" endtime="20190525 00:40:39.540"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:38.320" endtime="20190525 00:40:39.541"></status>
+</kw>
+<kw name="${i} = 10" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:39.749" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:639,GPSADC:3283,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:48488858,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190525 00:40:39.750" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:639,GPSADC:3283,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:495288,CHKSUM:48488858,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190525 00:40:39.543" endtime="20190525 00:40:39.750"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:39.752" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '639', 'GPSADC', '3283', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '495288', 'CHKSUM', '48488858', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190525 00:40:39.753" level="INFO">${b} = 48488858</msg>
+<status status="PASS" starttime="20190525 00:40:39.751" endtime="20190525 00:40:39.753"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<msg timestamp="20190525 00:40:39.756" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190525 00:40:39.754" endtime="20190525 00:40:39.757"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:39.541" endtime="20190525 00:40:39.757"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:27.242" endtime="20190525 00:40:39.757"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}!=29</arg>
+<arg>write_mid_file</arg>
+<arg>TS02_代码校验</arg>
+<arg>PASS</arg>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>${a}</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>TS02_代码校验</arg>
+<arg>PASS</arg>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>${a}</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:39.761" endtime="20190525 00:40:39.764"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:39.758" endtime="20190525 00:40:39.764"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==29</arg>
+<arg>fail</arg>
+<arg>代码校验失败</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:39.766" endtime="20190525 00:40:39.768"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+NATIVE=?;</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.051" level="INFO">发送串口数据: IOT+S1+NATIVE=?;
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+S1+NATIVE=V1.01,V0.19,V1.02,P23,v11528_8db18225b,hzclz_ev460l,release,none;</msg>
+<msg timestamp="20190525 00:40:40.052" level="INFO">${c} = V1.01,V0.19,V1.02,P23,v11528_8db18225b,hzclz_ev460l,release,none</msg>
+<status status="PASS" starttime="20190525 00:40:39.770" endtime="20190525 00:40:40.052"></status>
+</kw>
+<kw name="Belong" library="Utils">
+<doc>功能:判断字符串1是否在字符串2里面(成功返回1否则返回0)</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>${branch}</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.055" level="INFO">${d} = 1</msg>
+<status status="PASS" starttime="20190525 00:40:40.053" endtime="20190525 00:40:40.055"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${d}==1</arg>
+<arg>write_mid_file</arg>
+<arg>TS02_版本校对</arg>
+<arg>PASS</arg>
+<arg>IOT+S1+NATIVE=?;</arg>
+<arg>${c}</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>TS02_版本校对</arg>
+<arg>PASS</arg>
+<arg>IOT+S1+NATIVE=?;</arg>
+<arg>${c}</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.058" endtime="20190525 00:40:40.060"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.056" endtime="20190525 00:40:40.061"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${d}!=1</arg>
+<arg>fail</arg>
+<arg>版本校对错误</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.062" endtime="20190525 00:40:40.064"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.067" endtime="20190525 00:40:40.068"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:26.956" endtime="20190525 00:40:40.069" critical="yes"></status>
+</test>
+<test id="s1-t4" name="TS04_BLE蓝牙">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${prduction_TS04}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.077" endtime="20190525 00:40:40.079"></status>
+</kw>
+<kw name="${i} IN RANGE [ 20 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.553" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,AC233F2043D0,E2C56DB5DDDD48D2B060D0F5A7117360,16160,17360,-40,-69</msg>
+<msg timestamp="20190525 00:40:40.555" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,AC233F2043D0,E2C56DB5DDDD48D2B060D0F5A7117360,16160,17360,-40,-69</msg>
+<status status="PASS" starttime="20190525 00:40:40.082" endtime="20190525 00:40:40.555"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.561" level="INFO">${b} = -69</msg>
+<status status="PASS" starttime="20190525 00:40:40.557" endtime="20190525 00:40:40.561"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.566" level="INFO">${c} = 69</msg>
+<status status="PASS" starttime="20190525 00:40:40.563" endtime="20190525 00:40:40.566"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.571" level="INFO">${d} = E2C56DB5DDDD48D2B060D0F5A7117360</msg>
+<status status="PASS" starttime="20190525 00:40:40.568" endtime="20190525 00:40:40.571"></status>
+</kw>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.576" level="INFO">${state} = 0</msg>
+<status status="PASS" starttime="20190525 00:40:40.573" endtime="20190525 00:40:40.577"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<msg timestamp="20190525 00:40:40.584" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190525 00:40:40.579" endtime="20190525 00:40:40.585"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.080" endtime="20190525 00:40:40.586"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.079" endtime="20190525 00:40:40.586"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}!=19</arg>
+<arg>write_mid_file</arg>
+<arg>TS04_BLE蓝牙</arg>
+<arg>PASS</arg>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>${a}</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>TS04_BLE蓝牙</arg>
+<arg>PASS</arg>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>${a}</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.594" endtime="20190525 00:40:40.599"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.588" endtime="20190525 00:40:40.600"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==19</arg>
+<arg>fail</arg>
+<arg>蓝牙测试错误</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.603" endtime="20190525 00:40:40.606"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.610" endtime="20190525 00:40:40.612"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.072" endtime="20190525 00:40:40.613" critical="yes"></status>
+</test>
+<test id="s1-t5" name="TS06_GPRS信号">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${prduction_TS06}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.628" endtime="20190525 00:40:40.632"></status>
+</kw>
+<kw name="${i} IN RANGE [ 50 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM INFO</arg>
+<arg>(CESHI)MODEM</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.855" level="INFO">发送串口数据: (CESHI)MODEM INFO
+应该收到串口数据: (CESHI)MODEM
+实际接收到的数据:  (CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,26;COPS:1|7,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID:214416149;BID:0;LOCALIP:10.195.52.10;BOARD:Ready,Tim506;PPP:Ready,Con3,ITIM460;MAINLNK0:Tcp,UseMajor,Error,Try28,OTIM480;MAINLNK1:Tcp,UseMajor,Error,Try18,OTIM480;MAINLNK2:None,UseMajor,Error,Try0,OTIM480;TCPFST:Close;UDPFST:Close;RFTEST:0;CONFAIL:0;EDISCNT:10;ANT0:2|1785|0;ANT1:2|1788|1;QX:1,Try0;</msg>
+<msg timestamp="20190525 00:40:40.856" level="INFO">${a} = (CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,26;COPS:1|7,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID...</msg>
+<status status="PASS" starttime="20190525 00:40:40.636" endtime="20190525 00:40:40.856"></status>
+</kw>
+<kw name="Get Str 1" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.859" level="INFO">['(CESHI)MODEM', '0', '0', '33', 'EC20F_CEFAGR06A01M4G_HL_BETA0404', 'DRV', 'V0.2', '2018-2-8', 'Gprs', 'USIM', 'Ready', '26', 'COPS', '1|7', 'CHN-UNICOM', 'ICCID', '89860918710006540682', 'IMSI', '460099501781395', 'IMEI', '861529043679022', 'LAC_SID', '22291', 'CID_NID', '214416149', 'BID', '0', 'LOCALIP', '10.195.52.10', 'BOARD', 'Ready', 'Tim506', 'PPP', 'Ready', 'Con3', 'ITIM460', 'MAINLNK0', 'Tcp', 'UseMajor', 'Error', 'Try28', 'OTIM480', 'MAINLNK1', 'Tcp', 'UseMajor', 'Error', 'Try18', 'OTIM480', 'MAINLNK2', 'None', 'UseMajor', 'Error', 'Try0', 'OTIM480', 'TCPFST', 'Close', 'UDPFST', 'Close', 'RFTEST', '0', 'CONFAIL', '0', 'EDISCNT', '10', 'ANT0', '2|1785|0', 'ANT1', '2|1788|1', 'QX', '1', 'Try0']</msg>
+<msg timestamp="20190525 00:40:40.860" level="INFO">${b} = EC20F_CEFAGR06A01M4G_HL_BETA0404</msg>
+<status status="PASS" starttime="20190525 00:40:40.857" endtime="20190525 00:40:40.860"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>USIM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.862" level="INFO">['(CESHI)MODEM', '0', '0', '33', 'EC20F_CEFAGR06A01M4G_HL_BETA0404', 'DRV', 'V0.2', '2018-2-8', 'Gprs', 'USIM', 'Ready', '26', 'COPS', '1|7', 'CHN-UNICOM', 'ICCID', '89860918710006540682', 'IMSI', '460099501781395', 'IMEI', '861529043679022', 'LAC_SID', '22291', 'CID_NID', '214416149', 'BID', '0', 'LOCALIP', '10.195.52.10', 'BOARD', 'Ready', 'Tim506', 'PPP', 'Ready', 'Con3', 'ITIM460', 'MAINLNK0', 'Tcp', 'UseMajor', 'Error', 'Try28', 'OTIM480', 'MAINLNK1', 'Tcp', 'UseMajor', 'Error', 'Try18', 'OTIM480', 'MAINLNK2', 'None', 'UseMajor', 'Error', 'Try0', 'OTIM480', 'TCPFST', 'Close', 'UDPFST', 'Close', 'RFTEST', '0', 'CONFAIL', '0', 'EDISCNT', '10', 'ANT0', '2|1785|0', 'ANT1', '2|1788|1', 'QX', '1', 'Try0', '']</msg>
+<msg timestamp="20190525 00:40:40.863" level="INFO">${c} = Ready</msg>
+<status status="PASS" starttime="20190525 00:40:40.861" endtime="20190525 00:40:40.863"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>USIM</arg>
+<arg>2</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.866" level="INFO">['(CESHI)MODEM', '0', '0', '33', 'EC20F_CEFAGR06A01M4G_HL_BETA0404', 'DRV', 'V0.2', '2018-2-8', 'Gprs', 'USIM', 'Ready', '26', 'COPS', '1|7', 'CHN-UNICOM', 'ICCID', '89860918710006540682', 'IMSI', '460099501781395', 'IMEI', '861529043679022', 'LAC_SID', '22291', 'CID_NID', '214416149', 'BID', '0', 'LOCALIP', '10.195.52.10', 'BOARD', 'Ready', 'Tim506', 'PPP', 'Ready', 'Con3', 'ITIM460', 'MAINLNK0', 'Tcp', 'UseMajor', 'Error', 'Try28', 'OTIM480', 'MAINLNK1', 'Tcp', 'UseMajor', 'Error', 'Try18', 'OTIM480', 'MAINLNK2', 'None', 'UseMajor', 'Error', 'Try0', 'OTIM480', 'TCPFST', 'Close', 'UDPFST', 'Close', 'RFTEST', '0', 'CONFAIL', '0', 'EDISCNT', '10', 'ANT0', '2|1785|0', 'ANT1', '2|1788|1', 'QX', '1', 'Try0', '']</msg>
+<msg timestamp="20190525 00:40:40.866" level="INFO">${d} = 26</msg>
+<status status="PASS" starttime="20190525 00:40:40.864" endtime="20190525 00:40:40.866"></status>
+</kw>
+<kw name="Change Int" library="Utils">
+<doc>把列表的某一项转成整型</doc>
+<arguments>
+<arg>${d}</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.869" level="INFO">${d} = 26</msg>
+<status status="PASS" starttime="20190525 00:40:40.867" endtime="20190525 00:40:40.869"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>PPP</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20190525 00:40:40.873" level="INFO">['(CESHI)MODEM', '0', '0', '33', 'EC20F_CEFAGR06A01M4G_HL_BETA0404', 'DRV', 'V0.2', '2018-2-8', 'Gprs', 'USIM', 'Ready', '26', 'COPS', '1|7', 'CHN-UNICOM', 'ICCID', '89860918710006540682', 'IMSI', '460099501781395', 'IMEI', '861529043679022', 'LAC_SID', '22291', 'CID_NID', '214416149', 'BID', '0', 'LOCALIP', '10.195.52.10', 'BOARD', 'Ready', 'Tim506', 'PPP', 'Ready', 'Con3', 'ITIM460', 'MAINLNK0', 'Tcp', 'UseMajor', 'Error', 'Try28', 'OTIM480', 'MAINLNK1', 'Tcp', 'UseMajor', 'Error', 'Try18', 'OTIM480', 'MAINLNK2', 'None', 'UseMajor', 'Error', 'Try0', 'OTIM480', 'TCPFST', 'Close', 'UDPFST', 'Close', 'RFTEST', '0', 'CONFAIL', '0', 'EDISCNT', '10', 'ANT0', '2|1785|0', 'ANT1', '2|1788|1', 'QX', '1', 'Try0', '']</msg>
+<msg timestamp="20190525 00:40:40.873" level="INFO">${e} = Ready</msg>
+<status status="PASS" starttime="20190525 00:40:40.870" endtime="20190525 00:40:40.873"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${b}'=='${GPRS1}' and '${c}'=='Ready' and ${d}&gt;${GPRS2} and '${e}'=='Ready'</arg>
+</arguments>
+<msg timestamp="20190525 00:40:40.877" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190525 00:40:40.874" endtime="20190525 00:40:40.877"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.634" endtime="20190525 00:40:40.877"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.633" endtime="20190525 00:40:40.878"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}!=49</arg>
+<arg>write_mid_file</arg>
+<arg>TS06_GPRS信号检测</arg>
+<arg>PASS</arg>
+<arg>(CESHI)MODEM INFO</arg>
+<arg>${a}</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>TS06_GPRS信号检测</arg>
+<arg>PASS</arg>
+<arg>(CESHI)MODEM INFO</arg>
+<arg>${a}</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.881" endtime="20190525 00:40:40.884"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.879" endtime="20190525 00:40:40.884"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==49</arg>
+<arg>fail</arg>
+<arg>GPRS信号检测错误</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.886" endtime="20190525 00:40:40.888"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.891" endtime="20190525 00:40:40.892"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.618" endtime="20190525 00:40:40.893" critical="yes"></status>
+</test>
+<test id="s1-t6" name="TS05_GPS定位">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${prduction_TS05}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:40.902" endtime="20190525 00:40:40.904"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${GPSISMOD}'=='YES'</arg>
+<arg>GPS1</arg>
+<arg>ELSE</arg>
+<arg>Run Keyword</arg>
+<arg>GPS2</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>GPS2</arg>
+</arguments>
+<kw name="GPS2">
+<kw name="${i} IN RANGE [ 120 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)GPS INFO</arg>
+<arg>(CESHI)GPS</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:41.157" level="INFO">发送串口数据: (CESHI)GPS INFO
+应该收到串口数据: (CESHI)GPS
+实际接收到的数据:  (CESHI)GPS A,,OK,0,2|3265|0|0|3227|1905281140|4,9,0,0,31,ditu.google.cn/?q=30.211176N,120.221190E</msg>
+<msg timestamp="20190525 00:40:41.158" level="INFO">${a} = (CESHI)GPS A,,OK,0,2|3265|0|0|3227|1905281140|4,9,0,0,31,ditu.google.cn/?q=30.211176N,120.221190E</msg>
+<status status="PASS" starttime="20190525 00:40:40.918" endtime="20190525 00:40:41.159"></status>
+</kw>
+<kw name="Get Str 1" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>2</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:41.161" level="INFO">['(CESHI)GPS', 'A', 'OK', '0', '2|3265|0|0|3227|1905281140|4', '9', '0', '0', '31', 'ditu.google.cn/?q=30.211176N']</msg>
+<msg timestamp="20190525 00:40:41.162" level="INFO">${b} = A</msg>
+<status status="PASS" starttime="20190525 00:40:41.159" endtime="20190525 00:40:41.162"></status>
+</kw>
+<kw name="Get Str 1" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>3</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:41.164" level="INFO">['(CESHI)GPS', 'A', 'OK', '0', '2|3265|0|0|3227|1905281140|4', '9', '0', '0', '31', 'ditu.google.cn/?q=30.211176N']</msg>
+<msg timestamp="20190525 00:40:41.165" level="INFO">${d} = OK</msg>
+<status status="PASS" starttime="20190525 00:40:41.163" endtime="20190525 00:40:41.165"></status>
+</kw>
+<kw name="Get Str 1" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>6</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20190525 00:40:41.167" level="INFO">['(CESHI)GPS', 'A', 'OK', '0', '2|3265|0|0|3227|1905281140|4', '9', '0', '0', '31', 'ditu.google.cn/?q=30.211176N']</msg>
+<msg timestamp="20190525 00:40:41.168" level="INFO">${e} = 9</msg>
+<status status="PASS" starttime="20190525 00:40:41.166" endtime="20190525 00:40:41.168"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${b}'=='${GPS01}' and '${d}'=='${GPS03}' and ${e}&gt;${GPS04}</arg>
+</arguments>
+<msg timestamp="20190525 00:40:41.171" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190525 00:40:41.169" endtime="20190525 00:40:41.172"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.917" endtime="20190525 00:40:41.172"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.916" endtime="20190525 00:40:41.172"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}!=119</arg>
+<arg>write_mid_file</arg>
+<arg>TS05_GPS定位</arg>
+<arg>PASS</arg>
+<arg>(CESHI)GPS INFO</arg>
+<arg>${a}</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>TS05_GPS定位</arg>
+<arg>PASS</arg>
+<arg>(CESHI)GPS INFO</arg>
+<arg>${a}</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:41.176" endtime="20190525 00:40:41.178"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:41.173" endtime="20190525 00:40:41.179"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==119</arg>
+<arg>fail</arg>
+<arg>定位超时</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:41.180" endtime="20190525 00:40:41.182"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.914" endtime="20190525 00:40:41.182"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.912" endtime="20190525 00:40:41.183"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.905" endtime="20190525 00:40:41.183"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:41.185" endtime="20190525 00:40:41.186"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:40.896" endtime="20190525 00:40:41.187" critical="yes"></status>
+</test>
+<test id="s1-t7" name="TS03_WIFI测试">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${prduction_TS03}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:41.196" endtime="20190525 00:40:41.199"></status>
+</kw>
+<kw name="${i} IN RANGE [ 20 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)NETCHK=WIFI</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:41.459" level="INFO">发送串口数据: (CESHI)NETCHK=WIFI
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)NETCHK:WIFI,3,3,-1,-21;</msg>
+<msg timestamp="20190525 00:40:41.460" level="INFO">${a} = (CESHI)NETCHK:WIFI,3,3,-1,-21;</msg>
+<status status="PASS" starttime="20190525 00:40:41.202" endtime="20190525 00:40:41.461"></status>
+</kw>
+<kw name="Get Str 1" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>6</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:41.463" level="INFO">['(CESHI)NETCHK', 'WIFI', '3', '3', '-1', '-21']</msg>
+<msg timestamp="20190525 00:40:41.464" level="INFO">${b} = -21</msg>
+<status status="PASS" starttime="20190525 00:40:41.461" endtime="20190525 00:40:41.464"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:41.466" level="INFO">${c} = 21</msg>
+<status status="PASS" starttime="20190525 00:40:41.465" endtime="20190525 00:40:41.466"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${WIFI} and ${c}!=0</arg>
+</arguments>
+<msg timestamp="20190525 00:40:41.470" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190525 00:40:41.467" endtime="20190525 00:40:41.471"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:41.201" endtime="20190525 00:40:41.471"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:41.200" endtime="20190525 00:40:41.471"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)WIFI FACTORY-W000</arg>
+<arg>(CESHI)WIFI FACTORY DONE;</arg>
+</arguments>
+<msg timestamp="20190525 00:40:41.762" level="INFO">发送串口数据: (CESHI)WIFI FACTORY-W000
+应该收到串口数据: (CESHI)WIFI FACTORY DONE;
+实际接收到的数据:  (CESHI)WIFI FACTORY DONE;</msg>
+<status status="PASS" starttime="20190525 00:40:41.472" endtime="20190525 00:40:41.762"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}!=19</arg>
+<arg>write_mid_file</arg>
+<arg>TS03_WIFI测试</arg>
+<arg>PASS</arg>
+<arg>(CESHI)NETCHK=WIFI</arg>
+<arg>${a}</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>TS03_WIFI测试</arg>
+<arg>PASS</arg>
+<arg>(CESHI)NETCHK=WIFI</arg>
+<arg>${a}</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:41.766" endtime="20190525 00:40:41.768"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:41.763" endtime="20190525 00:40:41.769"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==19</arg>
+<arg>fail</arg>
+<arg>WIFI测试失败</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:41.770" endtime="20190525 00:40:41.772"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:41.774" endtime="20190525 00:40:41.775"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:41.190" endtime="20190525 00:40:41.776" critical="yes"></status>
+</test>
+<test id="s1-t8" name="TS08_ECM">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${prduction_TS08}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:41.783" endtime="20190525 00:40:41.786"></status>
+</kw>
+<kw name="Tcp Test" library="NetTest">
+<doc>- data:发送的数据</doc>
+<arguments>
+<arg>(CESHI)DEV</arg>
+<arg>${Equipment_type}</arg>
+<arg>${ip}</arg>
+<arg>${port}</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:43.912" level="INFO">['192', '168', '100', '21  ']
+(CESHI)DEV BOARD:HL685,HW:15,RAM:1,NAND:1(C2F18095),SPIFI:1(C216),BAT:1|LI,RTC:1,USB:1(V91),CPS:2(V0),RCY:1(V39),RDN:1(V54),SLP:1(V211),CC936:1(V10),CLK:1|16|96|48|0,WDG:1,ACCE:1(0098),BLE:1(V131),MFU:1(V27),DEBUG:0;
+
+(CESHI)DEV BOARD:HL685,HW:15,RAM:1,NAND:1(C2F18095),SPIFI:1(C216),BAT:1|LI,RTC:1,USB:1(V91),CPS:2(V0),RCY:1(V39),RDN:1(V54),SLP:1(V211),CC936:1(V10),CLK:1|16|96|48|0,WDG:1,ACCE:1(0098),BLE:1(V131),MFU:1(V27),DEBUG:0;
+
+(CESHI)DEV BOARD:HL685,HW:15,RAM:1,NAND:1(C2F18095),SPIFI:1(C216),BAT:1|LI,RTC:1,USB:1(V91),CPS:2(V0),RCY:1(V39),RDN:1(V54),SLP:1(V211),CC936:1(V10),CLK:1|16|96|48|0,WDG:1,ACCE:1(0098),BLE:1(V131),MFU:1(V27),DEBUG:0;
+
+(CESHI)DEV BOARD:HL685,HW:15,RAM:1,NAND:1(C2F18095),SPIFI:1(C216),BAT:1|LI,RTC:1,USB:1(V91),CPS:2(V0),RCY:1(V39),RDN:1(V54),SLP:1(V211),CC936:1(V10),CLK:1|16|96|48|0,WDG:1,ACCE:1(0098),BLE:1(V131),MFU:1(V27),DEBUG:0;
+
+(CESHI)DEV BOARD:HL685,HW:15,RAM:1,NAND:1(C2F18095),SPIFI:1(C216),BAT:1|LI,RTC:1,USB:1(V91),CPS:2(V0),RCY:1(V39),RDN:1(V54),SLP:1(V211),CC936:1(V10),CLK:1|16|96|48|0,WDG:1,ACCE:1(0098),BLE:1(V131),MFU:1(V27),DEBUG:0;</msg>
+<msg timestamp="20190525 00:40:43.914" level="INFO">${a} = right</msg>
+<status status="PASS" starttime="20190525 00:40:41.787" endtime="20190525 00:40:43.915"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${a}"=="right"</arg>
+<arg>log</arg>
+<arg>正确</arg>
+<arg>ELSE</arg>
+<arg>Run Keyword And Continue On Failure</arg>
+<arg>Fail</arg>
+<arg>接收数据错误</arg>
+</arguments>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>正确</arg>
+</arguments>
+<msg timestamp="20190525 00:40:43.925" level="INFO">正确</msg>
+<status status="PASS" starttime="20190525 00:40:43.923" endtime="20190525 00:40:43.926"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:43.918" endtime="20190525 00:40:43.927"></status>
+</kw>
+<kw name="Tcp Test" library="NetTest">
+<doc>- data:发送的数据</doc>
+<arguments>
+<arg>(CESHI)MODEM INFO</arg>
+<arg>ICCID</arg>
+<arg>${ip}</arg>
+<arg>${port}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190525 00:40:44.379" level="INFO">['192', '168', '100', '21  ']
+(CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,26;COPS:1|7,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID:214416149;BID:0;LOCALIP:10.195.52.10;BOARD:Ready,Tim509;PPP:Ready,Con3,ITIM463;MAINLNK0:Tcp,UseMajor,Error,Try28,OTIM483;MAINLNK1:Tcp,UseMajor,Error,Try18,OTIM483;MAINLNK2:None,UseMajor,Error,Try0,OTIM483;TCPFST:Close;UDPFST:Close;RFTEST:0;CONFAIL:0;EDISCNT:11;ANT0:2|1785|0;ANT1:2|1788|1;QX:1,Try0;
+
+(CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,26;COPS:1|7,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID:214416149;BID:0;LOCALIP:10.195.52.10;BOARD:Ready,Tim509;PPP:Ready,Con3,ITIM463;MAINLNK0:Tcp,UseMajor,Error,Try28,OTIM483;MAINLNK1:Tcp,UseMajor,Error,Try18,OTIM483;MAINLNK2:None,UseMajor,Error,Try0,OTIM483;TCPFST:Close;UDPFST:Close;RFTEST:0;CONFAIL:0;EDISCNT:11;ANT0:2|1785|0;ANT1:2|1788|1;QX:1,Try0;
+
+(CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,26;COPS:1|7,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID:214416149;BID:0;LOCALIP:10.195.52.10;BOARD:Ready,Tim509;PPP:Ready,Con3,ITIM463;MAINLNK0:Tcp,UseMajor,Error,Try28,OTIM483;MAINLNK1:Tcp,UseMajor,Error,Try18,OTIM483;MAINLNK2:None,UseMajor,Error,Try0,OTIM483;TCPFST:Close;UDPFST:Close;RFTEST:0;CONFAIL:0;EDISCNT:11;ANT0:2|1785|0;ANT1:2|1788|1;QX:1,Try0;
+
+(CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,26;COPS:1|7,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID:214416149;BID:0;LOCALIP:10.195.52.10;BOARD:Ready,Tim509;PPP:Ready,Con3,ITIM463;MAINLNK0:Tcp,UseMajor,Error,Try28,OTIM483;MAINLNK1:Tcp,UseMajor,Error,Try18,OTIM483;MAINLNK2:None,UseMajor,Error,Try0,OTIM483;TCPFST:Close;UDPFST:Close;RFTEST:0;CONFAIL:0;EDISCNT:11;ANT0:2|1785|0;ANT1:2|1788|1;QX:1,Try0;
+
+(CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,26;COPS:1|7,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID:214416149;BID:0;LOCALIP:10.195.52.10;BOARD:Ready,Tim509;PPP:Ready,Con3,ITIM463;MAINLNK0:Tcp,UseMajor,Error,Try28,OTIM483;MAINLNK1:Tcp,UseMajor,Error,Try18,OTIM483;MAINLNK2:None,UseMajor,Error,Try0,OTIM483;TCPFST:Close;UDPFST:Close;RFTEST:0;CONFAIL:0;EDISCNT:11;ANT0:2|1785|0;ANT1:2|1788|1;QX:1,Try0;</msg>
+<msg timestamp="20190525 00:40:44.380" level="INFO">${b} = right</msg>
+<status status="PASS" starttime="20190525 00:40:43.929" endtime="20190525 00:40:44.380"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${b}"=="right"</arg>
+<arg>log</arg>
+<arg>正确</arg>
+<arg>ELSE</arg>
+<arg>Run Keyword And Continue On Failure</arg>
+<arg>Fail</arg>
+<arg>接收数据错误</arg>
+</arguments>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>正确</arg>
+</arguments>
+<msg timestamp="20190525 00:40:44.386" level="INFO">正确</msg>
+<status status="PASS" starttime="20190525 00:40:44.384" endtime="20190525 00:40:44.386"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:44.382" endtime="20190525 00:40:44.387"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:45.389" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:44.388" endtime="20190525 00:40:45.391"></status>
+</kw>
+<kw name="Ping Test" library="NetTest">
+<doc>- ping</doc>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:49.589" level="INFO">${c} = 1</msg>
+<status status="PASS" starttime="20190525 00:40:45.393" endtime="20190525 00:40:49.590"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${c}</arg>
+</arguments>
+<msg timestamp="20190525 00:40:49.595" level="INFO">1</msg>
+<status status="PASS" starttime="20190525 00:40:49.593" endtime="20190525 00:40:49.596"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${c}==1</arg>
+<arg>log</arg>
+<arg>正确</arg>
+<arg>ELSE</arg>
+<arg>Run Keyword And Continue On Failure</arg>
+<arg>Fail</arg>
+<arg>ping失败</arg>
+</arguments>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>正确</arg>
+</arguments>
+<msg timestamp="20190525 00:40:49.605" level="INFO">正确</msg>
+<status status="PASS" starttime="20190525 00:40:49.603" endtime="20190525 00:40:49.607"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:49.599" endtime="20190525 00:40:49.608"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:50.612" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:49.610" endtime="20190525 00:40:50.614"></status>
+</kw>
+<kw name="Ftp Test" library="NetTest">
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:51.829" level="INFO">${d} = right</msg>
+<status status="PASS" starttime="20190525 00:40:50.616" endtime="20190525 00:40:51.830"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${d}</arg>
+</arguments>
+<msg timestamp="20190525 00:40:51.835" level="INFO">right</msg>
+<status status="PASS" starttime="20190525 00:40:51.832" endtime="20190525 00:40:51.836"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${d}"=="right"</arg>
+<arg>log</arg>
+<arg>正确</arg>
+<arg>ELSE</arg>
+<arg>Run Keyword And Continue On Failure</arg>
+<arg>Fail</arg>
+<arg>错误</arg>
+</arguments>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>正确</arg>
+</arguments>
+<msg timestamp="20190525 00:40:51.845" level="INFO">正确</msg>
+<status status="PASS" starttime="20190525 00:40:51.843" endtime="20190525 00:40:51.846"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:51.838" endtime="20190525 00:40:51.847"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${a}"=="right" and "${b}"=="right" and ${c}==1 and "${d}"=="right"</arg>
+<arg>write_mid_file</arg>
+<arg>TS08_ECM</arg>
+<arg>PASS</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>TS08_ECM</arg>
+<arg>PASS</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:51.854" endtime="20190525 00:40:51.858"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:51.849" endtime="20190525 00:40:51.859"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:51.862" endtime="20190525 00:40:51.865"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:41.779" endtime="20190525 00:40:51.866" critical="yes"></status>
+</test>
+<test id="s1-t9" name="TS10_电容测试">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)DEV-1</arg>
+<arg>(CESHI)DEV-1</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190525 00:40:52.082" level="INFO">发送串口数据: (CESHI)DEV-1
+应该收到串口数据: (CESHI)DEV-1
+实际接收到的数据:  (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000101,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:688|-183|-121|985|0|1|0,COM:0;</msg>
+<msg timestamp="20190525 00:40:52.083" level="INFO">${a} = (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000101,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:688|-183|-121|985|0|1|0,COM:0;</msg>
+<status status="PASS" starttime="20190525 00:40:51.878" endtime="20190525 00:40:52.083"></status>
+</kw>
+<kw name="Get Flag" library="Utils">
+<doc>- param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>GPI</arg>
+<arg>13</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:52.086" level="INFO">['0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '1']</msg>
+<msg timestamp="20190525 00:40:52.087" level="INFO">${d} = 1</msg>
+<status status="PASS" starttime="20190525 00:40:52.084" endtime="20190525 00:40:52.087"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'!='1'</arg>
+<arg>FAIL</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:52.088" endtime="20190525 00:40:52.090"></status>
+</kw>
+<kw name="Close KL15" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190525 00:40:52.091" endtime="20190525 00:40:52.092"></status>
+</kw>
+<kw name="Close KL30" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190525 00:40:52.093" endtime="20190525 00:40:52.095"></status>
+</kw>
+<kw name="Test Time" library="Utils">
+<assign>
+<var>${time1}</var>
+</assign>
+<msg timestamp="20190525 00:40:52.098" level="INFO">${time1} = 1558716052</msg>
+<status status="PASS" starttime="20190525 00:40:52.096" endtime="20190525 00:40:52.098"></status>
+</kw>
+<kw name="${i} IN RANGE [ 30 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)DEV-1</arg>
+<arg>(CESHI)DEV-1</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:52.384" level="INFO">发送串口数据: (CESHI)DEV-1
+应该收到串口数据: (CESHI)DEV-1
+实际接收到的数据:  (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000001,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:688|-183|-121|985|0|1|0,COM:0;</msg>
+<msg timestamp="20190525 00:40:52.385" level="INFO">${c} = (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000001,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:688|-183|-121|985|0|1|0,COM:0;</msg>
+<status status="PASS" starttime="20190525 00:40:52.101" endtime="20190525 00:40:52.385"></status>
+</kw>
+<kw name="Get Flag" library="Utils">
+<doc>- param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>GPI</arg>
+<arg>13</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:52.388" level="INFO">['0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1']</msg>
+<msg timestamp="20190525 00:40:52.388" level="INFO">${d} = 1</msg>
+<status status="PASS" starttime="20190525 00:40:52.386" endtime="20190525 00:40:52.388"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='0'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:52.389" endtime="20190525 00:40:52.392"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:53.394" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:52.392" endtime="20190525 00:40:53.395"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:52.100" endtime="20190525 00:40:53.396"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)DEV-1</arg>
+<arg>(CESHI)DEV-1</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:53.604" level="INFO">发送串口数据: (CESHI)DEV-1
+应该收到串口数据: (CESHI)DEV-1
+实际接收到的数据:  (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000001,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:689|-183|-123|979|0|1|0,COM:0;</msg>
+<msg timestamp="20190525 00:40:53.605" level="INFO">${c} = (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000001,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:689|-183|-123|979|0|1|0,COM:0;</msg>
+<status status="PASS" starttime="20190525 00:40:53.398" endtime="20190525 00:40:53.605"></status>
+</kw>
+<kw name="Get Flag" library="Utils">
+<doc>- param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>GPI</arg>
+<arg>13</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:53.608" level="INFO">['0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1']</msg>
+<msg timestamp="20190525 00:40:53.608" level="INFO">${d} = 1</msg>
+<status status="PASS" starttime="20190525 00:40:53.606" endtime="20190525 00:40:53.609"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='0'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:53.609" endtime="20190525 00:40:53.611"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:54.613" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:53.612" endtime="20190525 00:40:54.615"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:53.397" endtime="20190525 00:40:54.615"></status>
+</kw>
+<kw name="${i} = 2" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)DEV-1</arg>
+<arg>(CESHI)DEV-1</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:54.823" level="INFO">发送串口数据: (CESHI)DEV-1
+应该收到串口数据: (CESHI)DEV-1
+实际接收到的数据:  (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000001,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:691|-185|-118|980|0|1|0,COM:0;</msg>
+<msg timestamp="20190525 00:40:54.824" level="INFO">${c} = (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000001,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:691|-185|-118|980|0|1|0,COM:0;</msg>
+<status status="PASS" starttime="20190525 00:40:54.617" endtime="20190525 00:40:54.825"></status>
+</kw>
+<kw name="Get Flag" library="Utils">
+<doc>- param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>GPI</arg>
+<arg>13</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:54.827" level="INFO">['0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1']</msg>
+<msg timestamp="20190525 00:40:54.827" level="INFO">${d} = 1</msg>
+<status status="PASS" starttime="20190525 00:40:54.825" endtime="20190525 00:40:54.828"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='0'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:54.828" endtime="20190525 00:40:54.830"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:55.832" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:54.831" endtime="20190525 00:40:55.834"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:54.616" endtime="20190525 00:40:55.834"></status>
+</kw>
+<kw name="${i} = 3" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)DEV-1</arg>
+<arg>(CESHI)DEV-1</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:56.043" level="INFO">发送串口数据: (CESHI)DEV-1
+应该收到串口数据: (CESHI)DEV-1
+实际接收到的数据:  (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000001,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:692|-188|-123|982|0|1|0,COM:0;</msg>
+<msg timestamp="20190525 00:40:56.044" level="INFO">${c} = (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000001,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:692|-188|-123|982|0|1|0,COM:0;</msg>
+<status status="PASS" starttime="20190525 00:40:55.837" endtime="20190525 00:40:56.045"></status>
+</kw>
+<kw name="Get Flag" library="Utils">
+<doc>- param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>GPI</arg>
+<arg>13</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:56.050" level="INFO">['0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1']</msg>
+<msg timestamp="20190525 00:40:56.052" level="INFO">${d} = 1</msg>
+<status status="PASS" starttime="20190525 00:40:56.046" endtime="20190525 00:40:56.052"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='0'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:56.054" endtime="20190525 00:40:56.058"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:57.062" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:56.060" endtime="20190525 00:40:57.063"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:55.835" endtime="20190525 00:40:57.064"></status>
+</kw>
+<kw name="${i} = 4" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)DEV-1</arg>
+<arg>(CESHI)DEV-1</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:57.272" level="INFO">发送串口数据: (CESHI)DEV-1
+应该收到串口数据: (CESHI)DEV-1
+实际接收到的数据:  (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000001,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:693|-186|-122|977|0|1|0,COM:0;</msg>
+<msg timestamp="20190525 00:40:57.273" level="INFO">${c} = (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000001,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:693|-186|-122|977|0|1|0,COM:0;</msg>
+<status status="PASS" starttime="20190525 00:40:57.066" endtime="20190525 00:40:57.273"></status>
+</kw>
+<kw name="Get Flag" library="Utils">
+<doc>- param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>GPI</arg>
+<arg>13</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:57.275" level="INFO">['0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1']</msg>
+<msg timestamp="20190525 00:40:57.276" level="INFO">${d} = 1</msg>
+<status status="PASS" starttime="20190525 00:40:57.274" endtime="20190525 00:40:57.276"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='0'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:57.277" endtime="20190525 00:40:57.279"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:58.281" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:57.280" endtime="20190525 00:40:58.283"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:57.065" endtime="20190525 00:40:58.283"></status>
+</kw>
+<kw name="${i} = 5" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)DEV-1</arg>
+<arg>(CESHI)DEV-1</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:58.491" level="INFO">发送串口数据: (CESHI)DEV-1
+应该收到串口数据: (CESHI)DEV-1
+实际接收到的数据:  (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000000,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:694|-184|-124|978|0|1|0,COM:0;</msg>
+<msg timestamp="20190525 00:40:58.492" level="INFO">${c} = (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000000,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:694|-184|-124|978|0|1|0,COM:0;</msg>
+<status status="PASS" starttime="20190525 00:40:58.286" endtime="20190525 00:40:58.492"></status>
+</kw>
+<kw name="Get Flag" library="Utils">
+<doc>- param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>GPI</arg>
+<arg>13</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:58.495" level="INFO">['0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']</msg>
+<msg timestamp="20190525 00:40:58.495" level="INFO">${d} = 1</msg>
+<status status="PASS" starttime="20190525 00:40:58.493" endtime="20190525 00:40:58.495"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='0'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:58.496" endtime="20190525 00:40:58.498"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:40:59.500" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:58.499" endtime="20190525 00:40:59.502"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:58.284" endtime="20190525 00:40:59.502"></status>
+</kw>
+<kw name="${i} = 6" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)DEV-1</arg>
+<arg>(CESHI)DEV-1</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:40:59.710" level="INFO">发送串口数据: (CESHI)DEV-1
+应该收到串口数据: (CESHI)DEV-1
+实际接收到的数据:  (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000000,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:695|-183|-122|981|0|1|0,COM:0;</msg>
+<msg timestamp="20190525 00:40:59.711" level="INFO">${c} = (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0011000000000000,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:695|-183|-122|981|0|1|0,COM:0;</msg>
+<status status="PASS" starttime="20190525 00:40:59.505" endtime="20190525 00:40:59.712"></status>
+</kw>
+<kw name="Get Flag" library="Utils">
+<doc>- param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>GPI</arg>
+<arg>13</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:40:59.714" level="INFO">['0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']</msg>
+<msg timestamp="20190525 00:40:59.715" level="INFO">${d} = 1</msg>
+<status status="PASS" starttime="20190525 00:40:59.712" endtime="20190525 00:40:59.715"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='0'</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:40:59.716" endtime="20190525 00:40:59.718"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190525 00:41:00.720" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190525 00:40:59.719" endtime="20190525 00:41:00.722"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:59.503" endtime="20190525 00:41:00.722"></status>
+</kw>
+<kw name="${i} = 7" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)DEV-1</arg>
+<arg>(CESHI)DEV-1</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190525 00:41:00.930" level="INFO">发送串口数据: (CESHI)DEV-1
+应该收到串口数据: (CESHI)DEV-1
+实际接收到的数据:  (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0010000000000000,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:698|-185|-124|983|0|1|0,COM:0;</msg>
+<msg timestamp="20190525 00:41:00.931" level="INFO">${c} = (CESHI)DEV-1 WDTM:1890,CLK_VAR:270|255,GPI:0010000000000000,GPO:0000000000110000,MADKEY:2|2|2|2,OLED:0|0|0|0|0,ACCE:698|-185|-124|983|0|1|0,COM:0;</msg>
+<status status="PASS" starttime="20190525 00:41:00.725" endtime="20190525 00:41:00.932"></status>
+</kw>
+<kw name="Get Flag" library="Utils">
+<doc>- param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>GPI</arg>
+<arg>13</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190525 00:41:00.938" level="INFO">['0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']</msg>
+<msg timestamp="20190525 00:41:00.939" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190525 00:41:00.932" endtime="20190525 00:41:00.939"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='0'</arg>
+</arguments>
+<msg timestamp="20190525 00:41:00.942" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190525 00:41:00.940" endtime="20190525 00:41:00.942"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:41:00.723" endtime="20190525 00:41:00.943"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:52.099" endtime="20190525 00:41:00.943"></status>
+</kw>
+<kw name="Test Time" library="Utils">
+<assign>
+<var>${time2}</var>
+</assign>
+<msg timestamp="20190525 00:41:00.945" level="INFO">${time2} = 1558716060</msg>
+<status status="PASS" starttime="20190525 00:41:00.944" endtime="20190525 00:41:00.945"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${time2}-${time1}</arg>
+</arguments>
+<assign>
+<var>${time}</var>
+</assign>
+<msg timestamp="20190525 00:41:00.948" level="INFO">${time} = 8</msg>
+<status status="PASS" starttime="20190525 00:41:00.946" endtime="20190525 00:41:00.949"></status>
+</kw>
+<kw name="Bestr" library="Utils">
+<arguments>
+<arg>${time}</arg>
+</arguments>
+<assign>
+<var>${timestr}</var>
+</assign>
+<msg timestamp="20190525 00:41:00.951" level="INFO">${timestr} = 8</msg>
+<status status="PASS" starttime="20190525 00:41:00.950" endtime="20190525 00:41:00.952"></status>
+</kw>
+<kw name="Open KL15" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190525 00:41:00.952" endtime="20190525 00:41:00.953"></status>
+</kw>
+<kw name="Open KL30" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190525 00:41:00.954" endtime="20190525 00:41:00.956"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>20</arg>
+</arguments>
+<msg timestamp="20190525 00:41:20.959" level="INFO">Slept 20 seconds</msg>
+<status status="PASS" starttime="20190525 00:41:00.957" endtime="20190525 00:41:20.960"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${time}&gt;${dianrong_time} and ${time}&lt;30</arg>
+<arg>write_mid_file</arg>
+<arg>电容测试</arg>
+<arg>PASS</arg>
+<arg>(CESHI)DEV-1</arg>
+<arg>${c}</arg>
+<arg>${timestr}</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>电容测试</arg>
+<arg>PASS</arg>
+<arg>(CESHI)DEV-1</arg>
+<arg>${c}</arg>
+<arg>${timestr}</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:41:20.968" endtime="20190525 00:41:20.973"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:41:20.962" endtime="20190525 00:41:20.974"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${time}&lt;${dianrong_time} or ${time}&gt;30</arg>
+<arg>Fail</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:41:20.977" endtime="20190525 00:41:20.981"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:41:20.984" endtime="20190525 00:41:20.986"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:51.871" endtime="20190525 00:41:20.987" critical="yes"></status>
+</test>
+<test id="s1-t10" name="GET_END">
+<kw name="Get Local Time" library="Utils">
+<assign>
+<var>${time2}</var>
+</assign>
+<msg timestamp="20190525 00:41:21.004" level="INFO">${time2} = 1558716081.0031214</msg>
+<status status="PASS" starttime="20190525 00:41:21.001" endtime="20190525 00:41:21.004"></status>
+</kw>
+<kw name="Get Local Time1" library="Utils">
+<assign>
+<var>${time22}</var>
+</assign>
+<msg timestamp="20190525 00:41:21.009" level="INFO">${time22} = 2019-05-25 00:41:21</msg>
+<status status="PASS" starttime="20190525 00:41:21.006" endtime="20190525 00:41:21.009"></status>
+</kw>
+<kw name="Round Int" library="Utils">
+<doc>功能:做差(保留2位小数，针对小数点后面数字很多的)</doc>
+<arguments>
+<arg>${time1}</arg>
+<arg>${time2}</arg>
+</arguments>
+<assign>
+<var>${time3}</var>
+</assign>
+<msg timestamp="20190525 00:41:21.015" level="INFO">${time3} = 55.39</msg>
+<status status="PASS" starttime="20190525 00:41:21.011" endtime="20190525 00:41:21.015"></status>
+</kw>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>结束时间:${time22}</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:41:21.017" endtime="20190525 00:41:21.021"></status>
+</kw>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>耗时:${time3}秒</arg>
+<arg>\n\n</arg>
+<arg>*****************************</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:41:21.023" endtime="20190525 00:41:21.028"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190525 00:41:21.031" endtime="20190525 00:41:21.033"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:41:20.993" endtime="20190525 00:41:21.034" critical="yes"></status>
+</test>
+<kw name="关机" type="teardown">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SHUTDOWN=1</arg>
+<arg>(CESHI)MODEM SHUTDOWN DONE</arg>
+</arguments>
+<msg timestamp="20190525 00:41:21.266" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SHUTDOWN=1
+应该收到串口数据: (CESHI)MODEM SHUTDOWN DONE
+实际接收到的数据:  (CESHI)MODEM SHUTDOWN DONE.</msg>
+<status status="PASS" starttime="20190525 00:41:21.059" endtime="20190525 00:41:21.266"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:41:21.056" endtime="20190525 00:41:21.267"></status>
+</kw>
+<status status="PASS" starttime="20190525 00:40:25.155" endtime="20190525 00:41:21.267"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="10" fail="0">Critical Tests</stat>
+<stat pass="10" fail="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="10" fail="0" id="s1" name="Production Case">Production Case</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

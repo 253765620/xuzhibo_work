@@ -1,0 +1,2179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.0.4 (Python 3.7.0 on linux)" generated="20190523 11:26:35.293">
+<suite id="s1" name="Production Case" source="/home/pi/production/case/production_case.txt">
+<test id="s1-t1" name="GET_Ready">
+<kw name="Get Local Time" library="Utils">
+<assign>
+<var>${time1}</var>
+</assign>
+<msg timestamp="20190523 11:26:35.779" level="INFO">${time1} = 1558581995.7787442</msg>
+<status status="PASS" starttime="20190523 11:26:35.777" endtime="20190523 11:26:35.780"></status>
+</kw>
+<kw name="Get Local Time1" library="Utils">
+<assign>
+<var>${time11}</var>
+</assign>
+<msg timestamp="20190523 11:26:35.785" level="INFO">${time11} = 2019-05-23 11:26:35</msg>
+<status status="PASS" starttime="20190523 11:26:35.781" endtime="20190523 11:26:35.785"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${time1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:35.790" level="INFO">${time1} = 1558581995.7787442</msg>
+<status status="PASS" starttime="20190523 11:26:35.787" endtime="20190523 11:26:35.791"></status>
+</kw>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>开始时间:${time11}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:35.792" endtime="20190523 11:26:35.795"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>${wifi_change}</arg>
+<arg>(CESHI)WIFI FACTORY DONE;</arg>
+</arguments>
+<msg timestamp="20190523 11:26:36.000" level="INFO">发送串口数据: (CESHI)WIFI FACTORY-W005
+应该收到串口数据: (CESHI)WIFI FACTORY DONE;
+实际接收到的数据:  (CESHI)WIFI FACTORY DONE;</msg>
+<status status="PASS" starttime="20190523 11:26:35.796" endtime="20190523 11:26:36.001"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN=3</arg>
+<arg>(CESHI)BLE OK</arg>
+</arguments>
+<msg timestamp="20190523 11:26:36.302" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN=3
+应该收到串口数据: (CESHI)BLE OK
+实际接收到的数据:  (CESHI)BLE OK</msg>
+<status status="PASS" starttime="20190523 11:26:36.002" endtime="20190523 11:26:36.303"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:36.305" endtime="20190523 11:26:36.306"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:35.773" endtime="20190523 11:26:36.307" critical="yes"></status>
+</test>
+<test id="s1-t2" name="TS01_终端自检">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${prduction_TS01}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:36.319" endtime="20190523 11:26:36.321"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)DEV</arg>
+<arg>(CESHI)DEV</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:36.606" level="INFO">发送串口数据: (CESHI)DEV
+应该收到串口数据: (CESHI)DEV
+实际接收到的数据:  (CESHI)DEV BOARD:HL685,HW:15,RAM:1,NAND:1(C2F18095),SPIFI:1(C216),BAT:1|LI,RTC:1,USB:1(V91),CPS:2(V0),RCY:1(V39),RDN:1(V54),SLP:1(V211),CC936:1(V10),CLK:1|16|96|48|0,WDG:1,ACCE:1(0098),BLE:1(V131),MFU:1(V27),DEBUG:0;</msg>
+<msg timestamp="20190523 11:26:36.608" level="INFO">${a} = (CESHI)DEV BOARD:HL685,HW:15,RAM:1,NAND:1(C2F18095),SPIFI:1(C216),BAT:1|LI,RTC:1,USB:1(V91),CPS:2(V0),RCY:1(V39),RDN:1(V54),SLP:1(V211),CC936:1(V10),CLK:1|16|96|48|0,WDG:1,ACCE:1(0098),BLE:1(V131),MFU...</msg>
+<status status="PASS" starttime="20190523 11:26:36.323" endtime="20190523 11:26:36.609"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${a}'=='${zijian}'</arg>
+<arg>write_mid_file</arg>
+<arg>TS01_终端自检</arg>
+<arg>PASS</arg>
+<arg>(CESHI)DEV</arg>
+<arg>${a}</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>TS01_终端自检</arg>
+<arg>PASS</arg>
+<arg>(CESHI)DEV</arg>
+<arg>${a}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:36.616" endtime="20190523 11:26:36.621"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:36.611" endtime="20190523 11:26:36.622"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${a}'!='${zijian}'</arg>
+<arg>fail</arg>
+<arg>自检错误</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:36.625" endtime="20190523 11:26:36.629"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:36.632" endtime="20190523 11:26:36.635"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:36.311" endtime="20190523 11:26:36.636" critical="yes"></status>
+</test>
+<test id="s1-t3" name="TS02_代码校验">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${prduction_TS02}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:36.658" endtime="20190523 11:26:36.662"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;CHKSIZE=${chksize}</arg>
+<arg>(CESHI)MODEM CHKSIZE DONE.</arg>
+</arguments>
+<msg timestamp="20190523 11:26:36.908" level="INFO">发送串口数据: (CESHI)MODEM COM=1;CHKSIZE=488640
+应该收到串口数据: (CESHI)MODEM CHKSIZE DONE.
+实际接收到的数据:  (CESHI)MODEM CHKSIZE DONE.</msg>
+<status status="PASS" starttime="20190523 11:26:36.664" endtime="20190523 11:26:36.909"></status>
+</kw>
+<kw name="${i} IN RANGE [ 30 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>(CESHI)</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:37.210" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SYSINFO=1;
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)MODEM SYSINFO DONE,RUNTIME:510,GPSADC:675,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:488640,CHKSUM:47859604,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<msg timestamp="20190523 11:26:37.211" level="INFO">${a} = (CESHI)MODEM SYSINFO DONE,RUNTIME:510,GPSADC:675,UUID:419430401-2938707109-1519308379-4110425285,CHKSIZE:488640,CHKSUM:47859604,SIM:8614619911775,ICCID:89860918710006540682,BOARDVER:15,</msg>
+<status status="PASS" starttime="20190523 11:26:36.911" endtime="20190523 11:26:37.211"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>CHKSUM</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:37.214" level="INFO">['(CESHI)MODEM', 'SYSINFO', 'DONE', 'RUNTIME', '510', 'GPSADC', '675', 'UUID', '419430401-2938707109-1519308379-4110425285', 'CHKSIZE', '488640', 'CHKSUM', '47859604', 'SIM', '8614619911775', 'ICCID', '89860918710006540682', 'BOARDVER', '15', '']</msg>
+<msg timestamp="20190523 11:26:37.215" level="INFO">${b} = 47859604</msg>
+<status status="PASS" starttime="20190523 11:26:37.212" endtime="20190523 11:26:37.215"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${chksum}'=='${b}'</arg>
+</arguments>
+<msg timestamp="20190523 11:26:37.218" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190523 11:26:37.216" endtime="20190523 11:26:37.219"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:36.911" endtime="20190523 11:26:37.219"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:36.910" endtime="20190523 11:26:37.219"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}!=29</arg>
+<arg>write_mid_file</arg>
+<arg>TS02_代码校验</arg>
+<arg>PASS</arg>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>${a}</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>TS02_代码校验</arg>
+<arg>PASS</arg>
+<arg>(CESHI)MODEM COM=1;SYSINFO=1;</arg>
+<arg>${a}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:37.223" endtime="20190523 11:26:37.225"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:37.221" endtime="20190523 11:26:37.226"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==29</arg>
+<arg>fail</arg>
+<arg>代码校验失败</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:37.227" endtime="20190523 11:26:37.230"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+NATIVE=?;</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:37.513" level="INFO">发送串口数据: IOT+S1+NATIVE=?;
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+S1+NATIVE=V1.01,V0.19,V1.02,P23,v11462_6ca285d8c,hzclz_ev460l,release,none;</msg>
+<msg timestamp="20190523 11:26:37.514" level="INFO">${c} = V1.01,V0.19,V1.02,P23,v11462_6ca285d8c,hzclz_ev460l,release,none</msg>
+<status status="PASS" starttime="20190523 11:26:37.231" endtime="20190523 11:26:37.514"></status>
+</kw>
+<kw name="Belong" library="Utils">
+<doc>功能:判断字符串1是否在字符串2里面(成功返回1否则返回0)</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>${branch}</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:37.518" level="INFO">${d} = 1</msg>
+<status status="PASS" starttime="20190523 11:26:37.516" endtime="20190523 11:26:37.518"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${d}==1</arg>
+<arg>write_mid_file</arg>
+<arg>TS02_版本校对</arg>
+<arg>PASS</arg>
+<arg>IOT+S1+NATIVE=?;</arg>
+<arg>${c}</arg>
+</arguments>
+<kw name="Write Mid File" library="Utils">
+<arguments>
+<arg>TS02_版本校对</arg>
+<arg>PASS</arg>
+<arg>IOT+S1+NATIVE=?;</arg>
+<arg>${c}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:37.522" endtime="20190523 11:26:37.527"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:37.520" endtime="20190523 11:26:37.529"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${d}!=1</arg>
+<arg>fail</arg>
+<arg>版本校对错误</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:37.532" endtime="20190523 11:26:37.535"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:37.538" endtime="20190523 11:26:37.540"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:36.643" endtime="20190523 11:26:37.541" critical="yes"></status>
+</test>
+<test id="s1-t4" name="TS04_BLE蓝牙">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${prduction_TS04}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:37.554" endtime="20190523 11:26:37.557"></status>
+</kw>
+<kw name="${i} IN RANGE [ 20 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:37.815" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:37.816" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:37.560" endtime="20190523 11:26:37.816"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:37.820" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:37.817" endtime="20190523 11:26:37.821"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:37.823" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:37.821" endtime="20190523 11:26:37.823"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:37.826" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:37.824" endtime="20190523 11:26:37.826"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:37.834" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:37.829" endtime="20190523 11:26:37.835"></status>
+</kw>
+<msg timestamp="20190523 11:26:37.836" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:37.827" endtime="20190523 11:26:37.836"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:37.837" endtime="20190523 11:26:37.840"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:38.843" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:37.841" endtime="20190523 11:26:38.844"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:37.559" endtime="20190523 11:26:38.844"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:39.253" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:39.254" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:38.847" endtime="20190523 11:26:39.254"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:39.256" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:39.255" endtime="20190523 11:26:39.257"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:39.259" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:39.258" endtime="20190523 11:26:39.259"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:39.262" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:39.260" endtime="20190523 11:26:39.262"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:39.266" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:39.264" endtime="20190523 11:26:39.267"></status>
+</kw>
+<msg timestamp="20190523 11:26:39.268" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:39.263" endtime="20190523 11:26:39.268"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:39.269" endtime="20190523 11:26:39.271"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:40.273" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:39.272" endtime="20190523 11:26:40.275"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:38.845" endtime="20190523 11:26:40.275"></status>
+</kw>
+<kw name="${i} = 2" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:40.683" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:40.684" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:40.278" endtime="20190523 11:26:40.685"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:40.688" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:40.686" endtime="20190523 11:26:40.688"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:40.691" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:40.689" endtime="20190523 11:26:40.692"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:40.695" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:40.693" endtime="20190523 11:26:40.696"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:40.702" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:40.699" endtime="20190523 11:26:40.703"></status>
+</kw>
+<msg timestamp="20190523 11:26:40.703" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:40.697" endtime="20190523 11:26:40.704"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:40.705" endtime="20190523 11:26:40.708"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:41.711" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:40.709" endtime="20190523 11:26:41.712"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:40.276" endtime="20190523 11:26:41.712"></status>
+</kw>
+<kw name="${i} = 3" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:42.121" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:42.121" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:41.715" endtime="20190523 11:26:42.122"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:42.124" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:42.123" endtime="20190523 11:26:42.124"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:42.126" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:42.125" endtime="20190523 11:26:42.127"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:42.130" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:42.128" endtime="20190523 11:26:42.130"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:42.135" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:42.133" endtime="20190523 11:26:42.136"></status>
+</kw>
+<msg timestamp="20190523 11:26:42.137" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:42.131" endtime="20190523 11:26:42.137"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:42.138" endtime="20190523 11:26:42.140"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:43.143" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:42.141" endtime="20190523 11:26:43.144"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:41.713" endtime="20190523 11:26:43.145"></status>
+</kw>
+<kw name="${i} = 4" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:43.553" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:43.554" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:43.147" endtime="20190523 11:26:43.554"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:43.557" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:43.555" endtime="20190523 11:26:43.557"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:43.559" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:43.558" endtime="20190523 11:26:43.559"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:43.562" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:43.560" endtime="20190523 11:26:43.562"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:43.566" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:43.564" endtime="20190523 11:26:43.567"></status>
+</kw>
+<msg timestamp="20190523 11:26:43.568" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:43.563" endtime="20190523 11:26:43.568"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:43.569" endtime="20190523 11:26:43.571"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:44.573" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:43.572" endtime="20190523 11:26:44.575"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:43.145" endtime="20190523 11:26:44.575"></status>
+</kw>
+<kw name="${i} = 5" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:44.983" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:44.984" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:44.578" endtime="20190523 11:26:44.984"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:44.987" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:44.985" endtime="20190523 11:26:44.987"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:44.989" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:44.988" endtime="20190523 11:26:44.989"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:44.992" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:44.990" endtime="20190523 11:26:44.992"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:44.997" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:44.994" endtime="20190523 11:26:44.997"></status>
+</kw>
+<msg timestamp="20190523 11:26:44.998" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:44.993" endtime="20190523 11:26:44.998"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:44.999" endtime="20190523 11:26:45.001"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:46.003" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:45.002" endtime="20190523 11:26:46.005"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:44.576" endtime="20190523 11:26:46.005"></status>
+</kw>
+<kw name="${i} = 6" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:46.414" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:46.415" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:46.008" endtime="20190523 11:26:46.416"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:46.420" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:46.418" endtime="20190523 11:26:46.421"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:46.425" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:46.422" endtime="20190523 11:26:46.425"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:46.433" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:46.427" endtime="20190523 11:26:46.433"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:46.442" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:46.438" endtime="20190523 11:26:46.443"></status>
+</kw>
+<msg timestamp="20190523 11:26:46.444" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:46.435" endtime="20190523 11:26:46.445"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:46.446" endtime="20190523 11:26:46.448"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:47.450" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:46.449" endtime="20190523 11:26:47.452"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:46.006" endtime="20190523 11:26:47.452"></status>
+</kw>
+<kw name="${i} = 7" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:47.861" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:47.862" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:47.455" endtime="20190523 11:26:47.862"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:47.865" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:47.863" endtime="20190523 11:26:47.865"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:47.867" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:47.866" endtime="20190523 11:26:47.868"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:47.870" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:47.868" endtime="20190523 11:26:47.870"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:47.875" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:47.873" endtime="20190523 11:26:47.875"></status>
+</kw>
+<msg timestamp="20190523 11:26:47.876" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:47.871" endtime="20190523 11:26:47.876"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:47.877" endtime="20190523 11:26:47.880"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:48.882" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:47.880" endtime="20190523 11:26:48.883"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:47.453" endtime="20190523 11:26:48.884"></status>
+</kw>
+<kw name="${i} = 8" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:49.092" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:49.093" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:48.886" endtime="20190523 11:26:49.093"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:49.095" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:49.094" endtime="20190523 11:26:49.095"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:49.098" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:49.096" endtime="20190523 11:26:49.098"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:49.103" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:49.101" endtime="20190523 11:26:49.104"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:49.109" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:49.106" endtime="20190523 11:26:49.109"></status>
+</kw>
+<msg timestamp="20190523 11:26:49.110" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:49.105" endtime="20190523 11:26:49.110"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:49.111" endtime="20190523 11:26:49.113"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:50.115" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:49.114" endtime="20190523 11:26:50.117"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:48.884" endtime="20190523 11:26:50.117"></status>
+</kw>
+<kw name="${i} = 9" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:50.526" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:50.527" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:50.120" endtime="20190523 11:26:50.527"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:50.529" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:50.528" endtime="20190523 11:26:50.530"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:50.532" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:50.530" endtime="20190523 11:26:50.532"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:50.536" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:50.533" endtime="20190523 11:26:50.536"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:50.541" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:50.538" endtime="20190523 11:26:50.541"></status>
+</kw>
+<msg timestamp="20190523 11:26:50.542" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:50.537" endtime="20190523 11:26:50.542"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:50.543" endtime="20190523 11:26:50.548"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:51.550" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:50.549" endtime="20190523 11:26:51.552"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:50.118" endtime="20190523 11:26:51.552"></status>
+</kw>
+<kw name="${i} = 10" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:51.960" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:51.961" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:51.554" endtime="20190523 11:26:51.961"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:51.963" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:51.962" endtime="20190523 11:26:51.964"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:51.966" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:51.964" endtime="20190523 11:26:51.966"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:51.969" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:51.967" endtime="20190523 11:26:51.969"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:51.974" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:51.972" endtime="20190523 11:26:51.974"></status>
+</kw>
+<msg timestamp="20190523 11:26:51.975" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:51.970" endtime="20190523 11:26:51.975"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:51.976" endtime="20190523 11:26:51.979"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:52.981" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:51.979" endtime="20190523 11:26:52.982"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:51.553" endtime="20190523 11:26:52.983"></status>
+</kw>
+<kw name="${i} = 11" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:53.394" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:53.395" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:52.985" endtime="20190523 11:26:53.395"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:53.398" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:53.396" endtime="20190523 11:26:53.398"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:53.400" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:53.399" endtime="20190523 11:26:53.401"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:53.403" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:53.401" endtime="20190523 11:26:53.403"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:53.408" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:53.406" endtime="20190523 11:26:53.409"></status>
+</kw>
+<msg timestamp="20190523 11:26:53.409" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:53.404" endtime="20190523 11:26:53.410"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:53.410" endtime="20190523 11:26:53.413"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:54.415" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:53.414" endtime="20190523 11:26:54.416"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:52.984" endtime="20190523 11:26:54.417"></status>
+</kw>
+<kw name="${i} = 12" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:54.826" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:54.827" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:54.419" endtime="20190523 11:26:54.828"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:54.832" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:54.829" endtime="20190523 11:26:54.832"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:54.836" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:54.834" endtime="20190523 11:26:54.837"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:54.841" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:54.838" endtime="20190523 11:26:54.842"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:54.853" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:54.848" endtime="20190523 11:26:54.854"></status>
+</kw>
+<msg timestamp="20190523 11:26:54.855" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:54.843" endtime="20190523 11:26:54.855"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:54.857" endtime="20190523 11:26:54.862"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:55.866" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:54.863" endtime="20190523 11:26:55.867"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:54.418" endtime="20190523 11:26:55.867"></status>
+</kw>
+<kw name="${i} = 13" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:56.275" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:56.276" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:55.870" endtime="20190523 11:26:56.277"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:56.279" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:56.277" endtime="20190523 11:26:56.279"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:56.281" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:56.280" endtime="20190523 11:26:56.282"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:56.284" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:56.283" endtime="20190523 11:26:56.285"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:56.289" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:56.287" endtime="20190523 11:26:56.290"></status>
+</kw>
+<msg timestamp="20190523 11:26:56.290" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:56.285" endtime="20190523 11:26:56.291"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:56.291" endtime="20190523 11:26:56.294"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:57.297" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:56.295" endtime="20190523 11:26:57.298"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:55.868" endtime="20190523 11:26:57.299"></status>
+</kw>
+<kw name="${i} = 14" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:57.707" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:57.708" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:57.301" endtime="20190523 11:26:57.708"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:57.711" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:57.709" endtime="20190523 11:26:57.711"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:57.713" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:57.712" endtime="20190523 11:26:57.713"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:57.716" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:57.714" endtime="20190523 11:26:57.716"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:57.720" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:57.718" endtime="20190523 11:26:57.721"></status>
+</kw>
+<msg timestamp="20190523 11:26:57.721" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:57.717" endtime="20190523 11:26:57.722"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:57.722" endtime="20190523 11:26:57.725"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:26:58.727" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:57.726" endtime="20190523 11:26:58.729"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:57.300" endtime="20190523 11:26:58.729"></status>
+</kw>
+<kw name="${i} = 15" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:26:59.137" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:26:59.138" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:26:58.731" endtime="20190523 11:26:59.138"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:26:59.141" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:59.139" endtime="20190523 11:26:59.141"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:26:59.143" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:26:59.142" endtime="20190523 11:26:59.143"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:26:59.145" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:26:59.144" endtime="20190523 11:26:59.146"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:26:59.154" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:26:59.152" endtime="20190523 11:26:59.155"></status>
+</kw>
+<msg timestamp="20190523 11:26:59.155" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:26:59.147" endtime="20190523 11:26:59.156"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:26:59.156" endtime="20190523 11:26:59.159"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:27:00.161" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:26:59.160" endtime="20190523 11:27:00.162"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:58.730" endtime="20190523 11:27:00.163"></status>
+</kw>
+<kw name="${i} = 16" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:27:00.572" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:27:00.572" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:27:00.165" endtime="20190523 11:27:00.573"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:27:00.575" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:27:00.574" endtime="20190523 11:27:00.575"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:27:00.578" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:27:00.576" endtime="20190523 11:27:00.578"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:27:00.580" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:27:00.579" endtime="20190523 11:27:00.581"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:27:00.586" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:27:00.583" endtime="20190523 11:27:00.586"></status>
+</kw>
+<msg timestamp="20190523 11:27:00.587" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:27:00.582" endtime="20190523 11:27:00.587"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:27:00.588" endtime="20190523 11:27:00.591"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:27:01.594" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:27:00.592" endtime="20190523 11:27:01.595"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:27:00.164" endtime="20190523 11:27:01.596"></status>
+</kw>
+<kw name="${i} = 17" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:27:01.806" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:27:01.808" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:27:01.598" endtime="20190523 11:27:01.809"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:27:01.814" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:27:01.810" endtime="20190523 11:27:01.815"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:27:01.820" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:27:01.816" endtime="20190523 11:27:01.821"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:27:01.826" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:27:01.823" endtime="20190523 11:27:01.827"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:27:01.837" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:27:01.832" endtime="20190523 11:27:01.838"></status>
+</kw>
+<msg timestamp="20190523 11:27:01.839" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:27:01.829" endtime="20190523 11:27:01.840"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:27:01.841" endtime="20190523 11:27:01.848"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:27:02.853" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:27:01.850" endtime="20190523 11:27:02.855"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:27:01.597" endtime="20190523 11:27:02.855"></status>
+</kw>
+<kw name="${i} = 18" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:27:03.263" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:27:03.264" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:27:02.858" endtime="20190523 11:27:03.264"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:27:03.267" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:27:03.265" endtime="20190523 11:27:03.267"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:27:03.269" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:27:03.268" endtime="20190523 11:27:03.270"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:27:03.272" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:27:03.270" endtime="20190523 11:27:03.272"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:27:03.278" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:27:03.275" endtime="20190523 11:27:03.279"></status>
+</kw>
+<msg timestamp="20190523 11:27:03.279" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:27:03.273" endtime="20190523 11:27:03.280"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:27:03.280" endtime="20190523 11:27:03.283"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:27:04.285" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:27:03.284" endtime="20190523 11:27:04.287"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:27:02.856" endtime="20190523 11:27:04.287"></status>
+</kw>
+<kw name="${i} = 19" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>(CESHI)BLE</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:27:04.496" level="INFO">发送串口数据: (CESHI)BLE AT+BTSCACN?
+应该收到串口数据: (CESHI)BLE
+实际接收到的数据:  (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<msg timestamp="20190523 11:27:04.497" level="INFO">${a} = (CESHI)BLE +BTSCACN:0,0,000000000000,00000000000000000000000000000000,0,0,0,0</msg>
+<status status="PASS" starttime="20190523 11:27:04.290" endtime="20190523 11:27:04.497"></status>
+</kw>
+<kw name="Lanya" library="Utils">
+<arguments>
+<arg>${a}</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:27:04.499" level="INFO">${b} = 0</msg>
+<status status="PASS" starttime="20190523 11:27:04.498" endtime="20190523 11:27:04.500"></status>
+</kw>
+<kw name="Abs" library="Utils">
+<doc>取算式的绝对值并且返回</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190523 11:27:04.502" level="INFO">${c} = 0</msg>
+<status status="PASS" starttime="20190523 11:27:04.500" endtime="20190523 11:27:04.502"></status>
+</kw>
+<kw name="Get Str 2" library="Utils">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:27:04.505" level="INFO">${d} = 00000000000000000000000000000000</msg>
+<status status="PASS" starttime="20190523 11:27:04.503" endtime="20190523 11:27:04.505"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>ble_j</arg>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<assign>
+<var>${state}</var>
+</assign>
+<kw name="Ble J" library="Utils">
+<arguments>
+<arg>${d}</arg>
+<arg>${BLES}</arg>
+<arg>${BLES_1}</arg>
+</arguments>
+<msg timestamp="20190523 11:27:04.511" level="FAIL">NameError: name 'str1' is not defined</msg>
+<status status="FAIL" starttime="20190523 11:27:04.508" endtime="20190523 11:27:04.512"></status>
+</kw>
+<msg timestamp="20190523 11:27:04.513" level="INFO">${state} = False</msg>
+<status status="PASS" starttime="20190523 11:27:04.506" endtime="20190523 11:27:04.513"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${c}&lt;${BLE} and ${c}!=0 and ${state}==0</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:27:04.514" endtime="20190523 11:27:04.516"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:27:05.519" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:27:04.517" endtime="20190523 11:27:05.520"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:27:04.288" endtime="20190523 11:27:05.520"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:26:37.558" endtime="20190523 11:27:05.521"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}!=19</arg>
+<arg>write_mid_file</arg>
+<arg>TS04_BLE蓝牙</arg>
+<arg>PASS</arg>
+<arg>(CESHI)BLE AT+BTSCACN?</arg>
+<arg>${a}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:27:05.523" endtime="20190523 11:27:05.526"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==19</arg>
+<arg>fail</arg>
+<arg>蓝牙测试错误</arg>
+</arguments>
+<kw name="Fail" library="BuiltIn">
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<arguments>
+<arg>蓝牙测试错误</arg>
+</arguments>
+<msg timestamp="20190523 11:27:05.538" level="FAIL">蓝牙测试错误</msg>
+<status status="FAIL" starttime="20190523 11:27:05.535" endtime="20190523 11:27:05.539"></status>
+</kw>
+<status status="FAIL" starttime="20190523 11:27:05.529" endtime="20190523 11:27:05.540"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<kw name="Fatal Error" library="BuiltIn">
+<doc>Stops the whole test execution.</doc>
+<msg timestamp="20190523 11:27:05.550" level="FAIL">AssertionError</msg>
+<status status="FAIL" starttime="20190523 11:27:05.546" endtime="20190523 11:27:05.553"></status>
+</kw>
+<status status="FAIL" starttime="20190523 11:27:05.543" endtime="20190523 11:27:05.553">AssertionError</status>
+</kw>
+<status status="FAIL" starttime="20190523 11:26:37.547" endtime="20190523 11:27:05.555" critical="yes">蓝牙测试错误
+
+Also teardown failed:
+AssertionError</status>
+</test>
+<test id="s1-t5" name="TS06_GPRS信号">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190523 11:27:05.564" endtime="20190523 11:27:05.574" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t6" name="TS08_ECM">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190523 11:27:05.580" endtime="20190523 11:27:05.585" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t7" name="TS10_电容测试">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190523 11:27:05.592" endtime="20190523 11:27:05.606" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t8" name="GET_END">
+<tags>
+<tag>robot-exit</tag>
+</tags>
+<status status="FAIL" starttime="20190523 11:27:05.611" endtime="20190523 11:27:05.616" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<kw name="关机" type="teardown">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM COM=1;SHUTDOWN=1</arg>
+<arg>(CESHI)MODEM SHUTDOWN DONE</arg>
+</arguments>
+<msg timestamp="20190523 11:27:05.834" level="INFO">发送串口数据: (CESHI)MODEM COM=1;SHUTDOWN=1
+应该收到串口数据: (CESHI)MODEM SHUTDOWN DONE
+实际接收到的数据:  (CESHI)MODEM SHUTDOWN DONE.</msg>
+<status status="PASS" starttime="20190523 11:27:05.628" endtime="20190523 11:27:05.834"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:27:05.624" endtime="20190523 11:27:05.835"></status>
+</kw>
+<status status="FAIL" starttime="20190523 11:26:35.313" endtime="20190523 11:27:05.835"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="5">Critical Tests</stat>
+<stat pass="3" fail="5">All Tests</stat>
+</total>
+<tag>
+<stat pass="3" fail="1" info="combined" combined="NOT robot-exit">NOT robot-exit</stat>
+<stat pass="0" fail="4">robot-exit</stat>
+</tag>
+<suite>
+<stat pass="3" fail="5" id="s1" name="Production Case">Production Case</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

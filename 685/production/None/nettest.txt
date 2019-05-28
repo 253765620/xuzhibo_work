@@ -1,0 +1,32 @@
+*** Settings ***
+Test Setup        testzb
+Library           NetTest
+
+*** Test Cases ***
+TCP测试
+    :FOR    ${I}    INRANGE   10
+    \    ${a}    tcp_test    (CESHI)DEV    HL685
+    \    exit for loop if    "${a}"=="right"
+    \    sleep    3
+    ${b}    tcp_test    (CESHI)MODEM INFO    ICCID
+    Run Keyword If    "${b}"=="right"    log    正确
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    接收数据错误
+
+网络通断测试
+    ${c}    ping_test
+    log    ${c}
+    Run Keyword If    ${c}==1    log    正确
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ping失败
+
+FTP下载测试
+    ${d}    ftp_test
+    log    ${d}
+    Run Keyword If    "${d}"=="right"    log    正确
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    错误
+
+*** Keywords ***
+testzb
+    ${a}    get_net_state    usb0
+    Run Keyword If    ${a}==1    log    正确
+    ...    ELSE IF    ${a}==0    sleep    5
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    错误

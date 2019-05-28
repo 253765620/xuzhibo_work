@@ -1,0 +1,79 @@
+*** Settings ***
+Test Teardown     Run Keyword If Test Failed    Fatal Error
+Library           SerialLibrary
+Library           Utils
+Library           Power
+Library           NetTest
+
+*** Test Cases ***
+GET_Ready
+    ${time1}    get_local_time
+    Set Suite Variable    ${time1}
+    write_abox_file    开始时间:${time1}
+abox自检+设置pid
+    ${is_have_pid}    serial send    IOT+D1+N.SN=?    IOT+D3    #PID查询
+    ${lenpid}    length    ${is_have_pid}
+    Run Keyword If    ${lenpid}>1    Fail    PID不为空    #PID查询结果是否为空
+    : FOR    ${i}    INRANGE    20
+    \    ${k}    serial send    IOT+S1+ai.m.con.st=?    IOT+S1+AI.M.CON.ST
+    \    Exit For Loop If    '${k}'=='1'
+    \    sleep    1
+    Run Keyword If    ${i}==19    fail    IOT+S1+ai.m.con.st失败
+    ai_test
+    sleep    2
+    serial_send    IOT+V1+ai.fom.nt=01    IOT+V1+AI.FOM.NT=successful
+    sleep    1
+    serial_send    IOT+S1+ai.m.ai.fom.ack=?    IOT+S1+AI.M.AI.FOM.ACK=2
+    ${a}    serial send    (CESHI)MODEM INFO    (CESHI)MODEM
+    ${IMEI}    get_flag_1    ${a}    IMEI    1    #ICCID查询
+    ${b}    get_flag_1    ${a}    ICCID    1
+    ${sim}    Set Variable    ${ICCID_SIM['${b}']}
+    ${d}    serial send    IOT+D1150511+WA.SIM=${ICCID_SIM['${b}']}    IOT
+    ${sim1}    Set Variable    ${ICCID_SIM['${b}']}
+    Run Keyword If    '${sim}'!='${d}'    fail    sim查询错误
+    serial send    IOT+D1150511+N.SN=${pid_start}    IOT+D1150511+N.SN=${pid_start}    #PID设置
+    serial send    IOT+D1+N.SN=?    IOT+D3+N.SN=${pid_start}    #PID查询
+    ${date}    serial_send    IOT+D1+N.P.D=?    IOT
+    ${tdid}    zhongji_id    t    d    ${date}    ${pid_start}
+    ${tcid}    zhongji_id    t    c    ${date}    ${pid_start}
+    ${adid}    zhongji_id    a    d    ${date}    ${pid_start}
+    ${acid}    zhongji_id    a    c    ${date}    ${pid_start}
+    serial_send    IOT+L1+mat3.f1.dide=?    IOT+L1+MAT3.F1.DIDE=${tdid}
+    serial_send    IOT+L1+mat3.f1.ide=?    IOT+L1+MAT3.F1.IDE=${tcid}
+    serial_send    IOT+V1+ai.m.info.req=    IOT+V1+AI.M.INFO.REQ=successful
+    serial_send    IOT+C1+ai.m.dev.id=?    IOT+C1+AI.M.DEV.ID=${adid}
+    serial_send    IOT+C1+ai.m.cli.id=?    IOT+C1+AI.M.CLI.ID=${acid}
+    serial_send    IOT+V1+ai.app.st=1    IOT+V1+AI.APP.ST=successful
+    serial_send    IOT+S1+ai.m.app.ack=?    IOT+S1+ai.m.app.ack=1
+    #: FOR    ${i}    INRANGE    20
+    #\    ${m}    serial_send    IOT+S1+PH.M.LINK1=?    IOT
+    #\    Exit For Loop If    '${m}'=='IOT+S1+PH.M.LINK1=mqttai.pivar,1,TCP,192.168.100.3,1883'
+    #\    sleep    1
+    #Run Keyword If    ${i}==19    fail    IOT+S1+PH.M.LINK1查询失败
+    write_setid_file    ${b}    #把ICCID写入输出文件
+    write_setid_file    ${IMEI}    #把IEEM的数据写入输出文件
+    write_setid_file    ${sim}    #把SIM的数据写入输出文件
+    write_setid_file    ${pid_start}    #把PID写入输出文件
+    write_setid_file    ${tdid}    #把TBOX_deviceID写入输出文件
+    write_setid_file    ${adid}    \n    #把ABOX_deviceID写入输出文件
+    pid_set    ${pid_start}    #PID加1写入配置文件
+    write_abox_file    ${b}
+    write_abox_file    IOT+S1+ai.m.con.st=?    IOT+S1+AI.M.CON.ST=${k}
+    write_abox_file    IOT+D1150511+WA.SIM=${ICCID_SIM['${b}']}    ${d}
+    write_abox_file    IOT+D1150511+N.SN=${pid_start}    IOT+D1150511+N.SN=${pid_start}
+    write_abox_file    IOT+D1+N.P.D=?    ${date}  
+    write_abox_file    IOT+L1+mat3.f1.dide=?    IOT+L1+MAT3.F1.DIDE=${tdid}
+    write_abox_file    IOT+L1+mat3.f1.ide=?    IOT+L1+MAT3.F1.IDE=${tcid}
+    write_abox_file    IOT+V1+ai.m.info.req=    IOT+V1+AI.M.INFO.REQ=successful
+    write_abox_file    IOT+C1+ai.m.dev.id=?    IOT+C1+AI.M.DEV.ID=${adid}
+    write_abox_file    IOT+C1+ai.m.cli.id=?    IOT+C1+AI.M.CLI.ID=${acid}
+    write_abox_file    IOT+V1+ai.app.st=1    IOT+V1+AI.APP.ST=successful
+    write_abox_file    IOT+S1+ai.m.app.ack=?    IOT+S1+ai.m.app.ack=1
+GET_END
+    ${time2}    get_local_time
+    ${time3}    round_int    ${time1}    ${time2}
+    ${a}    serial send    (CESHI)MODEM INFO    (CESHI)MODEM
+    ${b}    get_flag_1    ${a}    ICCID    1
+    write_abox_file    ICCID:${b}
+    write_abox_file    结束时间:${time2}
+    write_abox_file    耗时:${time3}秒    \n\n    *****************************

@@ -1,0 +1,950 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.0.4 (Python 3.7.0 on linux)" generated="20190523 11:11:02.850">
+<suite id="s1" name="Ai Test" source="/home/pi/production/case/ai_test.txt">
+<test id="s1-t1" name="GET_Ready">
+<kw name="Get Local Time" library="Utils">
+<assign>
+<var>${time1}</var>
+</assign>
+<msg timestamp="20190523 11:11:03.336" level="INFO">${time1} = 1558581063.335239</msg>
+<status status="PASS" starttime="20190523 11:11:03.334" endtime="20190523 11:11:03.336"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${time1}</arg>
+</arguments>
+<msg timestamp="20190523 11:11:03.339" level="INFO">${time1} = 1558581063.335239</msg>
+<status status="PASS" starttime="20190523 11:11:03.337" endtime="20190523 11:11:03.340"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>开始时间:${time1}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:11:03.343" endtime="20190523 11:11:03.345"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:11:03.347" endtime="20190523 11:11:03.348"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:11:03.330" endtime="20190523 11:11:03.349" critical="yes"></status>
+</test>
+<test id="s1-t2" name="abox自检+设置pid">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+D1+N.SN=?</arg>
+<arg>IOT+D3</arg>
+</arguments>
+<assign>
+<var>${is_have_pid}</var>
+</assign>
+<msg timestamp="20190523 11:11:03.568" level="INFO">发送串口数据: IOT+D1+N.SN=?
+应该收到串口数据: IOT+D3
+实际接收到的数据:  IOT+D3+N.SN=;</msg>
+<msg timestamp="20190523 11:11:03.570" level="INFO">${is_have_pid} = </msg>
+<status status="PASS" starttime="20190523 11:11:03.364" endtime="20190523 11:11:03.570"></status>
+</kw>
+<kw name="Length" library="Utils">
+<arguments>
+<arg>${is_have_pid}</arg>
+</arguments>
+<assign>
+<var>${lenpid}</var>
+</assign>
+<msg timestamp="20190523 11:11:03.572" level="INFO">${lenpid} = 0</msg>
+<status status="PASS" starttime="20190523 11:11:03.571" endtime="20190523 11:11:03.573"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${lenpid}&gt;1</arg>
+<arg>Fail</arg>
+<arg>PID不为空</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:11:03.574" endtime="20190523 11:11:03.575"></status>
+</kw>
+<kw name="${i} IN RANGE [ 20 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+ai.m.con.st=?</arg>
+<arg>IOT+S1+AI.M.CON.ST</arg>
+</arguments>
+<assign>
+<var>${k}</var>
+</assign>
+<msg timestamp="20190523 11:11:03.870" level="INFO">发送串口数据: IOT+S1+ai.m.con.st=?
+应该收到串口数据: IOT+S1+AI.M.CON.ST
+实际接收到的数据:  IOT+S1+AI.M.CON.ST=1;</msg>
+<msg timestamp="20190523 11:11:03.871" level="INFO">${k} = 1</msg>
+<status status="PASS" starttime="20190523 11:11:03.578" endtime="20190523 11:11:03.871"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${k}'=='1'</arg>
+</arguments>
+<msg timestamp="20190523 11:11:03.874" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190523 11:11:03.872" endtime="20190523 11:11:03.875"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:11:03.577" endtime="20190523 11:11:03.875"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:11:03.576" endtime="20190523 11:11:03.875"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==19</arg>
+<arg>fail</arg>
+<arg>IOT+S1+ai.m.con.st失败</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:11:03.877" endtime="20190523 11:11:03.878"></status>
+</kw>
+<kw name="Ai Test" library="NetTest">
+<doc>- aibox自检的测试用例</doc>
+<msg timestamp="20190523 11:12:27.117" level="INFO">发送串口数据: (CESHI)DSMCORE FACTORY-LOCK
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)DSMCORE FACTORY LOCKED;
+
+发送串口数据: (CESHI)DSMCORE FACTORY-P0000000000000110
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)GOING;
+
+发送串口数据: IOT+V1+ai.self.check=1
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+V1+AI.SELF.CHECK=successful;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=255,255,255,255,255,255,255,255,255,255,255;
+
+发送串口数据: IOT+C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+C1+AI.SF.CK.R=0,0,0,0,0,0,0,0,0,1,0;
+
+['0', '0', '0', '0', '0', '0', '0', '1', '0']
+Sdcard2测试失败
+发送串口数据: (CESHI)DSMCORE FACTORY-P0000000000000111
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)GOING;
+
+发送串口数据: (CESHI)DSMCORE FACTORY-UNLOCK
+应该收到串口数据: (CESHI)
+实际接收到的数据:  (CESHI)DSMCORE FACTORY UNLOCKED;</msg>
+<status status="PASS" starttime="20190523 11:11:03.879" endtime="20190523 11:12:27.120"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20190523 11:12:29.124" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20190523 11:12:27.122" endtime="20190523 11:12:29.125"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+V1+ai.fom.nt=01</arg>
+<arg>IOT+V1+AI.FOM.NT=successful</arg>
+</arguments>
+<msg timestamp="20190523 11:12:29.333" level="INFO">发送串口数据: IOT+V1+ai.fom.nt=01
+应该收到串口数据: IOT+V1+AI.FOM.NT=successful
+实际接收到的数据:  IOT+V1+AI.FOM.NT=successful;</msg>
+<status status="PASS" starttime="20190523 11:12:29.127" endtime="20190523 11:12:29.334"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190523 11:12:30.336" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190523 11:12:29.335" endtime="20190523 11:12:30.338"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+ai.m.ai.fom.ack=?</arg>
+<arg>IOT+S1+AI.M.AI.FOM.ACK=2</arg>
+</arguments>
+<msg timestamp="20190523 11:12:33.750" level="INFO">发送串口数据: IOT+S1+ai.m.ai.fom.ack=?
+应该收到串口数据: IOT+S1+AI.M.AI.FOM.ACK=2
+num 0, time: 2019-05-23 11:12:30
+实际接收到的数据:  IOT+S1+AI.M.AI.FOM.ACK=2;</msg>
+<status status="PASS" starttime="20190523 11:12:30.340" endtime="20190523 11:12:33.750"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM INFO</arg>
+<arg>(CESHI)MODEM</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:12:34.052" level="INFO">发送串口数据: (CESHI)MODEM INFO
+应该收到串口数据: (CESHI)MODEM
+实际接收到的数据:  (CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,00;COPS:255|255,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID:214416149;BID:0;LOCALIP:10.21.79.56;BOARD:Ready,Tim1;PPP:Ready,Con2,ITIM27;MAINLNK0:Tcp,UseMajor,Error,Try4,OTIM1;MAINLNK1:Tcp,UseMajor,Error,Try3,OTIM1;MAINLNK2:None,UseMajor,Error,Try0,OTIM1;TCPFST:Close;UDPFST:Close;RFTEST:0;CONFAIL:0;EDISCNT:2;ANT0:2|1785|0;ANT1:2|1788|1;QX:1,Try0;</msg>
+<msg timestamp="20190523 11:12:34.053" level="INFO">${a} = (CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,00;COPS:255|255,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID...</msg>
+<status status="PASS" starttime="20190523 11:12:33.751" endtime="20190523 11:12:34.053"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>IMEI</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${IMEI}</var>
+</assign>
+<msg timestamp="20190523 11:12:34.056" level="INFO">['(CESHI)MODEM', '0', '0', '33', 'EC20F_CEFAGR06A01M4G_HL_BETA0404', 'DRV', 'V0.2', '2018-2-8', 'Gprs', 'USIM', 'Ready', '00', 'COPS', '255|255', 'CHN-UNICOM', 'ICCID', '89860918710006540682', 'IMSI', '460099501781395', 'IMEI', '861529043679022', 'LAC_SID', '22291', 'CID_NID', '214416149', 'BID', '0', 'LOCALIP', '10.21.79.56', 'BOARD', 'Ready', 'Tim1', 'PPP', 'Ready', 'Con2', 'ITIM27', 'MAINLNK0', 'Tcp', 'UseMajor', 'Error', 'Try4', 'OTIM1', 'MAINLNK1', 'Tcp', 'UseMajor', 'Error', 'Try3', 'OTIM1', 'MAINLNK2', 'None', 'UseMajor', 'Error', 'Try0', 'OTIM1', 'TCPFST', 'Close', 'UDPFST', 'Close', 'RFTEST', '0', 'CONFAIL', '0', 'EDISCNT', '2', 'ANT0', '2|1785|0', 'ANT1', '2|1788|1', 'QX', '1', 'Try0', '']</msg>
+<msg timestamp="20190523 11:12:34.057" level="INFO">${IMEI} = 861529043679022</msg>
+<status status="PASS" starttime="20190523 11:12:34.054" endtime="20190523 11:12:34.057"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>ICCID</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:12:34.060" level="INFO">['(CESHI)MODEM', '0', '0', '33', 'EC20F_CEFAGR06A01M4G_HL_BETA0404', 'DRV', 'V0.2', '2018-2-8', 'Gprs', 'USIM', 'Ready', '00', 'COPS', '255|255', 'CHN-UNICOM', 'ICCID', '89860918710006540682', 'IMSI', '460099501781395', 'IMEI', '861529043679022', 'LAC_SID', '22291', 'CID_NID', '214416149', 'BID', '0', 'LOCALIP', '10.21.79.56', 'BOARD', 'Ready', 'Tim1', 'PPP', 'Ready', 'Con2', 'ITIM27', 'MAINLNK0', 'Tcp', 'UseMajor', 'Error', 'Try4', 'OTIM1', 'MAINLNK1', 'Tcp', 'UseMajor', 'Error', 'Try3', 'OTIM1', 'MAINLNK2', 'None', 'UseMajor', 'Error', 'Try0', 'OTIM1', 'TCPFST', 'Close', 'UDPFST', 'Close', 'RFTEST', '0', 'CONFAIL', '0', 'EDISCNT', '2', 'ANT0', '2|1785|0', 'ANT1', '2|1788|1', 'QX', '1', 'Try0', '']</msg>
+<msg timestamp="20190523 11:12:34.061" level="INFO">${b} = 89860918710006540682</msg>
+<status status="PASS" starttime="20190523 11:12:34.058" endtime="20190523 11:12:34.061"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${ICCID_SIM['${b}']}</arg>
+</arguments>
+<assign>
+<var>${sim}</var>
+</assign>
+<msg timestamp="20190523 11:12:34.066" level="INFO">${sim} = 8614619911775</msg>
+<status status="PASS" starttime="20190523 11:12:34.062" endtime="20190523 11:12:34.067"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+D1150511+WA.SIM=${ICCID_SIM['${b}']}</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190523 11:12:34.354" level="INFO">发送串口数据: IOT+D1150511+WA.SIM=8614619911775
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+D1150511+WA.SIM=8614619911775;</msg>
+<msg timestamp="20190523 11:12:34.355" level="INFO">${d} = 8614619911775</msg>
+<status status="PASS" starttime="20190523 11:12:34.069" endtime="20190523 11:12:34.355"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${ICCID_SIM['${b}']}</arg>
+</arguments>
+<assign>
+<var>${sim1}</var>
+</assign>
+<msg timestamp="20190523 11:12:34.359" level="INFO">${sim1} = 8614619911775</msg>
+<status status="PASS" starttime="20190523 11:12:34.357" endtime="20190523 11:12:34.359"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${sim}'!='${d}'</arg>
+<arg>fail</arg>
+<arg>sim查询错误</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:34.360" endtime="20190523 11:12:34.362"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+D1150511+N.SN=${pid_start}</arg>
+<arg>IOT+D1150511+N.SN=${pid_start}</arg>
+</arguments>
+<msg timestamp="20190523 11:12:34.656" level="INFO">发送串口数据: IOT+D1150511+N.SN=6914404
+应该收到串口数据: IOT+D1150511+N.SN=6914404
+实际接收到的数据:  IOT+D1150511+N.SN=6914404;</msg>
+<status status="PASS" starttime="20190523 11:12:34.363" endtime="20190523 11:12:34.657"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+D1+N.SN=?</arg>
+<arg>IOT+D3+N.SN=${pid_start}</arg>
+</arguments>
+<msg timestamp="20190523 11:12:34.958" level="INFO">发送串口数据: IOT+D1+N.SN=?
+应该收到串口数据: IOT+D3+N.SN=6914404
+实际接收到的数据:  IOT+D3+N.SN=6914404;</msg>
+<status status="PASS" starttime="20190523 11:12:34.658" endtime="20190523 11:12:34.959"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+D1+N.P.D=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${date}</var>
+</assign>
+<msg timestamp="20190523 11:12:35.261" level="INFO">发送串口数据: IOT+D1+N.P.D=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+D3+N.P.D=20190523;</msg>
+<msg timestamp="20190523 11:12:35.263" level="INFO">${date} = 20190523</msg>
+<status status="PASS" starttime="20190523 11:12:34.960" endtime="20190523 11:12:35.264"></status>
+</kw>
+<kw name="Zhongji Id" library="Utils">
+<arguments>
+<arg>t</arg>
+<arg>d</arg>
+<arg>${date}</arg>
+<arg>${pid_start}</arg>
+</arguments>
+<assign>
+<var>${tdid}</var>
+</assign>
+<msg timestamp="20190523 11:12:35.269" level="INFO">69014404</msg>
+<msg timestamp="20190523 11:12:35.270" level="INFO">${tdid} = 010101190569014404</msg>
+<status status="PASS" starttime="20190523 11:12:35.266" endtime="20190523 11:12:35.271"></status>
+</kw>
+<kw name="Zhongji Id" library="Utils">
+<arguments>
+<arg>t</arg>
+<arg>c</arg>
+<arg>${date}</arg>
+<arg>${pid_start}</arg>
+</arguments>
+<assign>
+<var>${tcid}</var>
+</assign>
+<msg timestamp="20190523 11:12:35.276" level="INFO">69014404</msg>
+<msg timestamp="20190523 11:12:35.277" level="INFO">${tcid} = GID_T3_Group@@@010101190569014404</msg>
+<status status="PASS" starttime="20190523 11:12:35.273" endtime="20190523 11:12:35.278"></status>
+</kw>
+<kw name="Zhongji Id" library="Utils">
+<arguments>
+<arg>a</arg>
+<arg>d</arg>
+<arg>${date}</arg>
+<arg>${pid_start}</arg>
+</arguments>
+<assign>
+<var>${adid}</var>
+</assign>
+<msg timestamp="20190523 11:12:35.283" level="INFO">69014404</msg>
+<msg timestamp="20190523 11:12:35.285" level="INFO">${adid} = 010201190569014404</msg>
+<status status="PASS" starttime="20190523 11:12:35.280" endtime="20190523 11:12:35.286"></status>
+</kw>
+<kw name="Zhongji Id" library="Utils">
+<arguments>
+<arg>a</arg>
+<arg>c</arg>
+<arg>${date}</arg>
+<arg>${pid_start}</arg>
+</arguments>
+<assign>
+<var>${acid}</var>
+</assign>
+<msg timestamp="20190523 11:12:35.292" level="INFO">69014404</msg>
+<msg timestamp="20190523 11:12:35.293" level="INFO">${acid} = GID_T3_Group@@@010201190569014404</msg>
+<status status="PASS" starttime="20190523 11:12:35.288" endtime="20190523 11:12:35.294"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+L1+mat3.f1.dide=?</arg>
+<arg>IOT+L1+MAT3.F1.DIDE=${tdid}</arg>
+</arguments>
+<msg timestamp="20190523 11:12:35.564" level="INFO">发送串口数据: IOT+L1+mat3.f1.dide=?
+应该收到串口数据: IOT+L1+MAT3.F1.DIDE=010101190569014404
+实际接收到的数据:  IOT+L1+MAT3.F1.DIDE=010101190569014404;</msg>
+<status status="PASS" starttime="20190523 11:12:35.296" endtime="20190523 11:12:35.565"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+L1+mat3.f1.ide=?</arg>
+<arg>IOT+L1+MAT3.F1.IDE=${tcid}</arg>
+</arguments>
+<msg timestamp="20190523 11:12:35.867" level="INFO">发送串口数据: IOT+L1+mat3.f1.ide=?
+应该收到串口数据: IOT+L1+MAT3.F1.IDE=GID_T3_Group@@@010101190569014404
+实际接收到的数据:  IOT+L1+MAT3.F1.IDE=GID_T3_Group@@@010101190569014404;</msg>
+<status status="PASS" starttime="20190523 11:12:35.567" endtime="20190523 11:12:35.868"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+V1+ai.m.info.req=</arg>
+<arg>IOT+V1+AI.M.INFO.REQ=successful</arg>
+</arguments>
+<msg timestamp="20190523 11:12:36.170" level="INFO">发送串口数据: IOT+V1+ai.m.info.req=
+应该收到串口数据: IOT+V1+AI.M.INFO.REQ=successful
+实际接收到的数据:  IOT+V1+AI.M.INFO.REQ=successful;</msg>
+<status status="PASS" starttime="20190523 11:12:35.870" endtime="20190523 11:12:36.171"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+C1+ai.m.dev.id=?</arg>
+<arg>IOT+C1+AI.M.DEV.ID=${adid}</arg>
+</arguments>
+<msg timestamp="20190523 11:12:36.473" level="INFO">发送串口数据: IOT+C1+ai.m.dev.id=?
+应该收到串口数据: IOT+C1+AI.M.DEV.ID=010201190569014404
+实际接收到的数据:  IOT+C1+AI.M.DEV.ID=010201190569014404;</msg>
+<status status="PASS" starttime="20190523 11:12:36.173" endtime="20190523 11:12:36.474"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+C1+ai.m.cli.id=?</arg>
+<arg>IOT+C1+AI.M.CLI.ID=${acid}</arg>
+</arguments>
+<msg timestamp="20190523 11:12:36.776" level="INFO">发送串口数据: IOT+C1+ai.m.cli.id=?
+应该收到串口数据: IOT+C1+AI.M.CLI.ID=GID_T3_Group@@@010201190569014404
+实际接收到的数据:  IOT+C1+AI.M.CLI.ID=GID_T3_Group@@@010201190569014404;</msg>
+<status status="PASS" starttime="20190523 11:12:36.476" endtime="20190523 11:12:36.777"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+V1+ai.app.st=1</arg>
+<arg>IOT+V1+AI.APP.ST=successful</arg>
+</arguments>
+<msg timestamp="20190523 11:12:37.079" level="INFO">发送串口数据: IOT+V1+ai.app.st=1
+应该收到串口数据: IOT+V1+AI.APP.ST=successful
+实际接收到的数据:  IOT+V1+AI.APP.ST=successful;</msg>
+<status status="PASS" starttime="20190523 11:12:36.779" endtime="20190523 11:12:37.080"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+ai.m.app.ack=?</arg>
+<arg>IOT+S1+ai.m.app.ack=1</arg>
+</arguments>
+<msg timestamp="20190523 11:12:37.382" level="INFO">发送串口数据: IOT+S1+ai.m.app.ack=?
+应该收到串口数据: IOT+S1+ai.m.app.ack=1
+实际接收到的数据:  IOT+S1+AI.M.APP.ACK=1;</msg>
+<status status="PASS" starttime="20190523 11:12:37.082" endtime="20190523 11:12:37.383"></status>
+</kw>
+<kw name="Write Setid File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.385" endtime="20190523 11:12:37.388"></status>
+</kw>
+<kw name="Write Setid File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>${IMEI}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.390" endtime="20190523 11:12:37.393"></status>
+</kw>
+<kw name="Write Setid File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>${sim}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.396" endtime="20190523 11:12:37.400"></status>
+</kw>
+<kw name="Write Setid File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>${pid_start}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.402" endtime="20190523 11:12:37.406"></status>
+</kw>
+<kw name="Write Setid File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>${tdid}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.408" endtime="20190523 11:12:37.412"></status>
+</kw>
+<kw name="Write Setid File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>${adid}</arg>
+<arg>\n</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.414" endtime="20190523 11:12:37.418"></status>
+</kw>
+<kw name="Pid Set" library="Utils">
+<doc>功能:PID比较并写入配置文件</doc>
+<arguments>
+<arg>${pid_start}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.420" endtime="20190523 11:12:37.424"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>${b}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.426" endtime="20190523 11:12:37.430"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>IOT+S1+ai.m.con.st=?</arg>
+<arg>IOT+S1+AI.M.CON.ST=${k}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.432" endtime="20190523 11:12:37.436"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>IOT+D1150511+WA.SIM=${ICCID_SIM['${b}']}</arg>
+<arg>${d}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.438" endtime="20190523 11:12:37.442"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>IOT+D1150511+N.SN=${pid_start}</arg>
+<arg>IOT+D1150511+N.SN=${pid_start}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.444" endtime="20190523 11:12:37.446"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>IOT+D1+N.P.D=?</arg>
+<arg>${date}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.447" endtime="20190523 11:12:37.450"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>IOT+L1+mat3.f1.dide=?</arg>
+<arg>IOT+L1+MAT3.F1.DIDE=${tdid}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.452" endtime="20190523 11:12:37.454"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>IOT+L1+mat3.f1.ide=?</arg>
+<arg>IOT+L1+MAT3.F1.IDE=${tcid}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.455" endtime="20190523 11:12:37.457"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>IOT+V1+ai.m.info.req=</arg>
+<arg>IOT+V1+AI.M.INFO.REQ=successful</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.459" endtime="20190523 11:12:37.461"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>IOT+C1+ai.m.dev.id=?</arg>
+<arg>IOT+C1+AI.M.DEV.ID=${adid}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.462" endtime="20190523 11:12:37.465"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>IOT+C1+ai.m.cli.id=?</arg>
+<arg>IOT+C1+AI.M.CLI.ID=${acid}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.466" endtime="20190523 11:12:37.468"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>IOT+V1+ai.app.st=1</arg>
+<arg>IOT+V1+AI.APP.ST=successful</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.469" endtime="20190523 11:12:37.472"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>IOT+S1+ai.m.app.ack=?</arg>
+<arg>IOT+S1+ai.m.app.ack=1</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.473" endtime="20190523 11:12:37.475"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.477" endtime="20190523 11:12:37.478"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:11:03.352" endtime="20190523 11:12:37.479" critical="yes"></status>
+</test>
+<test id="s1-t3" name="GET_END">
+<kw name="Get Local Time" library="Utils">
+<assign>
+<var>${time2}</var>
+</assign>
+<msg timestamp="20190523 11:12:37.488" level="INFO">${time2} = 1558581157.4872591</msg>
+<status status="PASS" starttime="20190523 11:12:37.486" endtime="20190523 11:12:37.488"></status>
+</kw>
+<kw name="Round Int" library="Utils">
+<doc>功能:做差(保留2位小数，针对小数点后面数字很多的)</doc>
+<arguments>
+<arg>${time1}</arg>
+<arg>${time2}</arg>
+</arguments>
+<assign>
+<var>${time3}</var>
+</assign>
+<msg timestamp="20190523 11:12:37.491" level="INFO">${time3} = 94.15</msg>
+<status status="PASS" starttime="20190523 11:12:37.489" endtime="20190523 11:12:37.491"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(CESHI)MODEM INFO</arg>
+<arg>(CESHI)MODEM</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190523 11:12:37.699" level="INFO">发送串口数据: (CESHI)MODEM INFO
+应该收到串口数据: (CESHI)MODEM
+实际接收到的数据:  (CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,00;COPS:255|255,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID_NID:214416149;BID:0;LOCALIP:10.21.79.56;BOARD:Ready,Tim4;PPP:Ready,Con2,ITIM30;MAINLNK0:Tcp,UseMajor,Error,Try4,OTIM1;MAINLNK1:Tcp,UseMajor,Error,Try3,OTIM1;MAINLNK2:None,UseMajor,Error,Try0,OTIM1;TCPFST:Close;UDPFST:Close;RFTEST:0;CONFAIL:0;EDISCNT:3;ANT0:2|1785|0;ANT1:2|1788|1;QX:1,Try0;</msg>
+<msg timestamp="20190523 11:12:37.700" level="INFO">${a} = (CESHI)MODEM 0,0,33,EC20F_CEFAGR06A01M4G_HL_BETA0404;DRV:V0.2 2018-2-8,Gprs;USIM:Ready,00;COPS:255|255,CHN-UNICOM;ICCID:89860918710006540682;IMSI:460099501781395;IMEI:861529043679022;LAC_SID:22291;CID...</msg>
+<status status="PASS" starttime="20190523 11:12:37.493" endtime="20190523 11:12:37.700"></status>
+</kw>
+<kw name="Get Flag 1" library="Utils">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>ICCID</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190523 11:12:37.703" level="INFO">['(CESHI)MODEM', '0', '0', '33', 'EC20F_CEFAGR06A01M4G_HL_BETA0404', 'DRV', 'V0.2', '2018-2-8', 'Gprs', 'USIM', 'Ready', '00', 'COPS', '255|255', 'CHN-UNICOM', 'ICCID', '89860918710006540682', 'IMSI', '460099501781395', 'IMEI', '861529043679022', 'LAC_SID', '22291', 'CID_NID', '214416149', 'BID', '0', 'LOCALIP', '10.21.79.56', 'BOARD', 'Ready', 'Tim4', 'PPP', 'Ready', 'Con2', 'ITIM30', 'MAINLNK0', 'Tcp', 'UseMajor', 'Error', 'Try4', 'OTIM1', 'MAINLNK1', 'Tcp', 'UseMajor', 'Error', 'Try3', 'OTIM1', 'MAINLNK2', 'None', 'UseMajor', 'Error', 'Try0', 'OTIM1', 'TCPFST', 'Close', 'UDPFST', 'Close', 'RFTEST', '0', 'CONFAIL', '0', 'EDISCNT', '3', 'ANT0', '2|1785|0', 'ANT1', '2|1788|1', 'QX', '1', 'Try0', '']</msg>
+<msg timestamp="20190523 11:12:37.704" level="INFO">${b} = 89860918710006540682</msg>
+<status status="PASS" starttime="20190523 11:12:37.701" endtime="20190523 11:12:37.704"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>ICCID:${b}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.705" endtime="20190523 11:12:37.707"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>结束时间:${time2}</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.708" endtime="20190523 11:12:37.710"></status>
+</kw>
+<kw name="Write Abox File" library="Utils">
+<doc>文件写入</doc>
+<arguments>
+<arg>耗时:${time3}秒</arg>
+<arg>\n\n</arg>
+<arg>*****************************</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.711" endtime="20190523 11:12:37.714"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190523 11:12:37.716" endtime="20190523 11:12:37.717"></status>
+</kw>
+<status status="PASS" starttime="20190523 11:12:37.483" endtime="20190523 11:12:37.718" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20190523 11:11:02.870" endtime="20190523 11:12:37.722"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="0">Critical Tests</stat>
+<stat pass="3" fail="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="3" fail="0" id="s1" name="Ai Test">Ai Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
