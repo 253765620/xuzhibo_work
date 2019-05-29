@@ -14,7 +14,7 @@ GET_Ready
     Set Suite Variable    ${time1}
     write_file    开始时间:${time1}
     serial send    ${wifi_change}    (CESHI)WIFI FACTORY DONE;
-
+    serial send    (CESHI)BLE AT+BTSCACN=3    (CESHI)BLE OK
 TS01_终端自检
     Pass Execution If    ${board_TS01}==0    此项不测试
     ${a}    serial send    (CESHI)DEV    (CESHI)DEV
@@ -35,32 +35,15 @@ TS02_代码校验
 
 TS04_BLE蓝牙
     Pass Execution If    ${board_TS04}==0    此项不测试
-    serial send    (CESHI)BLE AT+BTSCACN=3    (CESHI)BLE OK
     : FOR    ${i}    INRANGE    20
     \    ${a}    serial send    (CESHI)BLE AT+BTSCACN?    (CESHI)BLE
     \    ${b}    lanya    ${a}
     \    ${c}    abs    ${b}
     \    ${d}    get_str_2    ${a}    5
-    \    Exit For Loop If    ${c}<${BLE} and ${c}!=0 and '${BLES}'=='${d}'
+    \    ${state}    ble_j    ${d}    ${BLES}    ${BLES_1}
+    \    Exit For Loop If    ${c}<${BLE} and ${c}!=0 and ${state}==0
     \    sleep    1
     Run Keyword If    ${i}==19    fail    蓝牙测试错误
-
-TS05_GPS定位
-    Pass Execution If    ${board_TS05}==0    此项不测试
-    Run Keyword If    '${GPSISMOD}'=='YES'    GPS1
-    ...    ELSE    Run Keyword    GPS2
-
-TS03_WIFI测试
-    Pass Execution If    ${board_TS03}==0    此项不测试
-    : FOR    ${i}    INRANGE    20
-    \    ${a}    serial send    (CESHI)NETCHK=WIFI    (CESHI)
-    \    ${b}    get_str_1    ${a}    6
-    \    ${c}    abs    ${b}
-    \    Exit For Loop If    ${c}<${WIFI} and ${c}!=0
-    \    sleep    1
-    serial send    (CESHI)WIFI FACTORY-W000    (CESHI)WIFI FACTORY DONE;
-    Run Keyword If    ${i}==19    fail    WIFI测试失败
-
 TS06_GPRS信号
     Pass Execution If    ${board_TS06}==0    此项不测试
     : FOR    ${i}    INRANGE    50
@@ -73,14 +56,32 @@ TS06_GPRS信号
     \    sleep    1
     Run Keyword If    ${i}==49    fail    GPRS信号检测错误
 
-TS07_等待终端上线
-    Pass Execution If    ${board_TS07}==0    此项不测试
-    : FOR    ${i}    INRANGE    80
-    \    ${a}    serial send    (CESHI)MODEM INFO    (CESHI)
-    \    ${b}    get_flag_1    ${a}    ${MAINLNK}    3
-    \    Exit For Loop If    '${b}'=='${isonline}'
+#TS05_GPS定位
+    #Pass Execution If    ${board_TS05}==0    此项不测试
+    #Run Keyword If    '${GPSISMOD}'=='YES'    GPS1
+    #...    ELSE    Run Keyword    GPS2
+
+TS03_WIFI测试
+    Pass Execution If    ${board_TS03}==0    此项不测试
+    : FOR    ${i}    INRANGE    20
+    \    ${a}    serial send    (CESHI)NETCHK=WIFI    (CESHI)
+    \    ${b}    get_str_1    ${a}    6
+    \    ${c}    abs    ${b}
+    \    Exit For Loop If    ${c}<${WIFI} and ${c}!=0
     \    sleep    1
-    Run Keyword If    ${i}==79    fail    上线超时
+    #serial send    (CESHI)WIFI FACTORY-W000    (CESHI)WIFI FACTORY DONE;
+    Run Keyword If    ${i}==19    fail    WIFI测试失败
+
+
+
+#TS07_等待终端上线
+    #Pass Execution If    ${board_TS07}==0    此项不测试
+    #: FOR    ${i}    INRANGE    80
+    #\    ${a}    serial send    (CESHI)MODEM INFO    (CESHI)
+    #\    ${b}    get_flag_1    ${a}    ${MAINLNK}    3
+    #\    Exit For Loop If    '${b}'=='${isonline}'
+    #\    sleep    1
+    #Run Keyword If    ${i}==79    fail    上线超时
 
 TS08_ECM
     Pass Execution If    ${board_TS08}==0    此项不测试
@@ -103,10 +104,6 @@ TS08_ECM
     log    ${d}
     Run Keyword If    "${d}"=="right"    log    正确
     ...    ELSE    Run Keyword And Continue On Failure    Fail    错误
-
-TS09_DFOTA升级
-    Pass Execution If    ${board_TS09}==0    此项不测试
-    log    pass
 
 TS10_以太网测试
     Pass Execution If    ${board_TS10}==0    此项不测试

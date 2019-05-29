@@ -174,10 +174,17 @@ class AsFlashloader(QThread):
             os.system('sudo pybot -P /home/pi/hlrfw/keywords /home/pi/production/volt.txt')
             self.infor.emit('开始测试质检测试')
             self.test_ctrl.set_rfcase_dir('/home/pi/production/case/quality_test.txt')
-            self.test_ctrl.start_usb_test()
+            #self.test_ctrl.start_usb_test()
             m  = self.test_ctrl.start_usb_test()
             if m ==0:
+                with open('/home/pi/production/mid.txt','r') as a1:
+                    a1_ = a1.read()
+                with open('/home/pi/production/quality.txt','a') as a2:
+                    a2.write(a1_)
+                os.system('sudo rm -rf /home/pi/production/mid.txt')
                 self.infor.emit('通过数量加1')
+            else:
+                os.system('sudo rm -rf /home/pi/production/mid.txt')
         elif test_type == '主板功能测试':
             os.system('sudo pybot -P /home/pi/hlrfw/keywords /home/pi/production/volt.txt')
             self.infor.emit('开始主板功能测试')

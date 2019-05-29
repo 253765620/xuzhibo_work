@@ -5,6 +5,7 @@ Library           SerialLibrary
 Library           Utils
 Library           Power
 Library           NetTest
+Library           Collections
 
 *** Test Cases ***
 GET_Ready
@@ -116,6 +117,7 @@ TS08_ECM
     Run Keyword If    "${a}"=="right" and "${b}"=="right" and ${c}==1 and "${d}"=="right"    write_mid_file    TS08_ECM    PASS
 
 TS10_电容测试
+    @{list1}    Create List
     ${a}    serial_send    (CESHI)DEV-1    (CESHI)DEV-1
     ${d}    get_flag    ${a}    GPI    13
     Run Keyword If    '${d}'!='1'    FAIL
@@ -125,6 +127,7 @@ TS10_电容测试
     : FOR    ${i}    INRANGE    30
     \    ${c}    serial_send    (CESHI)DEV-1    (CESHI)DEV-1
     \    ${d}    get_flag    ${c}    GPI    13
+    \    Append To List    ${list1}    ${c}
     \    Exit For Loop If    '${d}'=='0'
     \    sleep    1
     ${time2}    test_time
@@ -132,7 +135,9 @@ TS10_电容测试
     ${timestr}    bestr    ${time}
     open_kl15
     open_kl30
-    Run Keyword If    ${time}>${dianrong_time} and ${time}<30    write_mid_file    电容测试    PASS    (CESHI)DEV-1    ${c}
+    Run Keyword If    ${time}>${dianrong_time} and ${time}<30    write_mid_file    电容测试    PASS    (CESHI)DEV-1    ${list1[-2]}
+    ...    ${timestr}
+    Run Keyword If    ${time}>${dianrong_time} and ${time}<30    write_mid_file    电容测试    PASS    (CESHI)DEV-1    ${list1[-1]}
     ...    ${timestr}
     Run Keyword If    ${time}<${dianrong_time} or ${time}>30    Fail
 GET_END
