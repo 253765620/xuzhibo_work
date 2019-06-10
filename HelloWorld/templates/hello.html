@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>hello</title>
 </head>
 <body>
-<h1>{{hello}}</h1>
+{% extends 'base.html' %}
+{% block mainbody %}
+<p>继承了base.html 文件</p>
+{% endblock %}
+<h1>{{hello|upper}}</h1>
 </body>
 </html>
