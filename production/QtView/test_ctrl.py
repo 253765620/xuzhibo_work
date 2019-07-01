@@ -12,7 +12,8 @@ if '/home/pi' not in sys.path:
 from time import sleep
 from hlrfw.keywords.NetTest.__init__ import NetTest
 from hlrfw.keywords.SerialLibrary.__init__ import SerialLibrary
-from hlrfw.keywords.Utils.__init__ import Utils
+#from hlrfw.keywords.Utils.__init__ import Utils
+from hlrfw.keywords.EXP.__init__ import EXP
 
 
 # global param
@@ -25,7 +26,8 @@ class CombinationReport(object):
         self.report_dir = REPORT_PATH
         self.report_list = []
         self.xml_file_list = []
-        self.Utils = Utils
+        #self.Utils = Utils
+        self.EXP = EXP
     def start_combination(self, infor):
         self.infor = infor
         if not os.path.exists(self.report_dir):
@@ -93,7 +95,8 @@ class TestControl(object):
         self.project_path = '/home/pi/production/'
         self.nettest = NetTest()
         self.serial = SerialLibrary()
-        self.utils = Utils()
+        #self.Utils = Utils()
+        self.EXP = EXP()
 
     def set_rfcase_dir(self, rfcase_dir):
         self.rfcase_dir = rfcase_dir
@@ -101,79 +104,217 @@ class TestControl(object):
     def start_usb_test(self):
         self.get_curr_time()
         self.build_report_log()
-        self.get_dev_id()
-        if self.dev_id == 'no dev id' or self.dev_id == -1:
-            return 1
+        #self.get_dev_id()
+        #if self.dev_id == 'no dev id' or self.dev_id == -1:
+            #return 1
         self.build_report_path()
         self.build_report_dir()
         self.build_pybot_cmd()
 
         return self.exec_pybot()
-
-    def get_key_status(self, key_num):
-        for i in range(50):
-            serial_res = self.serial.serial_send('(CESHI)DEV-1', '(CESHI)DEV-1')
-            location = serial_res.find('GPI')
-            key_status_act = serial_res[location+8:location+12]
-            if key_status_act[4-key_num] == '1':
+    def restart(self):
+        self.serial.serial_send('(bsp)pwr-crt','(bsp)',baudrate=460800)
+        self.serial.serial_send('(bsp)pwr-ctl-arg3','t',baudrate=460800)
+    def get_key_status(self, key_num,B):
+        chn = str(key_num+25)
+        self.serial.serial_send('(bsp)gpi-crt-chn'+chn+'-tick1000-wakv1', '(bsp)gpi',baudrate=B)
+        self.serial.serial_send('(bsp)gpi-opn-chn'+chn, '(bsp)gpi',baudrate=B)
+        for i in range(20):
+            s_res = self.serial.serial_send('FF', '*btn'+str(key_num),baudrate=B)
+            value = self.EXP.exp_flag_more_query(s_res,'value',1)
+            if value == '01':
                 return 1
-            sleep(0.1)
+            sleep(0.2)
         return 0
-
+    def sleep_05(self):
+        sleep(0.5)
     def start_led_test(self):
+        self.infor.emit('LED开始测试')
         self.get_curr_time()
-        self.get_dev_id()
-        if self.dev_id == 'no dev id' or self.dev_id == -1:
-            return 1
-        TestControl.led_test_flag = False
+        B = 460800
         try:
-            self.serial.serial_send('(CESHI)OLED 1-99','(CESHI)OLED DONE')
-            self.serial.serial_send('(CESHI)OLED 2-99','(CESHI)OLED DONE')
-            self.serial.serial_send('(CESHI)OLED 3-99','(CESHI)OLED DONE')
-            self.serial.serial_send('(CESHI)OLED 4-99','(CESHI)OLED DONE')
+            self.serial.serial_send('(bsp)gpo-crt-chn5','(bsp)gpo',baudrate=B)
+            self.serial.serial_send('(bsp)gpo-ctl-chn5-mod1-argl0','(bsp)gpo',baudrate=B)
+            self.serial.serial_send('(bsp)gpo-crt-chn6','(bsp)gpo',baudrate=B)
+            self.serial.serial_send('(bsp)gpo-ctl-chn6-mod1-argl0','(bsp)gpo',baudrate=B)
+            sleep(1)
+            self.led_which_bright(1,460800,1)
+            self.sleep_05()
+            self.led_which_bright(2,460800,1)
+            self.sleep_05()
+            self.led_which_bright(3,460800,1)
+            self.sleep_05()
+            self.led_which_bright(4,460800,1)
+            sleep(2)
+            self.led_which_drak(1,460800)
+            self.sleep_05()
+            self.led_which_drak(2,460800)
+            self.sleep_05()
+            self.led_which_drak(3,460800)
+            self.sleep_05()
+            self.led_which_drak(4,460800)
+            sleep(2)
+            self.led_which_bright(1,460800,50)
+            self.sleep_05()
+            self.led_which_bright(2,460800,50)
+            self.sleep_05()
+            self.led_which_bright(3,460800,50)
+            self.sleep_05()
+            self.led_which_bright(4,460800,50)
+            sleep(2)
+            self.led_which_drak(1,460800)
+            self.sleep_05()
+            self.led_which_drak(2,460800)
+            self.sleep_05()
+            self.led_which_drak(3,460800)
+            self.sleep_05()
+            self.led_which_drak(4,460800)
+            sleep(2)
+            self.led_which_bright(1,460800,100)
+            self.sleep_05()
+            self.led_which_bright(2,460800,100)
+            self.sleep_05()
+            self.led_which_bright(3,460800,100)
+            self.sleep_05()
+            self.led_which_bright(4,460800,100)
         except Exception as e:
             self.infor.emit(str(e)+':串口异常')
+            self.infor.emit('LED测试失败')
+            return 1
+        TestControl.led_test_flag = False
+        
         for i in range(40):
             sleep(0.3)
             if TestControl.led_test_flag:
                 try:
-                    self.serial.serial_send('(CESHI)OLED 1-0','(CESHI)OLED DONE')
-                    self.serial.serial_send('(CESHI)OLED 2-0','(CESHI)OLED DONE')
-                    self.serial.serial_send('(CESHI)OLED 3-0','(CESHI)OLED DONE')
-                    self.serial.serial_send('(CESHI)OLED 4-0','(CESHI)OLED DONE')
+                    self.led_which_drak(1,460800)
+                    sleep(0.5)
+                    self.led_which_drak(2,460800)
+                    self.led_which_drak(3,460800)
+                    self.led_which_drak(4,460800)                    
                 except Exception as e:
                     self.infor.emit(str(e)+':串口异常')
                 self.infor.emit('LED测试通过')
-                self.add_test_record(0,'LED测试')
+                #self.add_test_record(0,'LED测试')
                 return 0
         if not TestControl.led_test_flag:
-            self.serial.serial_send('(CESHI)OLED 1-0','(CESHI)OLED DONE')
-            self.serial.serial_send('(CESHI)OLED 2-0','(CESHI)OLED DONE')
-            self.serial.serial_send('(CESHI)OLED 3-0','(CESHI)OLED DONE')
-            self.serial.serial_send('(CESHI)OLED 4-0','(CESHI)OLED DONE')
+            self.led_which_drak(1,460800)
+            self.led_which_drak(2,460800)
+            self.led_which_drak(3,460800)
+            self.led_which_drak(4,460800)
             self.infor.emit('LED测试失败')
-            self.add_test_record(1,'LED测试')
+            #self.add_test_record(1,'LED测试')
             return 1
 
+    def start_relay_test(self):
+        self.infor.emit('继电器开始测试')
+        B = 460800
+        self.serial.serial_send('(bsp)gpo-crt-chn7','(bsp)gpo',baudrate=B)
+        TestControl.led_test_flag = False
+        
+        for i in range(10):
+            if TestControl.led_test_flag:
+                self.infor.emit('继电器测试通过')
+                return 0
+            self.serial.serial_send('(bsp)gpo-ctl-chn7-mod1-argl0','(bsp)gpo',baudrate=B)
+            sleep(1)
+            self.serial.serial_send('(bsp)gpo-ctl-chn7-mod1-argl1','(bsp)gpo',baudrate=B)
+        
+        if not TestControl.led_test_flag:
+            self.serial.serial_send('(bsp)gpo-ctl-chn7-mod1-argl1','(bsp)gpo',baudrate=B)
+            self.infor.emit('继电器测试失败')
+            return 1
+        
+    def led_which_bright(self,num,B,brg):
+        chn = str(num + 8)
+        brg = str(brg)
+        self.serial.serial_send('(bsp)led-crt-chn'+chn,'(bsp)led',baudrate=B)
+        self.serial.serial_send('(bsp)led-ctl-chn'+chn+'-typ1-opn1-brg'+brg,'(bsp)led',baudrate=B)
+        
+    def led_which_drak(self,num,B):
+        chn = str(num + 8)
+        self.serial.serial_send('(bsp)led-crt-chn'+chn,'(bsp)led',baudrate=B)
+        self.serial.serial_send('(bsp)led-ctl-chn'+chn+'-typ1-opn0-brg0','(bsp)led',baudrate=B)
+    
+    def acce_test(self):
+        #try:
+            #TestControl.led_test_flag = False
+            self.infor.emit('ACCE开始夹具测试')
+            B = 460800
+            self.serial.serial_send('(bsp)pwr-crt','(bsp)pwr',baudrate=B)
+            self.serial.serial_send('(bsp)pwr-ctl-arg3','trace_initial done',baudrate=B)
+            sleep(2)
+            a = self.serial.serial_send('(bsp)msens-crt-rate100','devid',baudrate=B)
+            self.serial.serial_send('(bsp)msens-opn','(bsp)msens',baudrate=B)
+            #b = self.EXP.exp_flag_more_query(a,'devid',1)
+            #if b != acce_device:
+                #self.infor.emit('ACCE测试失败')
+            #else:
+            for i in range(20):
+                if i == 19:
+                    self.infor.emit('ACCE测试失败')
+                    self.serial.serial_send('(bsp)msens-cls','(bsp)m',baudrate=460800)
+                    return -1
+                c = self.serial.serial_send('FF','(bsp)',baudrate=B)
+                m1 = self.EXP.exp_serial_str_spilt(c,6)
+                m2 = self.EXP.exp_serial_str_spilt(c,7)
+                m3 = self.EXP.exp_serial_str_spilt(c,8)
+                #if m1 > 0 and m1 < 1 and m2 > 0 and m1 < 2 and m3 > 0 and m3 < 1:
+                if 1 > 0:
+                    print('22222222')
+                    self.infor.emit('ACCE开始方向测试')
+                    for j in range(20):
+                        print(j)
+                        if j == 19:
+                            self.infor.emit('ACCE测试失败')
+                            self.serial.serial_send('(bsp)msens-cls','(bsp)',baudrate=460800)
+                            return -1
+                        c1 = self.serial.serial_send('FF','(bsp)',baudrate=B)
+                        c2 = self.serial.serial_send('FF','(bsp)',baudrate=B)
+                        #self.serial.serial_send('(bsp)msens-cls','(bsp)',baudrate=460800)
+                        n1 = float(self.EXP.exp_serial_str_spilt(c1,10)[0].strip()[0:5])
+                        n2 = float(self.EXP.exp_serial_str_spilt(c1,11)[0].strip()[0:5])
+                        n3 = float(self.EXP.exp_serial_str_spilt(c1,12)[0].strip()[0:5])
+                        #n4 = float(self.EXP.exp_serial_str_spilt(c2,10))
+                        #n5 = float(self.EXP.exp_serial_str_spilt(c2,11))
+                        #n6 = float(strip(self.EXP.exp_serial_str_spilt(c2,12)))
+                        
+                        #gyro1 = n4-n1
+                        #gyro2 = n5-n2
+                        #gyro3 = n6-n3
+                        #if gyro1 > 1 and gyro2 > 1 and gyro3 > 1:
+                        if n1 > 1 and n2 > 1 and n3 > 1:
+                            if n1 < 0 or n2 < 0 or n3 < 0:
+                                self.infor.emit('ACCE测试通过')
+                                self.serial.serial_send('(bsp)msens-cls','(bsp)',baudrate=460800)
+                                return 0
+                        sleep(1)
+                    #break
+                sleep(1)
+        #except:
+            #self.serial.serial_send('(bsp)msens-cls','(bsp)',baudrate=460800)
+            #self.infor.emit('ACCE测试失败')
     def start_key_test(self):
-        self.get_curr_time()
-        self.get_dev_id()
-        if self.dev_id == 'no dev id' or self.dev_id == -1:
-            return 1
-
+        B = 460800
+        self.serial.serial_send('(bsp)gpo-crt-chn5','(bsp)gpo',baudrate=B)
+        self.serial.serial_send('(bsp)gpo-ctl-chn5-mod1-argl0','(bsp)gpo',baudrate=B)
+        self.serial.serial_send('(bsp)gpo-crt-chn6','(bsp)gpo',baudrate=B)
+        self.serial.serial_send('(bsp)gpo-ctl-chn6-mod1-argl0','(bsp)gpo',baudrate=B)
+        #self.get_curr_time()
+        
         #按下按键1，2s
         for item in [1, 2, 3, 4]:
             try:
-                key_status = self.get_key_status(item)
+                key_status = self.get_key_status(item,B)
             except Exception as e:
                 key_status = 0
                 self.infor.emit(str(e))
             if key_status:
                 self.infor.emit('按键{}测试通过'.format(item))
-                self.add_test_record(0, '按键{}'.format(item))
+                #self.add_test_record(0, '按键{}'.format(item))
             else:
                 self.infor.emit('按键{}测试失败'.format(item))
-                self.add_test_record(1, '按键{}'.format(item))
+                #self.add_test_record(1, '按键{}'.format(item))
                 return 1
         return 0
         
@@ -498,7 +639,3 @@ class TestControl(object):
             pid_2 = '0'+pid_2
         pid = pid_1+pid_2
         return str(pid)
-       
-
-
-

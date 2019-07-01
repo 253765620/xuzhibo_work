@@ -38,19 +38,28 @@ key_status_dict = {
             '测试失败': [True, False, True, '主板功能测试Fail', 'background-color: rgb(255, 0, 0)', '空闲', None, None],},
     '按键': {'开始测试': [False, True, False, '按下按钮1', 'background-color: rgb(255, 255, 0)', '查看信息提示结果', 'background-color: rgb(255, 255, 0)', None],
             '按键1测试通过': [False, True, True, '按键1PASS', 'background-color: rgb(0, 255, 0)', '请按下按键2', None, None],
-            '按键1测试失败': [True, True, True, '按键1Fail', 'background-color: rgb(255, 0, 0)', '请按下按键2', None, None],
+            '按键1测试失败': [True, True, True, '按键1Fail', 'background-color: rgb(255, 0, 0)', '按键测试失败', None, None],
             '按键2测试通过': [False, True, True, '按键2PASS', 'background-color: rgb(0, 255, 0)', '请按下按键3', None, None],
-            '按键2测试失败': [True, True, True, '按键2Fail', 'background-color: rgb(255, 0, 0)', '请按下按键3', None, None],
+            '按键2测试失败': [True, True, True, '按键2Fail', 'background-color: rgb(255, 0, 0)', '按键测试失败', None, None],
             '按键3测试通过': [False, True, True, '按键3PASS', 'background-color: rgb(0, 255, 0)', '请按下按键4', None, None],
-            '按键3测试失败': [True, True, True, '按键3Fail', 'background-color: rgb(255, 0, 0)', '请按下按键4', None, None],
+            '按键3测试失败': [True, True, True, '按键3Fail', 'background-color: rgb(255, 0, 0)', '按键测试失败', None, None],
             '按键4测试通过': [True, False, True, 'PASS', 'background-color: rgb(0, 255, 0)', '测试结束', None, None],
-            '按键4测试失败': [True, False, True, 'Fail', 'background-color: rgb(255, 0, 0)', '测试结束', None, None],
+            '按键4测试失败': [True, False, True, 'Fail', 'background-color: rgb(255, 0, 0)', '按键测试失败', None, None],
             '按键测试失败': [True, False, True, '按键测试Fail', 'background-color: rgb(255, 0, 0)', '按键测试结束', None, None],
             '按键测试通过': [True, False, True, '按键测试PASS', 'background-color: rgb(0, 255, 0)', '按键测试结束', None, None],
             },
+    '继电器':{ '开始测试': [False, True, False, '开始测试继电器', 'background-color: rgb(255, 255, 0)', '查看信息提示结果', 'background-color: rgb(255, 255, 0)', None],
+              '测试通过': [True, False, True, '继电器测试PASS', 'background-color: rgb(0, 255, 0)', '继电器测试结束', None, None],
+              '测试失败': [True, False, True, '继电器测试Fail', 'background-color: rgb(255, 0, 0)', '继电器测试结束', None, None],
+            },
     'LED': {'开始测试': [False, True, False, '开始测试LED', 'background-color: rgb(255, 255, 0)', '查看信息提示结果', 'background-color: rgb(255, 255, 0)', None],
-            '测试通过': [True, False, True, 'LED测试PASS', 'background-color: rgb(0, 255, 0)', '按键测试结束', None, None],
-            '测试失败': [True, False, True, 'LED测试Fail', 'background-color: rgb(255, 0, 0)', '按键测试结束', None, None],
+            '测试通过': [True, False, True, 'LED测试PASS', 'background-color: rgb(0, 255, 0)', 'LED测试结束', None, None],
+            '测试失败': [True, False, True, 'LED测试Fail', 'background-color: rgb(255, 0, 0)', 'LED测试结束', None, None],
+            },
+    'ACCE': {'开始夹具测试': [False, True, False, '开始测试ACCE', 'background-color: rgb(255, 255, 0)', '请放上夹具', 'background-color: rgb(255, 255, 0)', None],
+            '开始方向测试': [False, True, False, '开始测试ACCE', 'background-color: rgb(255, 255, 0)', '摇晃终端', 'background-color: rgb(255, 255, 0)', None],
+            '测试通过': [True, False, True, 'ACCE测试PASS', 'background-color: rgb(0, 255, 0)', 'LED测试结束', None, None],
+            '测试失败': [True, False, True, 'ACCE测试Fail', 'background-color: rgb(255, 0, 0)', 'LED测试结束', None, None],
             },
     '质检测试': {'开始测试': [False, False, False, '等待结果', 'background-color: rgb(255, 255, 0)', '繁忙', None, None],
             '测试通过': [True, False, True, '质检测试PASS', 'background-color: rgb(0, 255, 0)', '空闲', None, None],
@@ -174,17 +183,34 @@ class AsFlashloader(QThread):
             os.system('sudo pybot -P /home/pi/hlrfw/keywords /home/pi/production/volt.txt')
             self.infor.emit('开始测试质检测试')
             self.test_ctrl.set_rfcase_dir('/home/pi/production/case/quality_test.txt')
-            self.test_ctrl.start_usb_test()
+            #self.test_ctrl.start_usb_test()
             m  = self.test_ctrl.start_usb_test()
             if m ==0:
+                with open('/home/pi/production/mid.txt','r') as a1:
+                    a1_ = a1.read()
+                with open('/home/pi/production/quality.txt','a') as a2:
+                    a2.write(a1_)
+                os.system('sudo rm -rf /home/pi/production/mid.txt')
                 self.infor.emit('通过数量加1')
+            else:
+                os.system('sudo rm -rf /home/pi/production/mid.txt')
         elif test_type == '主板功能测试':
-            os.system('sudo pybot -P /home/pi/hlrfw/keywords /home/pi/production/volt.txt')
-            self.infor.emit('开始主板功能测试')
-            self.test_ctrl.set_rfcase_dir('/home/pi/production/case/board_case.txt')
-            m  = self.test_ctrl.start_usb_test()
-            if m ==0:
-                self.infor.emit('通过数量加1')
+            #os.system('sudo pybot -P /home/pi/hlrfw/keywords /home/pi/production/volt.txt')
+            #led_t = self.test_ctrl.start_led_test()
+            #if led_t==0:
+                #relay = self.test_ctrl.start_relay_test()
+                #if relay == 0:
+                #self.infor.emit('开始测试按键')
+                #btn_res = self.test_ctrl.start_key_test()
+                #self.test_ctrl.restart()
+                #if btn_res==0:
+            n = self.test_ctrl.acce_test()
+            if n == 0:
+                self.infor.emit('开始主板功能测试')
+                self.test_ctrl.set_rfcase_dir('/home/pi/production/case/board_case.txt')
+                m  = self.test_ctrl.start_usb_test()
+                if m ==0:
+                    self.infor.emit('通过数量加1')
         elif test_type == 'AI-box自检测试-序列号设置':
             os.system('sudo pybot -P /home/pi/hlrfw/keywords /home/pi/production/volt.txt')
             iccid_forai = self.test_ctrl.get_dev_id()
@@ -352,7 +378,7 @@ class UIFlashloader(QWidget):
         #self.testType.addItems(['主板：ECM&以太网&按键&LED', '整机：ECM&AI-box自检测试&按键&LED', '按键检测&LED', '主板功能', '以太网检测', 'AI-box自检测试','整机功能'])
         self.testType.addItems([ '主板功能测试','整机功能测试', 'AI-box自检测试-序列号设置','质检测试' ])
         self.btnStart1 = QPushButton('开始测试')
-        self.btnStart2 = QPushButton('LED确认')
+        self.btnStart2 = QPushButton('确认按键')
         self.btnStart2.setEnabled(True)
         self.res = QLabel('未测试')
         self.res.setFont(font)
@@ -401,8 +427,8 @@ class UIFlashloader(QWidget):
 
         self.setLayout(vbox)
         
-        os.system('sudo ip link set can0 down')
-        os.system('sudo ip link set can1 down')
+        #os.system('sudo ip link set can0 down')
+        #os.system('sudo ip link set can1 down')
         os.system('sudo sh /home/pi/hlrfw/scripts/disable_platform.sh')
         os.system('sudo python3.7 /home/pi/hlrfw/scripts/serial_handle.py &')
 
@@ -422,6 +448,15 @@ class UIFlashloader(QWidget):
                 self.auto_load_display(key_status_dict['主板功能测试']['测试通过'])
             elif test_res.find('测试失败') != -1:
                 self.auto_load_display(key_status_dict['主板功能测试']['测试失败'])
+        elif test_res.find('ACCE') != -1:
+            if test_res.find('开始夹具测试') != -1:
+                self.auto_load_display(key_status_dict['ACCE']['开始夹具测试'])
+            elif test_res.find('开始方向测试') != -1:
+                self.auto_load_display(key_status_dict['ACCE']['开始方向测试'])
+            elif test_res.find('测试通过') != -1:
+                self.auto_load_display(key_status_dict['ACCE']['测试通过'])
+            elif test_res.find('测试失败') != -1:
+                self.auto_load_display(key_status_dict['ACCE']['测试失败'])
         elif test_res.find('按键') != -1:
             if test_res.find('开始测试') != -1:
                 self.auto_load_display(key_status_dict['按键']['开始测试'])
@@ -452,6 +487,13 @@ class UIFlashloader(QWidget):
                 self.auto_load_display(key_status_dict['LED']['测试通过'])
             elif test_res.find('测试失败') != -1:
                 self.auto_load_display(key_status_dict['LED']['测试失败'])
+        elif test_res.find('继电器') != -1:
+            if test_res.find('开始测试') != -1:
+                self.auto_load_display(key_status_dict['继电器']['开始测试'])
+            elif test_res.find('测试通过') != -1:
+                self.auto_load_display(key_status_dict['继电器']['测试通过'])
+            elif test_res.find('测试失败') != -1:
+                self.auto_load_display(key_status_dict['继电器']['测试失败'])
         elif test_res.find('AI-box自检测试-序列号设置') != -1:
             if test_res.find('开始AI-box自检测试-序列号设置测试') != -1:
                 self.auto_load_display(key_status_dict['AI-box自检测试-序列号设置']['开始测试'])
