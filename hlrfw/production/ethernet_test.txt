@@ -1,0 +1,17 @@
+*** Settings ***
+Test Setup        testzb
+Library           NetTest
+
+*** Test Cases ***
+以太网测试
+    ${e}    ethernet_test
+    log    ${e}
+    Run Keyword If    ${e}==1    log    正确
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    以太网测试失败
+
+*** Keywords ***
+testzb
+    ${a}    get_net_state    usb0
+    Run Keyword If    ${a}==1    log    正确
+    ...    ELSE IF    ${a}==0    sleep    5
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    错误

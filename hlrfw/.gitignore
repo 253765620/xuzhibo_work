@@ -1,0 +1,7 @@
+##ignore this file##
+
+*.pyc
+*.out
+*.pye
+excel_report/
+report/

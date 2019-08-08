@@ -1,0 +1,6 @@
+*** Settings ***
+Library           NetTest
+
+*** Test Cases ***
+AIbox自检
+    ai_test

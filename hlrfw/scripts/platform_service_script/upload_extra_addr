@@ -1,0 +1,29 @@
+#!/bin/bash
+# /etc/init.d/upload_extra_addr
+
+### BEGIN INIT INFO
+# Provides: thingsboard
+# Required-Start: $remote_fs $syslog
+# Required-Stop: $remote_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: thingsboard initscript
+# Description: This service is used to manage a led
+### END INIT INFO
+
+case "$1" in
+  start)
+        echo 'Starting upload extra addr'
+        sh /home/pi/hlrfw/scripts/upload_extra_addr_to_thingsboard.sh &
+  ;;
+  stop)
+        echo 'Stop upload extra addr'
+        sudo kill $(ps aux | grep -m 1 'sh /home/pi/hlrfw/scripts/upload_extra_addr_to_thingsboard.sh' | awk '{ print $2 }')
+  ;;
+  *)
+        echo "Usage: /etc/init.d/upload_extra_addr {start|stop}"
+        exit 1
+  ;;
+esac
+
+exit 0
