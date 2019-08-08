@@ -1,0 +1,139 @@
+*** Settings ***
+Test Teardown     Run Keyword If Test Failed    Fatal Error
+Suite Teardown    clear
+Library           SerialLibrary
+Library           EXP
+Library           Power
+Library           Collections
+Library           CAN
+Library	     Txtrwx
+Library           NetTest
+*** Test Cases ***
+GET_Ready
+    ${time1}    get_local_time
+    ${ICCID_}    serial_send    IOT+L1+nw.e01.r01.ic=?    IOT
+    Set Suite Variable    ${time1}
+    txtrwx_mid_file_write    开始时间:${time1}
+    txtrwx_mid_file_write    本次测试ICCID为:${ICCID_}
+    #serial_send    IOT+D1150511+RESTORE.D=DEVICE    IOT
+    #sleep   20
+    serial_send    IOT-S1+AI.M.TB.ST.SW=0    IOT
+
+IOT_版本校对
+    ${a}    serial_send    IOT+S1+NATIVE=?    IOT
+    ${b}    exp_belong    ${a}    ${branch}
+    #Run Keyword If    ${b}!=1    txtrwx_mid_file_write    IOT_版本校对    PASS    IOT+S1+NATIVE=?    ${a}
+    #Run Keyword If    ${b}!=1    Fail      版本校对失败
+     
+IOT_型号日期设置
+    serial_send    IOT+D1150511+N.MD=${Equipment_type}    IOT+D1150511+N.MD
+    ${a}    serial_send    IOT+D1+N.MD=?    IOT
+    Run Keyword If    '${a}'!='${Equipment_type}'   Fail      型号设置失败
+    serial_send    IOT+D1150511+N.P.D=${date}    IOT+D1150511+N.P.D
+    ${b}    serial_send    IOT+D1+N.P.D=?   IOT
+    Run Keyword If    '${b}'!='${date}'   Fail      日期设置失败
+    Run Keyword If    '${a}'!='${Equipment_type}'    txtrwx_mid_file_write    IOT_型号日期设置    PASS    IOT+D1+N.MD=?    ${a}
+    Run Keyword If    '${b}'!='${date}'    txtrwx_mid_file_write    IOT_型号日期设置    PASS    IOT+D1150511+N.P.D=${date}    ${b}
+    
+
+IOT_通讯
+    ${a}    serial_send    IOT+D1+nw.e01.inf=?    IOT
+    ${b}    exp_serial_str_spilt    ${a}   1
+    ${c}    exp_serial_str_spilt    ${a}   2
+    ${d}    exp_serial_str_spilt    ${a}   3
+    log    ${d[0][0:23]}
+    #Run Keyword If    '${b[0]}'!= '${communication_IMEI}'    Fail    IMEI error
+    Run Keyword If    '${c[0]}'!= '${communication_name}'    Fail    name error
+    Run Keyword If    '${d[0][0:23]}'!= '${communication_version}'    Fail     version error
+    :FOR    ${I}    INRANGE    10
+    \    ${e}    serial_send    IOT+S1+nw.e01.stu=?    IOT
+    \    ${f}    exp_serial_str_spilt    ${e}    2
+    \    ${g}    exp_serial_str_spilt    ${e}    4
+    \    ${m}    exp_serial_str_spilt    ${e}    5
+    \    ${h}    exp_serial_str_spilt    ${e}    7
+    \    ${h}    return_int    ${h[0]}
+    \    Exit For Loop If    '${f[0]}'=='2' and '${g[0]}'=='2' and ${h}>${signal_value} and '${m[0]}'=='1'
+    \    sleep    1
+    Run Keyword If    ${I}!=9    txtrwx_mid_file_write    IOT_通讯    PASS    IOT+D1+nw.e01.inf=?    ${a}
+    Run Keyword If    ${I}!=9    txtrwx_mid_file_write    IOT_通讯    PASS    IOT+S1+nw.e01.stu=?    ${e}
+    Run Keyword If    ${I}==9    Fail    error
+
+IOT_定位
+    #serial_send    IOT+V1+QX.AK=${AK_value}    IOT
+    #serial_send    IOT+V1+QX.AK=?    IOT+V1+QX.AK=${AK_value}
+    #serial_send    IOT+V1+QX.AS=${AS_value}    IOT
+    #serial_send    IOT+V1+QX.AS=?    IOT+V1+QX.AS=${AS_value}
+    :FOR    ${I}    INRANGE    120
+    \    ${a}    serial_send    IOT+S1+GNSS=?    IOT
+    \    ${k}    exp_serial_str_spilt     ${a}    2
+    \    ${b}    exp_serial_str_spilt     ${a}    3
+    \    ${c}    exp_serial_str_spilt     ${a}    4
+    \    ${d}    exp_serial_str_spilt     ${a}    6
+    \    ${d}    return_int    ${d[0]}
+    \    Exit For Loop If    '${k[0]}'=='${GPS_model}' and '${b[0]}'== '${GPS_version}' and '${c[0]}'=='${GPS_state}' and ${d}>${GPS_number}
+    \    sleep    1
+    Run Keyword If    ${I}==119    Fail    error
+    #txtrwx_mid_file_write    IOT_定位    PASS    IOT+V1+QX.AK=?    IOT+V1+QX.AK=${AK_value}
+    #txtrwx_mid_file_write    IOT_定位    PASS    IOT+V1+QX.AS=?    IOT+V1+QX.AS=${AS_value}
+    txtrwx_mid_file_write    IOT_定位    PASS    IOT+S1+GNSS=?     ${a}
+    ${e}    serial_send    IOT+S1+QXWZ=?    IOT
+
+IOT_PID设置
+    ${is_have_pid}    serial send    IOT+D1+N.SN=?    IOT+D3    #PID查询
+    ${lenpid}    exp_length    ${is_have_pid}
+    #Run Keyword If    ${lenpid}>1    Fail    PID不为空    #PID查询结果是否为空
+    ai_test
+    :FOR    ${i}    INRANGE    3
+    \    serial_send    IOT-V1+AI.FOM.NT=01    IOT-V1+AI.FOM.NT=successful
+    \    sleep    5
+    \    ${a}    serial_send    IOT-S1+AI.M.AI.FOM.ACK=?    IOT
+    \    Exit For Loop If    '${a}'=='2'
+    Run Keyword If    ${i}==4    Fail    error
+    sleep    2
+    ${IMEI_}    serial_send    IOT+D1+nw.e01.inf=?    IOT
+    ${IMEI}    exp_serial_str_spilt    ${IMEI_}   1
+    ${IMEI}    evaluate    '${IMEI[0]}'
+    ${ICCID_}    serial_send    IOT+L1+nw.e01.r01.ic=?    IOT
+    ${sim}    Set Variable    ${ICCID_SIM['${ICCID_}']}
+    ${d}    serial send    IOT+D1150511+nw.e01.r01.sim=${sim}    IOT
+    Run Keyword If    '${sim}'!='${d}'    fail    sim查询错误
+    serial send    IOT+D1150511+N.SN=${pid_start}    IOT+D1150511+N.SN=${pid_start}
+    serial send    IOT+D1+N.SN=?    IOT+D3+N.SN=${pid_start}    #PID查询
+    ${date_}    serial_send    IOT+D1+N.P.D=?    IOT 	
+    ${tdid}    exp_generate_id    t    d    ${date}    ${pid_start}
+    ${tcid}    exp_generate_id    t    c    ${date}    ${pid_start}
+    ${adid}    exp_generate_id    a    d    ${date}    ${pid_start}
+    ${acid}    exp_generate_id    a    c    ${date}    ${pid_start}
+    serial_send    IOT+D1+T3.F1.DIDE=?    IOT+D1+T3.F1.DIDE=${tdid}
+    serial_send    IOT+D1+T3.F1.ID=?    IOT+D1+T3.F1.ID=${tcid}
+    serial_send    IOT-V1+ai.m.info.req=    IOT-V1+AI.M.INFO.REQ=successful
+    sleep    2
+    serial_send    IOT-D1+ai.m.dev.id=?    IOT-D1+AI.M.DEV.ID=${adid}
+    serial_send    IOT-D1+ai.m.cli.id=?    IOT-D1+AI.M.CLI.ID=${acid} 
+    :FOR    ${i}    INRANGE    5
+    \    serial_send    IOT-V1+ai.app.st=1    IOT-V1+AI.APP.ST=successful
+    \    sleep    2
+    \    ${a}    serial_send    IOT-S1+ai.m.app.ack=?    IOT
+    \    Exit For Loop If    '${a}'=='1'
+    Run Keyword If    ${i}==4    Fail    error
+    txtrwx_pid_set    ${pid_start}
+    txtrwx_setid_file_write    ${ICCID_}
+    txtrwx_setid_file_write    ${IMEI}
+    txtrwx_setid_file_write    ${sim}
+    txtrwx_setid_file_write    ${pid_start}
+    txtrwx_setid_file_write    ${tdid}
+    txtrwx_setid_file_write    ${adid}    \n
+    txtrwx_mid_file_write    IOT_PID设置    PASS    IOT+D1+nw.e01.inf=?    ${IMEI_}    IOT+L1+nw.e01.r01.ic=?    ${ICCID_}    IOT+D1150511+nw.e01.r01.sim=${sim}    ${sim}    IOT+D1150511+N.SN=?    ${pid_start}
+ 
+GET_END
+    ${time2}    get_local_time
+    #${time3}    round_int    ${time1}    ${time2}
+    txtrwx_mid_file_write    结束时间:${time2}
+    txtrwx_mid_file_write    *****************************
+    txtrwx_transfer    /home/pi/production/mid.txt    /home/pi/production/abox_log.txt
+    txtrwx_delet    /home/pi/production/mid.txt
+
+*** Keywords ***
+clear
+    txtrwx_delet    /home/pi/production/mid.txt
+    serial_send    IOT-S1+AI.M.TB.ST.SW=1    IOT

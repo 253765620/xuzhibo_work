@@ -1,0 +1,143 @@
+*** Settings ***
+Test Teardown     Run Keyword If Test Failed    Fatal Error
+Library           SerialLibrary
+Library           Utils
+Library           Power
+Library           NetTest
+
+*** Test Cases ***
+GET_Ready
+    adjust_volt    12
+    open_kl15
+    open_kl30
+    ${time1}    get_local_time
+    Set Suite Variable    ${time1}
+    write_file    开始时间:${time1}
+    serial send    ${wifi_change}    (CESHI)WIFI FACTORY DONE;
+    serial send    (CESHI)BLE AT+BTSCACN=3    (CESHI)BLE OK
+TS01_终端自检
+    Pass Execution If    ${board_TS01}==0    此项不测试
+    ${a}    serial send    (CESHI)DEV    (CESHI)DEV
+    Run Keyword If    '${a}'!='${zijian}'    fail    自检错误
+
+TS02_代码校验
+    Pass Execution If    ${board_TS02}==0    此项不测试
+    serial send    (CESHI)MODEM COM=1;CHKSIZE=${chksize}    (CESHI)MODEM CHKSIZE DONE.
+    : FOR    ${i}    INRANGE    30
+    \    ${a}    serial send    (CESHI)MODEM COM=1;SYSINFO=1;    (CESHI)
+    \    ${b}    get_flag_1    ${a}    CHKSUM    1
+    \    Exit For Loop If    '${chksum}'=='${b}'
+    \    sleep    1
+    Run Keyword If    ${i}==29    fail    代码校验失败
+    ${c}    serial send    IOT+S1+NATIVE=?;    IOT
+    ${d}    belong    ${c}    ${branch}
+    Run Keyword If    ${d}!=1    fail    版本校对错误
+
+TS04_BLE蓝牙
+    Pass Execution If    ${board_TS04}==0    此项不测试
+    : FOR    ${i}    INRANGE    20
+    \    ${a}    serial send    (CESHI)BLE AT+BTSCACN?    (CESHI)BLE
+    \    ${b}    lanya    ${a}
+    \    ${c}    abs    ${b}
+    \    ${d}    get_str_2    ${a}    5
+    \    ${state}    ble_j    ${d}    ${BLES}    ${BLES_1}
+    \    Exit For Loop If    ${c}<${BLE} and ${c}!=0 and ${state}==0
+    \    sleep    1
+    Run Keyword If    ${i}==19    fail    蓝牙测试错误
+TS06_GPRS信号
+    Pass Execution If    ${board_TS06}==0    此项不测试
+    : FOR    ${i}    INRANGE    50
+    \    ${a}    serial send    (CESHI)MODEM INFO    (CESHI)MODEM
+    \    ${b}    get_str_1    ${a}    5
+    \    ${c}    get_flag_1    ${a}    USIM    1
+    \    ${d}    get_flag_1    ${a}    USIM    2
+    \    ${e}    get_flag_1    ${a}    PPP    1
+    \    Exit For Loop If    '${b}'=='${GPRS1}' and '${c}'=='Ready' and ${d}>${GPRS2} and '${e}'=='Ready'
+    \    sleep    1
+    Run Keyword If    ${i}==49    fail    GPRS信号检测错误
+
+#TS05_GPS定位
+    #Pass Execution If    ${board_TS05}==0    此项不测试
+    #Run Keyword If    '${GPSISMOD}'=='YES'    GPS1
+    #...    ELSE    Run Keyword    GPS2
+
+TS03_WIFI测试
+    Pass Execution If    ${board_TS03}==0    此项不测试
+    : FOR    ${i}    INRANGE    20
+    \    ${a}    serial send    (CESHI)NETCHK=WIFI    (CESHI)
+    \    ${b}    get_str_1    ${a}    6
+    \    ${c}    abs    ${b}
+    \    Exit For Loop If    ${c}<${WIFI} and ${c}!=0
+    \    sleep    1
+    #serial send    (CESHI)WIFI FACTORY-W000    (CESHI)WIFI FACTORY DONE;
+    Run Keyword If    ${i}==19    fail    WIFI测试失败
+
+
+
+#TS07_等待终端上线
+    #Pass Execution If    ${board_TS07}==0    此项不测试
+    #: FOR    ${i}    INRANGE    80
+    #\    ${a}    serial send    (CESHI)MODEM INFO    (CESHI)
+    #\    ${b}    get_flag_1    ${a}    ${MAINLNK}    3
+    #\    Exit For Loop If    '${b}'=='${isonline}'
+    #\    sleep    1
+    #Run Keyword If    ${i}==79    fail    上线超时
+
+TS08_ECM
+    Pass Execution If    ${board_TS08}==0    此项不测试
+    #TCP测试
+    ${a}    tcp_test    (CESHI)DEV    ${Equipment_type}    ${ip}    ${port}
+    Run Keyword If    "${a}"=="right"    log    正确
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    接收数据错误
+    ${b}    tcp_test    (CESHI)MODEM INFO    ICCID    ${ip}    ${port}
+    Run Keyword If    "${b}"=="right"    log    正确
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    接收数据错误
+    sleep    1
+    #PING测试
+    ${c}    ping_test
+    log    ${c}
+    Run Keyword If    ${c}==1    log    正确
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ping失败
+    sleep    1
+    #FTP下载测试
+    ${d}    ftp_test
+    log    ${d}
+    Run Keyword If    "${d}"=="right"    log    正确
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    错误
+
+TS10_以太网测试
+    Pass Execution If    ${board_TS10}==0    此项不测试
+    ${e}    ethernet_test
+    log    ${e}
+    Run Keyword If    ${e}==1    log    正确
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    以太网测试失败
+
+GET_END
+    ${time2}    get_local_time
+    ${time3}    round_int    ${time1}    ${time2}
+    ${a}    serial send    (CESHI)MODEM INFO    (CESHI)MODEM
+    ${b}    get_flag_1    ${a}    ICCID    1
+    write_file    结束时间:${time2}
+    write_file    耗时:${time3}秒    \n\n    *****************************
+
+*** Keywords ***
+GPS1
+    : FOR    ${i}    INRANGE    120
+    \    ${a}    serial send    (CESHI)GPS INFO    (CESHI)GPS
+    \    ${b}    get_str_1    ${a}    2
+    \    ${c}    get_str_1    ${a}    3
+    \    ${d}    get_str_1    ${a}    4
+    \    ${e}    get_str_1    ${a}    7
+    \    Exit For Loop If    '${b}'=='${GPS01}' and '${c}'=='${GPS02}' and '${d}'=='${GPS03}' and ${e}>${GPS04}
+    \    sleep    1
+    Run Keyword If    ${i}==119    fail    定位超时
+
+GPS2
+    : FOR    ${i}    INRANGE    120
+    \    ${a}    serial send    (CESHI)GPS INFO    (CESHI)GPS
+    \    ${b}    get_str_1    ${a}    2
+    \    ${d}    get_str_1    ${a}    3
+    \    ${e}    get_str_1    ${a}    6
+    \    Exit For Loop If    '${b}'=='${GPS01}' and '${d}'=='${GPS03}' and ${e}>${GPS04}
+    \    sleep    1
+    Run Keyword If    ${i}==119    fail    定位超时

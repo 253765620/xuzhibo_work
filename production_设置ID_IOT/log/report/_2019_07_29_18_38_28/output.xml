@@ -1,0 +1,3592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.0.4 (Python 3.7.0 on linux)" generated="20190729 18:38:29.262">
+<suite id="s1" name="Ai Test" source="/home/pi/production/case/ai_test.txt">
+<test id="s1-t1" name="GET_Ready">
+<kw name="Get Local Time" library="EXP">
+<assign>
+<var>${time1}</var>
+</assign>
+<msg timestamp="20190729 18:38:30.409" level="INFO">${time1} = 2019-07-29 18:38:30</msg>
+<status status="PASS" starttime="20190729 18:38:30.406" endtime="20190729 18:38:30.409"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${time1}</arg>
+</arguments>
+<msg timestamp="20190729 18:38:30.414" level="INFO">${time1} = 2019-07-29 18:38:30</msg>
+<status status="PASS" starttime="20190729 18:38:30.411" endtime="20190729 18:38:30.415"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>25</arg>
+</arguments>
+<msg timestamp="20190729 18:38:55.418" level="INFO">Slept 25 seconds</msg>
+<status status="PASS" starttime="20190729 18:38:30.416" endtime="20190729 18:38:55.420"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${ABOX_TEST}==1</arg>
+<arg>发起自检</arg>
+</arguments>
+<kw name="发起自检">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.con.alive=5</arg>
+<arg>IOT-S1+AI.M.CON.ALIVE=5</arg>
+</arguments>
+<msg timestamp="20190729 18:38:55.637" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.con.alive=5
+应该收到串口数据: IOT-S1+AI.M.CON.ALIVE=5
+实际接收到的数据:  IOT-S1+AI.M.CON.ALIVE=5;</msg>
+<status status="PASS" starttime="20190729 18:38:55.430" endtime="20190729 18:38:55.638"></status>
+</kw>
+<kw name="${i} IN RANGE [ 80 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.con.st=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:38:55.940" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.con.st=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CON.ST=1;</msg>
+<msg timestamp="20190729 18:38:55.941" level="INFO">${a} = 1</msg>
+<status status="PASS" starttime="20190729 18:38:55.642" endtime="20190729 18:38:55.942"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${a}'=='1'</arg>
+</arguments>
+<msg timestamp="20190729 18:38:55.947" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190729 18:38:55.944" endtime="20190729 18:38:55.948"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:38:55.641" endtime="20190729 18:38:55.953"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:38:55.639" endtime="20190729 18:38:55.954"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==79</arg>
+<arg>Fail</arg>
+<arg>串口状态连接失败</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:38:55.957" endtime="20190729 18:38:55.961"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-V1+ai.lev.switch=0</arg>
+<arg>IOT-V1+AI.LEV.SWITCH=successful;</arg>
+</arguments>
+<msg timestamp="20190729 18:38:56.243" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-V1+ai.lev.switch=0
+应该收到串口数据: IOT-V1+AI.LEV.SWITCH=successful;
+实际接收到的数据:  IOT-V1+AI.LEV.SWITCH=successful;</msg>
+<status status="PASS" starttime="20190729 18:38:55.963" endtime="20190729 18:38:56.244"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5</arg>
+</arguments>
+<msg timestamp="20190729 18:39:01.250" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20190729 18:38:56.246" endtime="20190729 18:39:01.251"></status>
+</kw>
+<kw name="${i} IN RANGE [ 8 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-V1+ai.self.check=1</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:39:01.457" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-V1+ai.self.check=1
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-V1+AI.SELF.CHECK=successful;</msg>
+<msg timestamp="20190729 18:39:01.457" level="INFO">${b} = successful</msg>
+<status status="PASS" starttime="20190729 18:39:01.253" endtime="20190729 18:39:01.458"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20190729 18:39:03.460" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20190729 18:39:01.459" endtime="20190729 18:39:03.462"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.se.ch.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190729 18:39:03.670" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.se.ch.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.SE.CH.ACK=1;</msg>
+<msg timestamp="20190729 18:39:03.671" level="INFO">${c} = 1</msg>
+<status status="PASS" starttime="20190729 18:39:03.463" endtime="20190729 18:39:03.672"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${c}'=='1'</arg>
+</arguments>
+<msg timestamp="20190729 18:39:03.677" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190729 18:39:03.674" endtime="20190729 18:39:03.693"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:01.252" endtime="20190729 18:39:03.694"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:01.251" endtime="20190729 18:39:03.694"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==7</arg>
+<arg>Fail</arg>
+<arg>发起自检失败</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:03.696" endtime="20190729 18:39:03.700"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:38:55.426" endtime="20190729 18:39:03.701"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:38:55.422" endtime="20190729 18:39:03.702"></status>
+</kw>
+<kw name="Txtrwx Mid File Write" library="Txtrwx">
+<arguments>
+<arg>开始时间:${time1}</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:03.704" endtime="20190729 18:39:03.710"></status>
+</kw>
+<kw name="Get Local Time" library="EXP">
+<assign>
+<var>${time3}</var>
+</assign>
+<msg timestamp="20190729 18:39:03.716" level="INFO">${time3} = 2019-07-29 18:39:03</msg>
+<status status="PASS" starttime="20190729 18:39:03.712" endtime="20190729 18:39:03.717"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${time3}</arg>
+</arguments>
+<msg timestamp="20190729 18:39:03.724" level="INFO">${time3} = 2019-07-29 18:39:03</msg>
+<status status="PASS" starttime="20190729 18:39:03.720" endtime="20190729 18:39:03.725"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:03.729" endtime="20190729 18:39:03.732"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:38:30.383" endtime="20190729 18:39:03.734" critical="yes"></status>
+</test>
+<test id="s1-t2" name="TS01_TONGXIN">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${TONGXIN_TEST}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:03.753" endtime="20190729 18:39:03.758"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+D1+nw.e01.inf=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:39:03.973" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT+D1+nw.e01.inf=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+D3+NW.E01.INF=863412047498004,EC20CEFAG,EC20CEFAGR06A06M4G_OCPU  1  [Oct;</msg>
+<msg timestamp="20190729 18:39:03.974" level="INFO">${a} = 863412047498004,EC20CEFAG,EC20CEFAGR06A06M4G_OCPU  1  [Oct</msg>
+<status status="PASS" starttime="20190729 18:39:03.762" endtime="20190729 18:39:03.975"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>3</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:39:03.978" level="INFO">['863412047498004', 'EC20CEFAG', 'EC20CEFAGR06A06M4G_OCPU', '1', '[Oct']</msg>
+<msg timestamp="20190729 18:39:03.979" level="INFO">${b} = ['EC20CEFAGR06A06M4G_OCPU']</msg>
+<status status="PASS" starttime="20190729 18:39:03.976" endtime="20190729 18:39:03.979"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${b[0]}'!='${communication_version}'</arg>
+<arg>Fail</arg>
+<arg>error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:03.981" endtime="20190729 18:39:03.983"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+nw.e01.stu=?</arg>
+<arg>IOT</arg>
+<arg>wait_time=6</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190729 18:39:04.276" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT+S1+nw.e01.stu=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+S1+NW.E01.STU=LTE,2,LTE,2,1,197,27;</msg>
+<msg timestamp="20190729 18:39:04.277" level="INFO">${c} = LTE,2,LTE,2,1,197,27</msg>
+<status status="PASS" starttime="20190729 18:39:03.984" endtime="20190729 18:39:04.277"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:04.280" level="INFO">['LTE', '2', 'LTE', '2', '1', '197', '27']</msg>
+<msg timestamp="20190729 18:39:04.281" level="INFO">${d} = ['LTE']</msg>
+<status status="PASS" starttime="20190729 18:39:04.278" endtime="20190729 18:39:04.281"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>2</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20190729 18:39:04.284" level="INFO">['LTE', '2', 'LTE', '2', '1', '197', '27']</msg>
+<msg timestamp="20190729 18:39:04.285" level="INFO">${e} = ['2']</msg>
+<status status="PASS" starttime="20190729 18:39:04.282" endtime="20190729 18:39:04.286"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>3</arg>
+</arguments>
+<assign>
+<var>${f}</var>
+</assign>
+<msg timestamp="20190729 18:39:04.289" level="INFO">['LTE', '2', 'LTE', '2', '1', '197', '27']</msg>
+<msg timestamp="20190729 18:39:04.290" level="INFO">${f} = ['LTE']</msg>
+<status status="PASS" starttime="20190729 18:39:04.287" endtime="20190729 18:39:04.290"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>4</arg>
+</arguments>
+<assign>
+<var>${g}</var>
+</assign>
+<msg timestamp="20190729 18:39:04.293" level="INFO">['LTE', '2', 'LTE', '2', '1', '197', '27']</msg>
+<msg timestamp="20190729 18:39:04.293" level="INFO">${g} = ['2']</msg>
+<status status="PASS" starttime="20190729 18:39:04.291" endtime="20190729 18:39:04.294"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>5</arg>
+</arguments>
+<assign>
+<var>${h}</var>
+</assign>
+<msg timestamp="20190729 18:39:04.296" level="INFO">['LTE', '2', 'LTE', '2', '1', '197', '27']</msg>
+<msg timestamp="20190729 18:39:04.297" level="INFO">${h} = ['1']</msg>
+<status status="PASS" starttime="20190729 18:39:04.295" endtime="20190729 18:39:04.297"></status>
+</kw>
+<kw name="Exp Belong" library="EXP">
+<doc>功能:判断字符串1是否在字符串2里面(成功返回1否则返回0)</doc>
+<arguments>
+<arg>${communication_1}</arg>
+<arg>${d[0]}</arg>
+</arguments>
+<assign>
+<var>${one}</var>
+</assign>
+<msg timestamp="20190729 18:39:04.302" level="INFO">${one} = 1</msg>
+<status status="PASS" starttime="20190729 18:39:04.299" endtime="20190729 18:39:04.302"></status>
+</kw>
+<kw name="Exp Belong" library="EXP">
+<doc>功能:判断字符串1是否在字符串2里面(成功返回1否则返回0)</doc>
+<arguments>
+<arg>${communication_1}</arg>
+<arg>${f[0]}</arg>
+</arguments>
+<assign>
+<var>${two}</var>
+</assign>
+<msg timestamp="20190729 18:39:04.307" level="INFO">${two} = 1</msg>
+<status status="PASS" starttime="20190729 18:39:04.304" endtime="20190729 18:39:04.308"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${one}!=1 or ${two}!=1 or '${e[0]}'!='${communication_2}' or '${g[0]}'!= '${communication_2}' or '${h[0]}'!='${communication_3}'</arg>
+<arg>Fail</arg>
+<arg>error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:04.310" endtime="20190729 18:39:04.314"></status>
+</kw>
+<kw name="${I} IN RANGE [ 30 ]" type="for">
+<kw name="${I} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+nw.e01.stu=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190729 18:39:04.578" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT+S1+nw.e01.stu=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+S1+NW.E01.STU=LTE,2,LTE,2,1,197,27;</msg>
+<msg timestamp="20190729 18:39:04.580" level="INFO">${c} = LTE,2,LTE,2,1,197,27</msg>
+<status status="PASS" starttime="20190729 18:39:04.317" endtime="20190729 18:39:04.581"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>7</arg>
+</arguments>
+<assign>
+<var>${m}</var>
+</assign>
+<msg timestamp="20190729 18:39:04.587" level="INFO">['LTE', '2', 'LTE', '2', '1', '197', '27']</msg>
+<msg timestamp="20190729 18:39:04.589" level="INFO">${m} = ['27']</msg>
+<status status="PASS" starttime="20190729 18:39:04.583" endtime="20190729 18:39:04.590"></status>
+</kw>
+<kw name="Return Int" library="EXP">
+<arguments>
+<arg>${m[0]}</arg>
+</arguments>
+<assign>
+<var>${m}</var>
+</assign>
+<msg timestamp="20190729 18:39:04.599" level="INFO">${m} = 27</msg>
+<status status="PASS" starttime="20190729 18:39:04.593" endtime="20190729 18:39:04.600"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${m}&gt;${signal_value}</arg>
+</arguments>
+<msg timestamp="20190729 18:39:04.609" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190729 18:39:04.603" endtime="20190729 18:39:04.612"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:04.316" endtime="20190729 18:39:04.613"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:04.315" endtime="20190729 18:39:04.613"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${I}==29</arg>
+<arg>Fail</arg>
+<arg>error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:04.616" endtime="20190729 18:39:04.622"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:04.625" endtime="20190729 18:39:04.628"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:03.743" endtime="20190729 18:39:04.629" critical="yes"></status>
+</test>
+<test id="s1-t3" name="TS03_串口2">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${SERIAL_TEST}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:04.651" endtime="20190729 18:39:04.655"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)usart-crt-chn2-baud115200</arg>
+<arg>(bsp)usart</arg>
+</arguments>
+<msg timestamp="20190729 18:39:04.882" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)usart-crt-chn2-baud115200
+应该收到串口数据: (bsp)usart
+实际接收到的数据:  (bsp)usart callback, handle:0x1FFF49B4, sta_calb:0.</msg>
+<status status="PASS" starttime="20190729 18:39:04.656" endtime="20190729 18:39:04.883"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)usart-opn-chn2</arg>
+<arg>(bsp)usar</arg>
+</arguments>
+<msg timestamp="20190729 18:39:05.185" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)usart-opn-chn2
+应该收到串口数据: (bsp)usar
+实际接收到的数据:  (bsp)usart open, handle:0x1FFF49B4, ret:0.</msg>
+<status status="PASS" starttime="20190729 18:39:04.884" endtime="20190729 18:39:05.185"></status>
+</kw>
+<kw name="Start Ama0 Recv" library="SerialLibrary">
+<status status="PASS" starttime="20190729 18:39:05.187" endtime="20190729 18:39:05.198"></status>
+</kw>
+<kw name="${i} IN RANGE [ 5 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)usart-snd-chn2-hello</arg>
+<arg>(bsp)usart send</arg>
+</arguments>
+<msg timestamp="20190729 18:39:05.487" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)usart-snd-chn2-hello
+应该收到串口数据: (bsp)usart send
+实际接收到的数据:  (bsp)usart send, handle:0x1FFF49B4, ret:0.</msg>
+<status status="PASS" starttime="20190729 18:39:05.205" endtime="20190729 18:39:05.489"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:05.203" endtime="20190729 18:39:05.489"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)usart-snd-chn2-hello</arg>
+<arg>(bsp)usart send</arg>
+</arguments>
+<msg timestamp="20190729 18:39:05.790" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)usart-snd-chn2-hello
+应该收到串口数据: (bsp)usart send
+实际接收到的数据:  (bsp)usart send, handle:0x1FFF49B4, ret:0.</msg>
+<status status="PASS" starttime="20190729 18:39:05.492" endtime="20190729 18:39:05.792"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:05.490" endtime="20190729 18:39:05.792"></status>
+</kw>
+<kw name="${i} = 2" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)usart-snd-chn2-hello</arg>
+<arg>(bsp)usart send</arg>
+</arguments>
+<msg timestamp="20190729 18:39:06.094" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)usart-snd-chn2-hello
+应该收到串口数据: (bsp)usart send
+实际接收到的数据:  (bsp)usart send, handle:0x1FFF49B4, ret:0.</msg>
+<status status="PASS" starttime="20190729 18:39:05.795" endtime="20190729 18:39:06.095"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:05.793" endtime="20190729 18:39:06.096"></status>
+</kw>
+<kw name="${i} = 3" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)usart-snd-chn2-hello</arg>
+<arg>(bsp)usart send</arg>
+</arguments>
+<msg timestamp="20190729 18:39:06.397" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)usart-snd-chn2-hello
+应该收到串口数据: (bsp)usart send
+实际接收到的数据:  (bsp)usart send, handle:0x1FFF49B4, ret:0.</msg>
+<status status="PASS" starttime="20190729 18:39:06.099" endtime="20190729 18:39:06.399"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:06.097" endtime="20190729 18:39:06.399"></status>
+</kw>
+<kw name="${i} = 4" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)usart-snd-chn2-hello</arg>
+<arg>(bsp)usart send</arg>
+</arguments>
+<msg timestamp="20190729 18:39:06.699" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)usart-snd-chn2-hello
+应该收到串口数据: (bsp)usart send
+实际接收到的数据:  (bsp)usart send, handle:0x1FFF49B4, ret:0.</msg>
+<status status="PASS" starttime="20190729 18:39:06.403" endtime="20190729 18:39:06.700"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:06.400" endtime="20190729 18:39:06.700"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:05.201" endtime="20190729 18:39:06.700"></status>
+</kw>
+<kw name="Txtrwx Read" library="Txtrwx">
+<arguments>
+<arg>/home/pi/ser2.txt</arg>
+</arguments>
+<assign>
+<var>${r}</var>
+</assign>
+<msg timestamp="20190729 18:39:06.704" level="INFO">${r} = hello
+hello
+hello
+hello
+hello
+</msg>
+<status status="PASS" starttime="20190729 18:39:06.701" endtime="20190729 18:39:06.704"></status>
+</kw>
+<kw name="Txtrwx Delet" library="Txtrwx">
+<arguments>
+<arg>/home/pi/ser2.txt</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:06.705" endtime="20190729 18:39:06.751"></status>
+</kw>
+<kw name="Exp Belong" library="EXP">
+<doc>功能:判断字符串1是否在字符串2里面(成功返回1否则返回0)</doc>
+<arguments>
+<arg>${r}</arg>
+<arg>hello</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:39:06.756" level="INFO">${a} = 1</msg>
+<status status="PASS" starttime="20190729 18:39:06.753" endtime="20190729 18:39:06.756"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${a}==0</arg>
+<arg>Fail</arg>
+<arg>error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:06.758" endtime="20190729 18:39:06.761"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20190729 18:39:08.764" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20190729 18:39:06.762" endtime="20190729 18:39:08.766"></status>
+</kw>
+<kw name="Serial Ama0 Send" library="SerialLibrary">
+<arguments>
+<arg>goodgoodgood</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:08.768" endtime="20190729 18:39:08.774"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20190729 18:39:10.779" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20190729 18:39:08.776" endtime="20190729 18:39:10.780"></status>
+</kw>
+<kw name="Txtrwx Read" library="Txtrwx">
+<arguments>
+<arg>/home/pi/ser2_send.txt</arg>
+</arguments>
+<assign>
+<var>${r}</var>
+</assign>
+<msg timestamp="20190729 18:39:10.786" level="INFO">${r} = goodgoodgood
+</msg>
+<status status="PASS" starttime="20190729 18:39:10.783" endtime="20190729 18:39:10.787"></status>
+</kw>
+<kw name="Txtrwx Delet" library="Txtrwx">
+<arguments>
+<arg>/home/pi/ser2_send.txt</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:10.789" endtime="20190729 18:39:10.872"></status>
+</kw>
+<kw name="Exp Belong" library="EXP">
+<doc>功能:判断字符串1是否在字符串2里面(成功返回1否则返回0)</doc>
+<arguments>
+<arg>${r}</arg>
+<arg>goodgoodgood</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:39:10.879" level="INFO">${a} = 1</msg>
+<status status="PASS" starttime="20190729 18:39:10.875" endtime="20190729 18:39:10.880"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${a}==0</arg>
+<arg>Fail</arg>
+<arg>error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:10.882" endtime="20190729 18:39:10.887"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:10.891" endtime="20190729 18:39:10.894"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:04.638" endtime="20190729 18:39:10.896" critical="yes"></status>
+</test>
+<test id="s1-t4" name="TS04_定位">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${GPS_TEST}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:10.919" endtime="20190729 18:39:10.925"></status>
+</kw>
+<kw name="${I} IN RANGE [ 120 ]" type="for">
+<kw name="${I} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+GNSS=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:39:11.141" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT+S1+GNSS=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+S1+GNSS= MC120A, 1.1.1,1,1,5,1564634201,00000000;</msg>
+<msg timestamp="20190729 18:39:11.142" level="INFO">${a} =  MC120A, 1.1.1,1,1,5,1564634201,00000000</msg>
+<status status="PASS" starttime="20190729 18:39:10.932" endtime="20190729 18:39:11.142"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>2</arg>
+</arguments>
+<assign>
+<var>${k}</var>
+</assign>
+<msg timestamp="20190729 18:39:11.145" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634201', '00000000']</msg>
+<msg timestamp="20190729 18:39:11.145" level="INFO">${k} = ['MC120A']</msg>
+<status status="PASS" starttime="20190729 18:39:11.143" endtime="20190729 18:39:11.146"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>3</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:39:11.148" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634201', '00000000']</msg>
+<msg timestamp="20190729 18:39:11.149" level="INFO">${b} = ['1.1.1']</msg>
+<status status="PASS" starttime="20190729 18:39:11.146" endtime="20190729 18:39:11.149"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>4</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190729 18:39:11.152" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634201', '00000000']</msg>
+<msg timestamp="20190729 18:39:11.152" level="INFO">${c} = ['1']</msg>
+<status status="PASS" starttime="20190729 18:39:11.150" endtime="20190729 18:39:11.152"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>6</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:11.155" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634201', '00000000']</msg>
+<msg timestamp="20190729 18:39:11.155" level="INFO">${d} = ['5']</msg>
+<status status="PASS" starttime="20190729 18:39:11.153" endtime="20190729 18:39:11.156"></status>
+</kw>
+<kw name="Return Int" library="EXP">
+<arguments>
+<arg>${d[0]}</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:11.159" level="INFO">${d} = 5</msg>
+<status status="PASS" starttime="20190729 18:39:11.157" endtime="20190729 18:39:11.159"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${k[0]}'=='${GPS_model}' and '${b[0]}'== '${GPS_version}' and '${c[0]}'=='${GPS_state}' and ${d}&gt;${GPS_number}</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:11.160" endtime="20190729 18:39:11.165"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:12.167" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:11.166" endtime="20190729 18:39:12.168"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:10.930" endtime="20190729 18:39:12.168"></status>
+</kw>
+<kw name="${I} = 1" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+GNSS=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:39:12.374" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT+S1+GNSS=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+S1+GNSS= MC120A, 1.1.1,1,1,5,1564634202,00000000;</msg>
+<msg timestamp="20190729 18:39:12.375" level="INFO">${a} =  MC120A, 1.1.1,1,1,5,1564634202,00000000</msg>
+<status status="PASS" starttime="20190729 18:39:12.170" endtime="20190729 18:39:12.375"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>2</arg>
+</arguments>
+<assign>
+<var>${k}</var>
+</assign>
+<msg timestamp="20190729 18:39:12.379" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634202', '00000000']</msg>
+<msg timestamp="20190729 18:39:12.380" level="INFO">${k} = ['MC120A']</msg>
+<status status="PASS" starttime="20190729 18:39:12.376" endtime="20190729 18:39:12.380"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>3</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:39:12.382" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634202', '00000000']</msg>
+<msg timestamp="20190729 18:39:12.383" level="INFO">${b} = ['1.1.1']</msg>
+<status status="PASS" starttime="20190729 18:39:12.381" endtime="20190729 18:39:12.383"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>4</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190729 18:39:12.386" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634202', '00000000']</msg>
+<msg timestamp="20190729 18:39:12.386" level="INFO">${c} = ['1']</msg>
+<status status="PASS" starttime="20190729 18:39:12.384" endtime="20190729 18:39:12.386"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>6</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:12.389" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634202', '00000000']</msg>
+<msg timestamp="20190729 18:39:12.390" level="INFO">${d} = ['5']</msg>
+<status status="PASS" starttime="20190729 18:39:12.387" endtime="20190729 18:39:12.390"></status>
+</kw>
+<kw name="Return Int" library="EXP">
+<arguments>
+<arg>${d[0]}</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:12.393" level="INFO">${d} = 5</msg>
+<status status="PASS" starttime="20190729 18:39:12.391" endtime="20190729 18:39:12.393"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${k[0]}'=='${GPS_model}' and '${b[0]}'== '${GPS_version}' and '${c[0]}'=='${GPS_state}' and ${d}&gt;${GPS_number}</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:12.394" endtime="20190729 18:39:12.399"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:13.401" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:12.400" endtime="20190729 18:39:13.403"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:12.169" endtime="20190729 18:39:13.403"></status>
+</kw>
+<kw name="${I} = 2" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+GNSS=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:39:13.613" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT+S1+GNSS=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+S1+GNSS= MC120A, 1.1.1,1,1,5,1564634203,00000000;</msg>
+<msg timestamp="20190729 18:39:13.615" level="INFO">${a} =  MC120A, 1.1.1,1,1,5,1564634203,00000000</msg>
+<status status="PASS" starttime="20190729 18:39:13.406" endtime="20190729 18:39:13.615"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>2</arg>
+</arguments>
+<assign>
+<var>${k}</var>
+</assign>
+<msg timestamp="20190729 18:39:13.620" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634203', '00000000']</msg>
+<msg timestamp="20190729 18:39:13.621" level="INFO">${k} = ['MC120A']</msg>
+<status status="PASS" starttime="20190729 18:39:13.617" endtime="20190729 18:39:13.622"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>3</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:39:13.627" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634203', '00000000']</msg>
+<msg timestamp="20190729 18:39:13.628" level="INFO">${b} = ['1.1.1']</msg>
+<status status="PASS" starttime="20190729 18:39:13.624" endtime="20190729 18:39:13.629"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>4</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190729 18:39:13.635" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634203', '00000000']</msg>
+<msg timestamp="20190729 18:39:13.636" level="INFO">${c} = ['1']</msg>
+<status status="PASS" starttime="20190729 18:39:13.631" endtime="20190729 18:39:13.637"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>6</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:13.643" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634203', '00000000']</msg>
+<msg timestamp="20190729 18:39:13.645" level="INFO">${d} = ['5']</msg>
+<status status="PASS" starttime="20190729 18:39:13.639" endtime="20190729 18:39:13.646"></status>
+</kw>
+<kw name="Return Int" library="EXP">
+<arguments>
+<arg>${d[0]}</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:13.651" level="INFO">${d} = 5</msg>
+<status status="PASS" starttime="20190729 18:39:13.647" endtime="20190729 18:39:13.652"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${k[0]}'=='${GPS_model}' and '${b[0]}'== '${GPS_version}' and '${c[0]}'=='${GPS_state}' and ${d}&gt;${GPS_number}</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:13.654" endtime="20190729 18:39:13.662"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:14.666" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:13.664" endtime="20190729 18:39:14.668"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:13.404" endtime="20190729 18:39:14.668"></status>
+</kw>
+<kw name="${I} = 3" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+GNSS=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:39:14.878" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT+S1+GNSS=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+S1+GNSS= MC120A, 1.1.1,1,1,5,1564634204,00000000;</msg>
+<msg timestamp="20190729 18:39:14.879" level="INFO">${a} =  MC120A, 1.1.1,1,1,5,1564634204,00000000</msg>
+<status status="PASS" starttime="20190729 18:39:14.671" endtime="20190729 18:39:14.880"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>2</arg>
+</arguments>
+<assign>
+<var>${k}</var>
+</assign>
+<msg timestamp="20190729 18:39:14.885" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634204', '00000000']</msg>
+<msg timestamp="20190729 18:39:14.886" level="INFO">${k} = ['MC120A']</msg>
+<status status="PASS" starttime="20190729 18:39:14.882" endtime="20190729 18:39:14.886"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>3</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:39:14.891" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634204', '00000000']</msg>
+<msg timestamp="20190729 18:39:14.892" level="INFO">${b} = ['1.1.1']</msg>
+<status status="PASS" starttime="20190729 18:39:14.888" endtime="20190729 18:39:14.893"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>4</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190729 18:39:14.897" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634204', '00000000']</msg>
+<msg timestamp="20190729 18:39:14.899" level="INFO">${c} = ['1']</msg>
+<status status="PASS" starttime="20190729 18:39:14.894" endtime="20190729 18:39:14.899"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>6</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:14.904" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '5', '1564634204', '00000000']</msg>
+<msg timestamp="20190729 18:39:14.905" level="INFO">${d} = ['5']</msg>
+<status status="PASS" starttime="20190729 18:39:14.901" endtime="20190729 18:39:14.905"></status>
+</kw>
+<kw name="Return Int" library="EXP">
+<arguments>
+<arg>${d[0]}</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:14.911" level="INFO">${d} = 5</msg>
+<status status="PASS" starttime="20190729 18:39:14.907" endtime="20190729 18:39:14.911"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${k[0]}'=='${GPS_model}' and '${b[0]}'== '${GPS_version}' and '${c[0]}'=='${GPS_state}' and ${d}&gt;${GPS_number}</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:14.913" endtime="20190729 18:39:14.922"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:15.926" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:14.923" endtime="20190729 18:39:15.927"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:14.670" endtime="20190729 18:39:15.928"></status>
+</kw>
+<kw name="${I} = 4" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+GNSS=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:39:16.137" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT+S1+GNSS=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+S1+GNSS= MC120A, 1.1.1,1,1,7,1564634206,00000000;</msg>
+<msg timestamp="20190729 18:39:16.140" level="INFO">${a} =  MC120A, 1.1.1,1,1,7,1564634206,00000000</msg>
+<status status="PASS" starttime="20190729 18:39:15.931" endtime="20190729 18:39:16.141"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>2</arg>
+</arguments>
+<assign>
+<var>${k}</var>
+</assign>
+<msg timestamp="20190729 18:39:16.146" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '7', '1564634206', '00000000']</msg>
+<msg timestamp="20190729 18:39:16.148" level="INFO">${k} = ['MC120A']</msg>
+<status status="PASS" starttime="20190729 18:39:16.143" endtime="20190729 18:39:16.149"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>3</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:39:16.158" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '7', '1564634206', '00000000']</msg>
+<msg timestamp="20190729 18:39:16.160" level="INFO">${b} = ['1.1.1']</msg>
+<status status="PASS" starttime="20190729 18:39:16.151" endtime="20190729 18:39:16.162"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>4</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190729 18:39:16.170" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '7', '1564634206', '00000000']</msg>
+<msg timestamp="20190729 18:39:16.172" level="INFO">${c} = ['1']</msg>
+<status status="PASS" starttime="20190729 18:39:16.164" endtime="20190729 18:39:16.173"></status>
+</kw>
+<kw name="Exp Serial Str Spilt" library="EXP">
+<doc>功能：</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>6</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:16.179" level="INFO">['', 'MC120A', '1.1.1', '1', '1', '7', '1564634206', '00000000']</msg>
+<msg timestamp="20190729 18:39:16.181" level="INFO">${d} = ['7']</msg>
+<status status="PASS" starttime="20190729 18:39:16.175" endtime="20190729 18:39:16.181"></status>
+</kw>
+<kw name="Return Int" library="EXP">
+<arguments>
+<arg>${d[0]}</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:16.189" level="INFO">${d} = 7</msg>
+<status status="PASS" starttime="20190729 18:39:16.183" endtime="20190729 18:39:16.190"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${k[0]}'=='${GPS_model}' and '${b[0]}'== '${GPS_version}' and '${c[0]}'=='${GPS_state}' and ${d}&gt;${GPS_number}</arg>
+</arguments>
+<msg timestamp="20190729 18:39:16.200" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190729 18:39:16.191" endtime="20190729 18:39:16.201"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:15.929" endtime="20190729 18:39:16.201"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:10.927" endtime="20190729 18:39:16.201"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${I}==119</arg>
+<arg>Fail</arg>
+<arg>error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:16.202" endtime="20190729 18:39:16.204"></status>
+</kw>
+<kw name="Txtrwx Mid File Write" library="Txtrwx">
+<arguments>
+<arg>IOT_定位</arg>
+<arg>PASS</arg>
+<arg>IOT+S1+GNSS=?</arg>
+<arg>${a}</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:16.206" endtime="20190729 18:39:16.210"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+S1+QXWZ=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20190729 18:39:16.441" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT+S1+QXWZ=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+S1+QXWZ=1,1002,2002,3002,4011,0,0;</msg>
+<msg timestamp="20190729 18:39:16.442" level="INFO">${e} = 1,1002,2002,3002,4011,0,0</msg>
+<status status="PASS" starttime="20190729 18:39:16.211" endtime="20190729 18:39:16.442"></status>
+</kw>
+<kw name="Get Local Time" library="EXP">
+<assign>
+<var>${time4}</var>
+</assign>
+<msg timestamp="20190729 18:39:16.444" level="INFO">${time4} = 2019-07-29 18:39:16</msg>
+<status status="PASS" starttime="20190729 18:39:16.443" endtime="20190729 18:39:16.445"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${time4}</arg>
+</arguments>
+<msg timestamp="20190729 18:39:16.448" level="INFO">${time4} = 2019-07-29 18:39:16</msg>
+<status status="PASS" starttime="20190729 18:39:16.446" endtime="20190729 18:39:16.448"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:16.450" endtime="20190729 18:39:16.451"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:10.906" endtime="20190729 18:39:16.452" critical="yes"></status>
+</test>
+<test id="s1-t5" name="TS05_WIFI">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${WIFI_TEST}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<msg timestamp="20190729 18:39:16.464" level="INFO">Execution passed with message:
+此项不测试</msg>
+<status status="PASS" starttime="20190729 18:39:16.461" endtime="20190729 18:39:16.465"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:16.468" endtime="20190729 18:39:16.471"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:16.456" endtime="20190729 18:39:16.472" critical="yes">此项不测试</status>
+</test>
+<test id="s1-t6" name="ABOX_自检">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${ABOX_TEST}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:16.486" endtime="20190729 18:39:16.489"></status>
+</kw>
+<kw name="${i} IN RANGE [ 100 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:16.743" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:16.744" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:16.496" endtime="20190729 18:39:16.744"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:16.745" endtime="20190729 18:39:16.747"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:17.749" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:16.748" endtime="20190729 18:39:17.751"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:16.494" endtime="20190729 18:39:17.751"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:17.961" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:17.962" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:17.754" endtime="20190729 18:39:17.963"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:17.964" endtime="20190729 18:39:17.968"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:18.972" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:17.970" endtime="20190729 18:39:18.974"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:17.752" endtime="20190729 18:39:18.975"></status>
+</kw>
+<kw name="${i} = 2" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:19.185" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:19.186" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:18.978" endtime="20190729 18:39:19.187"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:19.189" endtime="20190729 18:39:19.192"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:20.196" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:19.194" endtime="20190729 18:39:20.197"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:18.976" endtime="20190729 18:39:20.198"></status>
+</kw>
+<kw name="${i} = 3" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:20.407" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:20.409" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:20.201" endtime="20190729 18:39:20.410"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:20.411" endtime="20190729 18:39:20.415"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:21.419" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:20.417" endtime="20190729 18:39:21.421"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:20.199" endtime="20190729 18:39:21.421"></status>
+</kw>
+<kw name="${i} = 4" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:21.630" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:21.632" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:21.424" endtime="20190729 18:39:21.632"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:21.634" endtime="20190729 18:39:21.638"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:22.642" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:21.639" endtime="20190729 18:39:22.643"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:21.422" endtime="20190729 18:39:22.644"></status>
+</kw>
+<kw name="${i} = 5" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:22.853" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:22.855" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:22.646" endtime="20190729 18:39:22.856"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:22.857" endtime="20190729 18:39:22.862"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:23.867" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:22.864" endtime="20190729 18:39:23.868"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:22.645" endtime="20190729 18:39:23.869"></status>
+</kw>
+<kw name="${i} = 6" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:24.078" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:24.080" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:23.871" endtime="20190729 18:39:24.081"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:24.082" endtime="20190729 18:39:24.086"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:25.092" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:24.088" endtime="20190729 18:39:25.094"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:23.870" endtime="20190729 18:39:25.094"></status>
+</kw>
+<kw name="${i} = 7" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:25.304" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:25.306" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:25.097" endtime="20190729 18:39:25.307"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:25.308" endtime="20190729 18:39:25.312"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:26.317" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:25.314" endtime="20190729 18:39:26.319"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:25.095" endtime="20190729 18:39:26.319"></status>
+</kw>
+<kw name="${i} = 8" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:26.529" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:26.532" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:26.322" endtime="20190729 18:39:26.533"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:26.535" endtime="20190729 18:39:26.541"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:27.545" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:26.543" endtime="20190729 18:39:27.547"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:26.320" endtime="20190729 18:39:27.547"></status>
+</kw>
+<kw name="${i} = 9" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:27.757" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:27.758" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:27.550" endtime="20190729 18:39:27.759"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:27.760" endtime="20190729 18:39:27.765"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:28.770" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:27.767" endtime="20190729 18:39:28.771"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:27.548" endtime="20190729 18:39:28.772"></status>
+</kw>
+<kw name="${i} = 10" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:28.981" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:28.982" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:28.774" endtime="20190729 18:39:28.983"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:28.985" endtime="20190729 18:39:28.989"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:29.994" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:28.991" endtime="20190729 18:39:29.995"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:28.773" endtime="20190729 18:39:29.996"></status>
+</kw>
+<kw name="${i} = 11" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:30.207" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:30.208" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:29.999" endtime="20190729 18:39:30.209"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:30.211" endtime="20190729 18:39:30.215"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:31.220" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:30.217" endtime="20190729 18:39:31.222"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:29.997" endtime="20190729 18:39:31.222"></status>
+</kw>
+<kw name="${i} = 12" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:31.433" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:31.435" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:31.225" endtime="20190729 18:39:31.435"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:31.437" endtime="20190729 18:39:31.442"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:32.446" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:31.443" endtime="20190729 18:39:32.447"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:31.223" endtime="20190729 18:39:32.448"></status>
+</kw>
+<kw name="${i} = 13" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:32.659" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:32.661" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:32.451" endtime="20190729 18:39:32.661"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:32.664" endtime="20190729 18:39:32.668"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:33.675" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:32.672" endtime="20190729 18:39:33.676"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:32.449" endtime="20190729 18:39:33.677"></status>
+</kw>
+<kw name="${i} = 14" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:33.886" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:33.887" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:33.679" endtime="20190729 18:39:33.888"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:33.890" endtime="20190729 18:39:33.893"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:34.898" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:33.895" endtime="20190729 18:39:34.900"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:33.678" endtime="20190729 18:39:34.900"></status>
+</kw>
+<kw name="${i} = 15" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:35.110" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:35.111" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:34.903" endtime="20190729 18:39:35.112"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:35.113" endtime="20190729 18:39:35.117"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:36.121" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:35.119" endtime="20190729 18:39:36.123"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:34.901" endtime="20190729 18:39:36.123"></status>
+</kw>
+<kw name="${i} = 16" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:36.333" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:36.334" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:36.126" endtime="20190729 18:39:36.335"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:36.336" endtime="20190729 18:39:36.340"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:37.344" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:36.342" endtime="20190729 18:39:37.346"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:36.124" endtime="20190729 18:39:37.346"></status>
+</kw>
+<kw name="${i} = 17" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:37.557" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:37.561" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:37.349" endtime="20190729 18:39:37.562"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:37.563" endtime="20190729 18:39:37.567"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:38.571" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:37.569" endtime="20190729 18:39:38.573"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:37.347" endtime="20190729 18:39:38.573"></status>
+</kw>
+<kw name="${i} = 18" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:38.783" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:38.786" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:38.576" endtime="20190729 18:39:38.787"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:38.789" endtime="20190729 18:39:38.795"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:39.799" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:38.797" endtime="20190729 18:39:39.801"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:38.574" endtime="20190729 18:39:39.802"></status>
+</kw>
+<kw name="${i} = 19" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:40.013" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:40.014" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:39.805" endtime="20190729 18:39:40.015"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:40.016" endtime="20190729 18:39:40.020"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:41.024" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:40.022" endtime="20190729 18:39:41.026"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:39.803" endtime="20190729 18:39:41.026"></status>
+</kw>
+<kw name="${i} = 20" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:41.236" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:41.237" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:41.029" endtime="20190729 18:39:41.238"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:41.240" endtime="20190729 18:39:41.243"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:42.248" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:41.245" endtime="20190729 18:39:42.249"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:41.027" endtime="20190729 18:39:42.250"></status>
+</kw>
+<kw name="${i} = 21" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:42.460" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:42.461" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:42.253" endtime="20190729 18:39:42.462"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:42.464" endtime="20190729 18:39:42.468"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:43.473" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:42.470" endtime="20190729 18:39:43.474"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:42.251" endtime="20190729 18:39:43.475"></status>
+</kw>
+<kw name="${i} = 22" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:43.699" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:43.701" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:43.478" endtime="20190729 18:39:43.703"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:43.705" endtime="20190729 18:39:43.709"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:44.713" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:43.711" endtime="20190729 18:39:44.714"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:43.476" endtime="20190729 18:39:44.715"></status>
+</kw>
+<kw name="${i} = 23" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:44.925" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:44.926" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:44.718" endtime="20190729 18:39:44.927"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:44.928" endtime="20190729 18:39:44.932"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:45.936" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:44.934" endtime="20190729 18:39:45.938"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:44.716" endtime="20190729 18:39:45.938"></status>
+</kw>
+<kw name="${i} = 24" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:46.148" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:46.150" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:45.941" endtime="20190729 18:39:46.150"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:46.152" endtime="20190729 18:39:46.156"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:47.160" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:46.157" endtime="20190729 18:39:47.162"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:45.939" endtime="20190729 18:39:47.162"></status>
+</kw>
+<kw name="${i} = 25" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:47.373" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:47.375" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:47.166" endtime="20190729 18:39:47.378"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:47.380" endtime="20190729 18:39:47.384"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:48.388" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:47.386" endtime="20190729 18:39:48.390"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:47.164" endtime="20190729 18:39:48.391"></status>
+</kw>
+<kw name="${i} = 26" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:48.600" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:48.602" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:48.393" endtime="20190729 18:39:48.602"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:48.604" endtime="20190729 18:39:48.609"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:49.613" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:48.611" endtime="20190729 18:39:49.615"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:48.391" endtime="20190729 18:39:49.615"></status>
+</kw>
+<kw name="${i} = 27" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:49.824" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:49.826" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:49.618" endtime="20190729 18:39:49.826"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:49.828" endtime="20190729 18:39:49.833"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:50.838" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:49.834" endtime="20190729 18:39:50.840"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:49.616" endtime="20190729 18:39:50.840"></status>
+</kw>
+<kw name="${i} = 28" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:51.050" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:51.052" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:50.843" endtime="20190729 18:39:51.052"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:51.054" endtime="20190729 18:39:51.058"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:52.062" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:51.059" endtime="20190729 18:39:52.064"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:50.841" endtime="20190729 18:39:52.065"></status>
+</kw>
+<kw name="${i} = 29" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:52.276" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:52.278" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:52.068" endtime="20190729 18:39:52.278"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:52.280" endtime="20190729 18:39:52.285"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:53.289" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:52.287" endtime="20190729 18:39:53.291"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:52.066" endtime="20190729 18:39:53.291"></status>
+</kw>
+<kw name="${i} = 30" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:53.501" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:53.503" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:53.294" endtime="20190729 18:39:53.503"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:53.506" endtime="20190729 18:39:53.511"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:54.518" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:53.513" endtime="20190729 18:39:54.519"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:53.292" endtime="20190729 18:39:54.520"></status>
+</kw>
+<kw name="${i} = 31" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:54.731" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:54.733" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:54.523" endtime="20190729 18:39:54.733"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:54.735" endtime="20190729 18:39:54.739"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:55.745" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:54.742" endtime="20190729 18:39:55.746"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:54.521" endtime="20190729 18:39:55.747"></status>
+</kw>
+<kw name="${i} = 32" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:55.958" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:55.960" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:55.750" endtime="20190729 18:39:55.960"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:55.962" endtime="20190729 18:39:55.966"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:56.970" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:55.968" endtime="20190729 18:39:56.972"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:55.748" endtime="20190729 18:39:56.973"></status>
+</kw>
+<kw name="${i} = 33" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:57.183" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:57.185" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:56.976" endtime="20190729 18:39:57.186"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:57.191" endtime="20190729 18:39:57.198"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:58.204" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:57.200" endtime="20190729 18:39:58.206"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:56.974" endtime="20190729 18:39:58.206"></status>
+</kw>
+<kw name="${i} = 34" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:58.417" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:58.419" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:58.210" endtime="20190729 18:39:58.419"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:58.421" endtime="20190729 18:39:58.425"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:39:59.430" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:58.428" endtime="20190729 18:39:59.432"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:58.208" endtime="20190729 18:39:59.432"></status>
+</kw>
+<kw name="${i} = 35" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:39:59.642" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:39:59.644" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:39:59.435" endtime="20190729 18:39:59.644"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:39:59.646" endtime="20190729 18:39:59.650"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:40:00.654" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:39:59.651" endtime="20190729 18:40:00.655"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:59.433" endtime="20190729 18:40:00.656"></status>
+</kw>
+<kw name="${i} = 36" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:40:00.865" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:40:00.866" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:40:00.659" endtime="20190729 18:40:00.867"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:00.868" endtime="20190729 18:40:00.870"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:40:01.872" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:40:00.871" endtime="20190729 18:40:01.874"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:00.657" endtime="20190729 18:40:01.874"></status>
+</kw>
+<kw name="${i} = 37" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:40:02.084" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:40:02.085" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:40:01.877" endtime="20190729 18:40:02.086"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:02.088" endtime="20190729 18:40:02.092"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:40:03.095" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:40:02.093" endtime="20190729 18:40:03.097"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:01.875" endtime="20190729 18:40:03.097"></status>
+</kw>
+<kw name="${i} = 38" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:40:03.310" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=0;</msg>
+<msg timestamp="20190729 18:40:03.313" level="INFO">${d} = 0</msg>
+<status status="PASS" starttime="20190729 18:40:03.100" endtime="20190729 18:40:03.313"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:03.320" endtime="20190729 18:40:03.327"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:40:04.331" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:40:03.329" endtime="20190729 18:40:04.333"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:03.098" endtime="20190729 18:40:04.333"></status>
+</kw>
+<kw name="${i} = 39" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ch.re.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:40:04.543" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ch.re.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.CH.RE.ACK=1;</msg>
+<msg timestamp="20190729 18:40:04.544" level="INFO">${d} = 1</msg>
+<status status="PASS" starttime="20190729 18:40:04.336" endtime="20190729 18:40:04.545"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${d}'=='1'</arg>
+</arguments>
+<msg timestamp="20190729 18:40:04.550" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190729 18:40:04.547" endtime="20190729 18:40:04.551"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:04.334" endtime="20190729 18:40:04.551"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:16.491" endtime="20190729 18:40:04.552"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==99</arg>
+<arg>Fail</arg>
+<arg>自检结果查询失败</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:04.554" endtime="20190729 18:40:04.559"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-C1+ai.sf.ck.r=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${e}</var>
+</assign>
+<msg timestamp="20190729 18:40:04.846" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-C1+ai.sf.ck.r=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-C1+AI.SF.CK.R=0,0,0,0,0,0,0,0,0,1,0,0,0;</msg>
+<msg timestamp="20190729 18:40:04.849" level="INFO">${e} = 0,0,0,0,0,0,0,0,0,1,0,0,0</msg>
+<status status="PASS" starttime="20190729 18:40:04.561" endtime="20190729 18:40:04.849"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${e}'!='0,0,0,0,0,0,0,0,0,1,0,0,0'</arg>
+<arg>Fail</arg>
+<arg>自检失败</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:04.852" endtime="20190729 18:40:04.855"></status>
+</kw>
+<kw name="Txtrwx Mid File Write" library="Txtrwx">
+<arguments>
+<arg>${e}</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:04.857" endtime="20190729 18:40:04.862"></status>
+</kw>
+<kw name="${i} IN RANGE [ 6 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-V1+ai.fom.nt=01</arg>
+<arg>IOT</arg>
+</arguments>
+<msg timestamp="20190729 18:40:05.150" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-V1+ai.fom.nt=01
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-V1+AI.FOM.NT=successful;</msg>
+<status status="PASS" starttime="20190729 18:40:04.868" endtime="20190729 18:40:05.152"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5</arg>
+</arguments>
+<msg timestamp="20190729 18:40:10.156" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20190729 18:40:05.153" endtime="20190729 18:40:10.157"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ai.fom.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${f}</var>
+</assign>
+<msg timestamp="20190729 18:40:10.366" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ai.fom.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.AI.FOM.ACK=0;</msg>
+<msg timestamp="20190729 18:40:10.367" level="INFO">${f} = 0</msg>
+<status status="PASS" starttime="20190729 18:40:10.159" endtime="20190729 18:40:10.368"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${f}'=='2'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:10.370" endtime="20190729 18:40:10.373"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:04.865" endtime="20190729 18:40:10.374"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-V1+ai.fom.nt=01</arg>
+<arg>IOT</arg>
+</arguments>
+<msg timestamp="20190729 18:40:10.669" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-V1+ai.fom.nt=01
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-V1+AI.FOM.NT=successful;</msg>
+<status status="PASS" starttime="20190729 18:40:10.376" endtime="20190729 18:40:10.670"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5</arg>
+</arguments>
+<msg timestamp="20190729 18:40:15.675" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20190729 18:40:10.672" endtime="20190729 18:40:15.677"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ai.fom.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${f}</var>
+</assign>
+<msg timestamp="20190729 18:40:15.887" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ai.fom.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.AI.FOM.ACK=0;</msg>
+<msg timestamp="20190729 18:40:15.888" level="INFO">${f} = 0</msg>
+<status status="PASS" starttime="20190729 18:40:15.679" endtime="20190729 18:40:15.889"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${f}'=='2'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:15.891" endtime="20190729 18:40:15.894"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:10.375" endtime="20190729 18:40:15.895"></status>
+</kw>
+<kw name="${i} = 2" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-V1+ai.fom.nt=01</arg>
+<arg>IOT</arg>
+</arguments>
+<msg timestamp="20190729 18:40:16.190" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-V1+ai.fom.nt=01
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-V1+AI.FOM.NT=successful;</msg>
+<status status="PASS" starttime="20190729 18:40:15.897" endtime="20190729 18:40:16.191"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5</arg>
+</arguments>
+<msg timestamp="20190729 18:40:21.196" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20190729 18:40:16.193" endtime="20190729 18:40:21.197"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ai.fom.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${f}</var>
+</assign>
+<msg timestamp="20190729 18:40:21.406" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ai.fom.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.AI.FOM.ACK=0;</msg>
+<msg timestamp="20190729 18:40:21.407" level="INFO">${f} = 0</msg>
+<status status="PASS" starttime="20190729 18:40:21.199" endtime="20190729 18:40:21.408"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${f}'=='2'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:21.410" endtime="20190729 18:40:21.413"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:15.896" endtime="20190729 18:40:21.414"></status>
+</kw>
+<kw name="${i} = 3" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-V1+ai.fom.nt=01</arg>
+<arg>IOT</arg>
+</arguments>
+<msg timestamp="20190729 18:40:21.710" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-V1+ai.fom.nt=01
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-V1+AI.FOM.NT=successful;</msg>
+<status status="PASS" starttime="20190729 18:40:21.416" endtime="20190729 18:40:21.711"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5</arg>
+</arguments>
+<msg timestamp="20190729 18:40:26.715" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20190729 18:40:21.713" endtime="20190729 18:40:26.717"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT-S1+ai.m.ai.fom.ack=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${f}</var>
+</assign>
+<msg timestamp="20190729 18:40:26.926" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT-S1+ai.m.ai.fom.ack=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT-S1+AI.M.AI.FOM.ACK=2;</msg>
+<msg timestamp="20190729 18:40:26.928" level="INFO">${f} = 2</msg>
+<status status="PASS" starttime="20190729 18:40:26.719" endtime="20190729 18:40:26.928"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${f}'=='2'</arg>
+</arguments>
+<msg timestamp="20190729 18:40:26.933" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190729 18:40:26.930" endtime="20190729 18:40:26.935"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:21.415" endtime="20190729 18:40:26.935"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:04.863" endtime="20190729 18:40:26.936"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==5</arg>
+<arg>Fail</arg>
+<arg>SD卡格式化失败</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:26.938" endtime="20190729 18:40:26.941"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:26.945" endtime="20190729 18:40:26.947"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:39:16.477" endtime="20190729 18:40:26.949" critical="yes"></status>
+</test>
+<test id="s1-t7" name="TS06_电容">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${CAP_TEST}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:26.976" endtime="20190729 18:40:26.983"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)pwr-crt</arg>
+<arg>(bsp)</arg>
+</arguments>
+<msg timestamp="20190729 18:40:27.230" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)pwr-crt
+应该收到串口数据: (bsp)
+实际接收到的数据:  (bsp)pwr err: handle is exist.</msg>
+<status status="PASS" starttime="20190729 18:40:26.986" endtime="20190729 18:40:27.231"></status>
+</kw>
+<kw name="${i} IN RANGE [ 180 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)pwr-tra-adc_drv</arg>
+<arg>adc_drv</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:40:27.534" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)pwr-tra-adc_drv
+应该收到串口数据: adc_drv
+实际接收到的数据:  adc_drv chn:9,calib:1,cnv:1357,**pwr:13660|13642,*batt:3439|3439,*bntc:1514|1514,*gnss:2817|2819,*adc1:0|0,*adc2:0|0,*sos1:4211|4214,*sos2:4219|4219,*scap:7002|7002;</msg>
+<msg timestamp="20190729 18:40:27.535" level="INFO">${a} = adc_drv chn:9,calib:1,cnv:1357,**pwr:13660|13642,*batt:3439|3439,*bntc:1514|1514,*gnss:2817|2819,*adc1:0|0,*adc2:0|0,*sos1:4211|4214,*sos2:4219|4219,*scap:7002|7002;</msg>
+<status status="PASS" starttime="20190729 18:40:27.234" endtime="20190729 18:40:27.536"></status>
+</kw>
+<kw name="Exp Flag More Query" library="EXP">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>*scap</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:40:27.539" level="INFO">['adc_drv', 'chn', '9', 'calib', '1', 'cnv', '1357', '**pwr', '13660', '13642', '*batt', '3439', '3439', '*bntc', '1514', '1514', '*gnss', '2817', '2819', '*adc1', '0', '0', '*adc2', '0', '0', '*sos1', '4211', '4214', '*sos2', '4219', '4219', '*scap', '7002', '7002', '']</msg>
+<msg timestamp="20190729 18:40:27.540" level="INFO">${b} = 7002</msg>
+<status status="PASS" starttime="20190729 18:40:27.537" endtime="20190729 18:40:27.541"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>int(${b})</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:40:27.543" level="INFO">${b} = 7002</msg>
+<status status="PASS" starttime="20190729 18:40:27.542" endtime="20190729 18:40:27.544"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${b}&gt;6500 or ${b}&lt;1000</arg>
+</arguments>
+<msg timestamp="20190729 18:40:27.546" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190729 18:40:27.545" endtime="20190729 18:40:27.547"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:27.233" endtime="20190729 18:40:27.548"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:27.232" endtime="20190729 18:40:27.548"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${i}==99 or ${b}&lt;4500</arg>
+<arg>Fail</arg>
+<arg>电容电压不足</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:27.550" endtime="20190729 18:40:27.552"></status>
+</kw>
+<kw name="Power KL30 Close" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190729 18:40:27.553" endtime="20190729 18:40:27.554"></status>
+</kw>
+<kw name="Power KL15 Close" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190729 18:40:27.556" endtime="20190729 18:40:27.557"></status>
+</kw>
+<kw name="Exp Timestamp" library="EXP">
+<assign>
+<var>${time1}</var>
+</assign>
+<msg timestamp="20190729 18:40:27.560" level="INFO">${time1} = 1564396827</msg>
+<status status="PASS" starttime="20190729 18:40:27.558" endtime="20190729 18:40:27.560"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)pwr-crt</arg>
+<arg>(bsp)</arg>
+</arguments>
+<msg timestamp="20190729 18:40:27.837" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)pwr-crt
+应该收到串口数据: (bsp)
+实际接收到的数据:  (bsp)pwr err: handle is exist.</msg>
+<status status="PASS" starttime="20190729 18:40:27.561" endtime="20190729 18:40:27.838"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)gpi-crt-chn30-tick1000-wakv1</arg>
+<arg>(bsp)</arg>
+</arguments>
+<msg timestamp="20190729 18:40:28.140" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)gpi-crt-chn30-tick1000-wakv1
+应该收到串口数据: (bsp)
+实际接收到的数据:  (bsp)gpi callback, handle:0x1FFF4A10, sta_calb:0.</msg>
+<status status="PASS" starttime="20190729 18:40:27.840" endtime="20190729 18:40:28.140"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)gpi-opn-chn30</arg>
+<arg>(bsp)</arg>
+</arguments>
+<msg timestamp="20190729 18:40:28.442" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)gpi-opn-chn30
+应该收到串口数据: (bsp)
+实际接收到的数据:  (bsp)gpi open, handle:0x1FFF4A10, ret:0.</msg>
+<status status="PASS" starttime="20190729 18:40:28.142" endtime="20190729 18:40:28.442"></status>
+</kw>
+<kw name="${i} IN RANGE [ 30 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>FF</arg>
+<arg>dsmin</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:40:29.149" level="INFO">('127.0.0.1', 2560)
+发送串口数据: FF
+应该收到串口数据: dsmin
+实际接收到的数据:  dsmin, value:02, inter_type:01, dect:00, inter_cnt:1, keep_tim:130700.</msg>
+<msg timestamp="20190729 18:40:29.152" level="INFO">${a} = dsmin, value:02, inter_type:01, dect:00, inter_cnt:1, keep_tim:130700.</msg>
+<status status="PASS" starttime="20190729 18:40:28.445" endtime="20190729 18:40:29.153"></status>
+</kw>
+<kw name="Exp Flag More Query" library="EXP">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>value</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:40:29.160" level="INFO">['dsmin', '', 'value', '02', '', 'inter_type', '01', '', 'dect', '00', '', 'inter_cnt', '1', '', 'keep_tim', '130700.']</msg>
+<msg timestamp="20190729 18:40:29.162" level="INFO">${b} = 02</msg>
+<status status="PASS" starttime="20190729 18:40:29.155" endtime="20190729 18:40:29.162"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${b}'=='01'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:29.165" endtime="20190729 18:40:29.171"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:40:30.182" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:40:29.173" endtime="20190729 18:40:30.184"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:28.444" endtime="20190729 18:40:30.184"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>FF</arg>
+<arg>dsmin</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:40:30.995" level="INFO">('127.0.0.1', 2560)
+发送串口数据: FF
+应该收到串口数据: dsmin
+实际接收到的数据:  dsmin, value:02, inter_type:01, dect:00, inter_cnt:1, keep_tim:130700.</msg>
+<msg timestamp="20190729 18:40:30.996" level="INFO">${a} = dsmin, value:02, inter_type:01, dect:00, inter_cnt:1, keep_tim:130700.</msg>
+<status status="PASS" starttime="20190729 18:40:30.187" endtime="20190729 18:40:30.997"></status>
+</kw>
+<kw name="Exp Flag More Query" library="EXP">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>value</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:40:31.009" level="INFO">['dsmin', '', 'value', '02', '', 'inter_type', '01', '', 'dect', '00', '', 'inter_cnt', '1', '', 'keep_tim', '130700.']</msg>
+<msg timestamp="20190729 18:40:31.011" level="INFO">${b} = 02</msg>
+<status status="PASS" starttime="20190729 18:40:30.999" endtime="20190729 18:40:31.012"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${b}'=='01'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:31.014" endtime="20190729 18:40:31.018"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:40:32.024" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:40:31.020" endtime="20190729 18:40:32.025"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:30.185" endtime="20190729 18:40:32.026"></status>
+</kw>
+<kw name="${i} = 2" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>FF</arg>
+<arg>dsmin</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:40:33.037" level="INFO">('127.0.0.1', 2560)
+发送串口数据: FF
+应该收到串口数据: dsmin
+实际接收到的数据:  dsmin, value:02, inter_type:01, dect:00, inter_cnt:1, keep_tim:130700.</msg>
+<msg timestamp="20190729 18:40:33.038" level="INFO">${a} = dsmin, value:02, inter_type:01, dect:00, inter_cnt:1, keep_tim:130700.</msg>
+<status status="PASS" starttime="20190729 18:40:32.029" endtime="20190729 18:40:33.039"></status>
+</kw>
+<kw name="Exp Flag More Query" library="EXP">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>value</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:40:33.044" level="INFO">['dsmin', '', 'value', '02', '', 'inter_type', '01', '', 'dect', '00', '', 'inter_cnt', '1', '', 'keep_tim', '130700.']</msg>
+<msg timestamp="20190729 18:40:33.045" level="INFO">${b} = 02</msg>
+<status status="PASS" starttime="20190729 18:40:33.041" endtime="20190729 18:40:33.046"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${b}'=='01'</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:33.047" endtime="20190729 18:40:33.052"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20190729 18:40:34.056" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20190729 18:40:33.054" endtime="20190729 18:40:34.058"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:32.027" endtime="20190729 18:40:34.059"></status>
+</kw>
+<kw name="${i} = 3" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>FF</arg>
+<arg>dsmin</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:40:34.470" level="INFO">('127.0.0.1', 2560)
+发送串口数据: FF
+应该收到串口数据: dsmin
+实际接收到的数据:  dsmin, value:01, inter_type:02, dect:00, inter_cnt:2, keep_tim:0.</msg>
+<msg timestamp="20190729 18:40:34.472" level="INFO">${a} = dsmin, value:01, inter_type:02, dect:00, inter_cnt:2, keep_tim:0.</msg>
+<status status="PASS" starttime="20190729 18:40:34.062" endtime="20190729 18:40:34.473"></status>
+</kw>
+<kw name="Exp Flag More Query" library="EXP">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>value</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:40:34.481" level="INFO">['dsmin', '', 'value', '01', '', 'inter_type', '02', '', 'dect', '00', '', 'inter_cnt', '2', '', 'keep_tim', '0.']</msg>
+<msg timestamp="20190729 18:40:34.482" level="INFO">${b} = 01</msg>
+<status status="PASS" starttime="20190729 18:40:34.476" endtime="20190729 18:40:34.483"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>'${b}'=='01'</arg>
+</arguments>
+<msg timestamp="20190729 18:40:34.487" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20190729 18:40:34.484" endtime="20190729 18:40:34.489"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:34.060" endtime="20190729 18:40:34.489"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:28.443" endtime="20190729 18:40:34.490"></status>
+</kw>
+<kw name="Power KL30 Open" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190729 18:40:34.492" endtime="20190729 18:40:34.494"></status>
+</kw>
+<kw name="Power KL30 Open" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190729 18:40:34.496" endtime="20190729 18:40:34.499"></status>
+</kw>
+<kw name="Exp Timestamp" library="EXP">
+<assign>
+<var>${time2}</var>
+</assign>
+<msg timestamp="20190729 18:40:34.504" level="INFO">${time2} = 1564396834</msg>
+<status status="PASS" starttime="20190729 18:40:34.502" endtime="20190729 18:40:34.504"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)gpi-cls-chn30</arg>
+<arg>(bsp)</arg>
+</arguments>
+<msg timestamp="20190729 18:40:34.974" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)gpi-cls-chn30
+应该收到串口数据: (bsp)
+实际接收到的数据:  (bsp)gpi inter callback, handle:0x1FFF4A10, name:dsmin, value:02, inter_type:01, dect:00, inter_cnt:3, keep_tim:0.</msg>
+<status status="PASS" starttime="20190729 18:40:34.507" endtime="20190729 18:40:34.976"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${time2}-${time1}</arg>
+</arguments>
+<assign>
+<var>${time3}</var>
+</assign>
+<msg timestamp="20190729 18:40:34.982" level="INFO">${time3} = 7</msg>
+<status status="PASS" starttime="20190729 18:40:34.978" endtime="20190729 18:40:34.982"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${time3}&lt;${dianrong}</arg>
+<arg>Fail</arg>
+<arg>error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:34.985" endtime="20190729 18:40:34.989"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)pwr-crt</arg>
+<arg>(bsp)</arg>
+</arguments>
+<msg timestamp="20190729 18:40:35.277" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)pwr-crt
+应该收到串口数据: (bsp)
+实际接收到的数据:  (bsp)pwr err: handle is exist.</msg>
+<status status="PASS" starttime="20190729 18:40:34.992" endtime="20190729 18:40:35.279"></status>
+</kw>
+<kw name="${i} IN RANGE [ 2 ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)pwr-tra-adc_drv</arg>
+<arg>adc_drv</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:40:35.584" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)pwr-tra-adc_drv
+应该收到串口数据: adc_drv
+实际接收到的数据:  adc_drv chn:9,calib:1,cnv:1439,**pwr:13739|13757,*batt:3344|3328,*bntc:1490|1490,*gnss:2818|2818,*adc1:0|0,*adc2:0|0,*sos1:4211|4213,*sos2:4219|4219,*scap:4591|4582;</msg>
+<msg timestamp="20190729 18:40:35.586" level="INFO">${a} = adc_drv chn:9,calib:1,cnv:1439,**pwr:13739|13757,*batt:3344|3328,*bntc:1490|1490,*gnss:2818|2818,*adc1:0|0,*adc2:0|0,*sos1:4211|4213,*sos2:4219|4219,*scap:4591|4582;</msg>
+<status status="PASS" starttime="20190729 18:40:35.283" endtime="20190729 18:40:35.587"></status>
+</kw>
+<kw name="Exp Flag More Query" library="EXP">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>*scap</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:40:35.592" level="INFO">['adc_drv', 'chn', '9', 'calib', '1', 'cnv', '1439', '**pwr', '13739', '13757', '*batt', '3344', '3328', '*bntc', '1490', '1490', '*gnss', '2818', '2818', '*adc1', '0', '0', '*adc2', '0', '0', '*sos1', '4211', '4213', '*sos2', '4219', '4219', '*scap', '4591', '4582', '']</msg>
+<msg timestamp="20190729 18:40:35.593" level="INFO">${b} = 4591</msg>
+<status status="PASS" starttime="20190729 18:40:35.588" endtime="20190729 18:40:35.593"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>int(${b})</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:40:35.598" level="INFO">${b} = 4591</msg>
+<status status="PASS" starttime="20190729 18:40:35.595" endtime="20190729 18:40:35.599"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${b}&gt;6900</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:35.600" endtime="20190729 18:40:35.605"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20190729 18:40:39.609" level="INFO">Slept 4 seconds</msg>
+<status status="PASS" starttime="20190729 18:40:35.607" endtime="20190729 18:40:39.611"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)pwr-tra-adc_drv</arg>
+<arg>adc_drv</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190729 18:40:39.819" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)pwr-tra-adc_drv
+应该收到串口数据: adc_drv
+实际接收到的数据:  adc_drv chn:9,calib:1,cnv:1481,**pwr:13722|13722,*batt:3386|3384,*bntc:1490|1490,*gnss:2818|2818,*adc1:0|0,*adc2:0|0,*sos1:4213|4213,*sos2:4219|4219,*scap:4733|4724;</msg>
+<msg timestamp="20190729 18:40:39.821" level="INFO">${c} = adc_drv chn:9,calib:1,cnv:1481,**pwr:13722|13722,*batt:3386|3384,*bntc:1490|1490,*gnss:2818|2818,*adc1:0|0,*adc2:0|0,*sos1:4213|4213,*sos2:4219|4219,*scap:4733|4724;</msg>
+<status status="PASS" starttime="20190729 18:40:39.613" endtime="20190729 18:40:39.821"></status>
+</kw>
+<kw name="Exp Flag More Query" library="EXP">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>*scap</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:40:39.826" level="INFO">['adc_drv', 'chn', '9', 'calib', '1', 'cnv', '1481', '**pwr', '13722', '13722', '*batt', '3386', '3384', '*bntc', '1490', '1490', '*gnss', '2818', '2818', '*adc1', '0', '0', '*adc2', '0', '0', '*sos1', '4213', '4213', '*sos2', '4219', '4219', '*scap', '4733', '4724', '']</msg>
+<msg timestamp="20190729 18:40:39.827" level="INFO">${d} = 4733</msg>
+<status status="PASS" starttime="20190729 18:40:39.823" endtime="20190729 18:40:39.828"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>int(${d})</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:40:39.833" level="INFO">${d} = 4733</msg>
+<status status="PASS" starttime="20190729 18:40:39.829" endtime="20190729 18:40:39.833"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${d}&lt;=${b}</arg>
+<arg>Fail</arg>
+<arg>电容未充电</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:39.835" endtime="20190729 18:40:39.839"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:35.281" endtime="20190729 18:40:39.839"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)pwr-tra-adc_drv</arg>
+<arg>adc_drv</arg>
+</arguments>
+<assign>
+<var>${a}</var>
+</assign>
+<msg timestamp="20190729 18:40:40.122" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)pwr-tra-adc_drv
+应该收到串口数据: adc_drv
+实际接收到的数据:  adc_drv chn:9,calib:1,cnv:1484,**pwr:13731|13722,*batt:3387|3386,*bntc:1490|1490,*gnss:2818|2817,*adc1:0|0,*adc2:0|0,*sos1:4213|4213,*sos2:4219|4219,*scap:4751|4742;</msg>
+<msg timestamp="20190729 18:40:40.124" level="INFO">${a} = adc_drv chn:9,calib:1,cnv:1484,**pwr:13731|13722,*batt:3387|3386,*bntc:1490|1490,*gnss:2818|2817,*adc1:0|0,*adc2:0|0,*sos1:4213|4213,*sos2:4219|4219,*scap:4751|4742;</msg>
+<status status="PASS" starttime="20190729 18:40:39.842" endtime="20190729 18:40:40.125"></status>
+</kw>
+<kw name="Exp Flag More Query" library="EXP">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${a}</arg>
+<arg>*scap</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:40:40.129" level="INFO">['adc_drv', 'chn', '9', 'calib', '1', 'cnv', '1484', '**pwr', '13731', '13722', '*batt', '3387', '3386', '*bntc', '1490', '1490', '*gnss', '2818', '2817', '*adc1', '0', '0', '*adc2', '0', '0', '*sos1', '4213', '4213', '*sos2', '4219', '4219', '*scap', '4751', '4742', '']</msg>
+<msg timestamp="20190729 18:40:40.131" level="INFO">${b} = 4751</msg>
+<status status="PASS" starttime="20190729 18:40:40.126" endtime="20190729 18:40:40.131"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>int(${b})</arg>
+</arguments>
+<assign>
+<var>${b}</var>
+</assign>
+<msg timestamp="20190729 18:40:40.136" level="INFO">${b} = 4751</msg>
+<status status="PASS" starttime="20190729 18:40:40.133" endtime="20190729 18:40:40.137"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${b}&gt;6900</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:40.138" endtime="20190729 18:40:40.141"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20190729 18:40:44.145" level="INFO">Slept 4 seconds</msg>
+<status status="PASS" starttime="20190729 18:40:40.143" endtime="20190729 18:40:44.147"></status>
+</kw>
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>(bsp)pwr-tra-adc_drv</arg>
+<arg>adc_drv</arg>
+</arguments>
+<assign>
+<var>${c}</var>
+</assign>
+<msg timestamp="20190729 18:40:44.357" level="INFO">('127.0.0.1', 2560)
+发送串口数据: (bsp)pwr-tra-adc_drv
+应该收到串口数据: adc_drv
+实际接收到的数据:  adc_drv chn:9,calib:1,cnv:1527,**pwr:13615|13598,*batt:3395|3395,*bntc:1493|1493,*gnss:2818|2817,*adc1:0|0,*adc2:0|0,*sos1:4213|4213,*sos2:4219|4219,*scap:4902|4893;</msg>
+<msg timestamp="20190729 18:40:44.359" level="INFO">${c} = adc_drv chn:9,calib:1,cnv:1527,**pwr:13615|13598,*batt:3395|3395,*bntc:1493|1493,*gnss:2818|2817,*adc1:0|0,*adc2:0|0,*sos1:4213|4213,*sos2:4219|4219,*scap:4902|4893;</msg>
+<status status="PASS" starttime="20190729 18:40:44.149" endtime="20190729 18:40:44.359"></status>
+</kw>
+<kw name="Exp Flag More Query" library="EXP">
+<doc>:param str1: 串口返回的内容</doc>
+<arguments>
+<arg>${c}</arg>
+<arg>*scap</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:40:44.365" level="INFO">['adc_drv', 'chn', '9', 'calib', '1', 'cnv', '1527', '**pwr', '13615', '13598', '*batt', '3395', '3395', '*bntc', '1493', '1493', '*gnss', '2818', '2817', '*adc1', '0', '0', '*adc2', '0', '0', '*sos1', '4213', '4213', '*sos2', '4219', '4219', '*scap', '4902', '4893', '']</msg>
+<msg timestamp="20190729 18:40:44.367" level="INFO">${d} = 4902</msg>
+<status status="PASS" starttime="20190729 18:40:44.361" endtime="20190729 18:40:44.367"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>int(${d})</arg>
+</arguments>
+<assign>
+<var>${d}</var>
+</assign>
+<msg timestamp="20190729 18:40:44.373" level="INFO">${d} = 4902</msg>
+<status status="PASS" starttime="20190729 18:40:44.369" endtime="20190729 18:40:44.374"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${d}&lt;=${b}</arg>
+<arg>Fail</arg>
+<arg>电容未充电</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:44.376" endtime="20190729 18:40:44.380"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:39.840" endtime="20190729 18:40:44.380"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:35.280" endtime="20190729 18:40:44.381"></status>
+</kw>
+<kw name="Txtrwx Mid File Write" library="Txtrwx">
+<arguments>
+<arg>TS10_电容</arg>
+<arg>PASS</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:44.383" endtime="20190729 18:40:44.387"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:44.391" endtime="20190729 18:40:44.397"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:26.962" endtime="20190729 18:40:44.399" critical="yes"></status>
+</test>
+<test id="s1-t8" name="IOT_型号日期设置">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${DATA_TEST}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<msg timestamp="20190729 18:40:44.431" level="INFO">Execution passed with message:
+此项不测试</msg>
+<status status="PASS" starttime="20190729 18:40:44.428" endtime="20190729 18:40:44.432"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:44.434" endtime="20190729 18:40:44.435"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:44.407" endtime="20190729 18:40:44.436" critical="yes">此项不测试</status>
+</test>
+<test id="s1-t9" name="IOT_PID设置">
+<kw name="Pass Execution If" library="BuiltIn">
+<doc>Conditionally skips rest of the current test, setup, or teardown with PASS status.</doc>
+<arguments>
+<arg>${PID_TEST}==0</arg>
+<arg>此项不测试</arg>
+</arguments>
+<msg timestamp="20190729 18:40:44.455" level="INFO">Execution passed with message:
+此项不测试</msg>
+<status status="PASS" starttime="20190729 18:40:44.452" endtime="20190729 18:40:44.457"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:44.460" endtime="20190729 18:40:44.463"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:44.442" endtime="20190729 18:40:44.464" critical="yes">此项不测试</status>
+</test>
+<test id="s1-t10" name="GET_END">
+<kw name="Serial Send" library="SerialLibrary">
+<doc>功能:</doc>
+<arguments>
+<arg>IOT+L1+nw.e01.r01.ic=?</arg>
+<arg>IOT</arg>
+</arguments>
+<assign>
+<var>${ICCID_}</var>
+</assign>
+<msg timestamp="20190729 18:40:44.685" level="INFO">('127.0.0.1', 2560)
+发送串口数据: IOT+L1+nw.e01.r01.ic=?
+应该收到串口数据: IOT
+实际接收到的数据:  IOT+L1+NW.E01.R01.IC=89860919730029419168;</msg>
+<msg timestamp="20190729 18:40:44.686" level="INFO">${ICCID_} = 89860919730029419168</msg>
+<status status="PASS" starttime="20190729 18:40:44.477" endtime="20190729 18:40:44.687"></status>
+</kw>
+<kw name="Get Local Time" library="EXP">
+<assign>
+<var>${time2}</var>
+</assign>
+<msg timestamp="20190729 18:40:44.690" level="INFO">${time2} = 2019-07-29 18:40:44</msg>
+<status status="PASS" starttime="20190729 18:40:44.688" endtime="20190729 18:40:44.691"></status>
+</kw>
+<kw name="Txtrwx Mid File Write" library="Txtrwx">
+<arguments>
+<arg>结束时间:${time2}</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:44.693" endtime="20190729 18:40:44.695"></status>
+</kw>
+<kw name="Txtrwx Mid File Write" library="Txtrwx">
+<arguments>
+<arg>${ICCID_}</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:44.697" endtime="20190729 18:40:44.700"></status>
+</kw>
+<kw name="Txtrwx Mid File Write" library="Txtrwx">
+<arguments>
+<arg>***************************************************************************************</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:44.701" endtime="20190729 18:40:44.704"></status>
+</kw>
+<kw name="Txtrwx Transfer" library="Txtrwx">
+<arguments>
+<arg>/home/pi/production/mid.txt</arg>
+<arg>/home/pi/production/log/整机测试日志.txt</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:44.705" endtime="20190729 18:40:44.708"></status>
+</kw>
+<kw name="Txtrwx Delet" library="Txtrwx">
+<arguments>
+<arg>/home/pi/production/mid.txt</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:44.710" endtime="20190729 18:40:44.780"></status>
+</kw>
+<kw name="Run Keyword If Test Failed" library="BuiltIn" type="teardown">
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<arguments>
+<arg>Fatal Error</arg>
+</arguments>
+<status status="PASS" starttime="20190729 18:40:44.784" endtime="20190729 18:40:44.788"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:44.470" endtime="20190729 18:40:44.789" critical="yes"></status>
+</test>
+<kw name="clear" type="teardown">
+<kw name="Txtrwx Delet" library="Txtrwx">
+<arguments>
+<arg>/home/pi/production/mid.txt</arg>
+</arguments>
+<msg timestamp="20190729 18:40:44.810" level="INFO">文件不存在</msg>
+<status status="PASS" starttime="20190729 18:40:44.807" endtime="20190729 18:40:44.812"></status>
+</kw>
+<kw name="Power KL30 Open" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190729 18:40:44.815" endtime="20190729 18:40:44.819"></status>
+</kw>
+<kw name="Power KL15 Open" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190729 18:40:44.821" endtime="20190729 18:40:44.825"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:40:44.802" endtime="20190729 18:40:44.826"></status>
+</kw>
+<status status="PASS" starttime="20190729 18:38:29.291" endtime="20190729 18:40:44.827"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="10" fail="0">Critical Tests</stat>
+<stat pass="10" fail="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="10" fail="0" id="s1" name="Ai Test">Ai Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

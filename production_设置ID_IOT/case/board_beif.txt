@@ -1,0 +1,211 @@
+*** Settings ***
+Suite Teardown    clear
+Test Teardown     Run Keyword If Test Failed    Fatal Error
+Library           SerialLibrary
+Library           EXP
+Library           Power
+Library           Collections
+Library           CAN
+Library	     Txtrwx
+Library	     NetTest
+*** Test Cases ***
+GET_Ready
+    ${time1}    get_local_time
+    Set Suite Variable    ${time1}
+    txtrwx_mid_file_write    开始时间:${time1}
+
+TS01_版本校对
+    serial_send    (bsp)pwr-crt    (bsp)pwr    baudrate=115200     #创建访问句柄
+    ${a}    serial_send    (bsp)pwr-info    (bsp)pwr    baudrate=115200     #查看电源信息
+    ${b}    exp_flag_more_query    ${a}    hw    1    #查看某项信息
+    ${c}    exp_flag_more_query    ${a}    sw    1    #查看某项信息     
+    Run Keyword If    '${b}'!='${hw}' or '${c}'!='${sw}'    Fail    error
+    txtrwx_mid_file_write    TS01_版本校对    PASS    (bsp)pwr-info    ${a} 
+    #${h}    exp_belong    ${g}    ${bat_type}
+    #Run Keyword If    ${h}==0    Fail    error  
+
+TS02_ACC
+    power_KL15_open    #打开ACC
+    serial_send    (bsp)pwr-crt    (bsp)pwr    baudrate=115200    #创建句柄
+    serial_send    (bsp)gpi-crt-chn1-tick1000-wakv1    (bsp)gpi    baudrate=115200    #创建acc信息查询
+    serial_send    (bsp)gpi-opn-chn1    (bsp)    baudrate=115200    
+    ${a}    serial_send    FF    **acc    baudrate=115200
+    ${acc_value_1}    exp_flag_more_query    ${a}    value    1
+    #${acc_inter_type_1}    exp_flag_more_query    ${a}    inter_type    1
+    ${acc_inter_cnt_1}    exp_flag_more_query    ${a}    inter_cnt    1
+    ${acc_inter_cnt_1}    evaluate    int(${acc_inter_cnt_1})
+    serial_send    (bsp)gpi-cls-chn1    (bsp)    baudrate=115200
+    Run Keyword If    '${acc_value_1}'!='02'    Fail    ACC状态位错误
+    ${drv_acc_11}    serial_send    (bsp)pwr-tra-gpi_drv    gpi_drv    baudrate=115200
+    ${drv_acc_21}    exp_serial_str_spilt   ${drv_acc_11}    15
+    ${drv_acc_31}    exp_serial_str_spilt   ${drv_acc_11}    16
+    ${drv_acc_41}    exp_serial_str_spilt   ${drv_acc_11}    17
+    ${drv_acc_41}    return_int    ${drv_acc_41[0]}
+    Run Keyword If    '${drv_acc_21[0]}'!='1'    Fail    ACC状态位错误
+    power_KL15_close
+    sleep    2
+    serial_send    (bsp)gpi-opn-chn1    (bsp)    baudrate=115200
+    ${b}    serial_send    FF    **acc    baudrate=115200
+    ${acc_value_2}    exp_flag_more_query    ${b}    value    1
+    ${acc_inter_type_2}    exp_flag_more_query    ${b}    inter_type    1
+    ${acc_inter_cnt_2}    exp_flag_more_query    ${b}    inter_cnt    1
+    ${acc_inter_cnt_2}    evaluate    int(${acc_inter_cnt_2})
+    ${res_cnt}    evaluate    ${acc_inter_cnt_2}-${acc_inter_cnt_1}
+    serial_send    (bsp)gpi-cls-chn1    (bsp)    baudrate=115200
+    Run Keyword If    '${acc_value_2}'!='01' or '${acc_inter_type_2}'!='02' or ${res_cnt}!=1   Fail    ACC状态位错误
+    ${drv_acc_12}    serial_send    (bsp)pwr-tra-gpi_drv    gpi_drv    baudrate=115200
+    ${drv_acc_22}    exp_serial_str_spilt   ${drv_acc_12}    15
+    ${drv_acc_32}    exp_serial_str_spilt   ${drv_acc_12}    16
+    ${drv_acc_42}    exp_serial_str_spilt   ${drv_acc_12}    17
+    ${drv_acc_42}    return_int    ${drv_acc_42[0]}
+    ${res1}    evaluate    ${drv_acc_42}-${drv_acc_41}
+    power_KL15_open
+    Run Keyword If    '${drv_acc_22[0]}'!='0' or ${res1}!=1 or '${drv_acc_32[0]}'!='fall'   Fail    ACC状态位错误
+    sleep    2
+    serial_send    (bsp)gpi-opn-chn1    (bsp)    baudrate=115200
+    ${c}    serial_send    FF    **acc    baudrate=115200
+    ${acc_value_3}    exp_flag_more_query    ${c}    value    1
+    ${acc_inter_type_3}    exp_flag_more_query    ${c}    inter_type    1
+    ${acc_inter_cnt_3}    exp_flag_more_query    ${c}    inter_cnt    1
+    ${acc_inter_cnt_3}    evaluate    int(${acc_inter_cnt_3})
+    ${res_cnt1}    evaluate    ${acc_inter_cnt_3}-${acc_inter_cnt_2}
+    serial_send    (bsp)gpi-cls-chn1    (bsp)    baudrate=115200
+    Run Keyword If    '${acc_value_3}'!='02' or '${acc_inter_type_3}'!='01' or ${res_cnt1}!=1   Fail    ACC状态位错误
+    ${drv_acc_13}    serial_send    (bsp)pwr-tra-gpi_drv    gpi_drv    baudrate=115200
+    ${drv_acc_23}    exp_serial_str_spilt   ${drv_acc_13}    15
+    ${drv_acc_33}    exp_serial_str_spilt   ${drv_acc_13}    16
+    ${drv_acc_43}    exp_serial_str_spilt   ${drv_acc_13}    17
+    ${drv_acc_43}    return_int    ${drv_acc_43[0]}
+    ${res2}    evaluate    ${drv_acc_43}-${drv_acc_42}
+    Run Keyword If    '${drv_acc_23[0]}'!='1' or ${res2}!=1 or '${drv_acc_33[0]}'!='rise'    Fail    ACC状态位错误
+    Run Keyword If    '${drv_acc_23[0]}'=='1' and ${res2}==1 or '${drv_acc_33[0]}'=='rise'    txtrwx_mid_file_write    TS02_ACC    PASS    
+    
+TS04_看门狗
+    serial_send    (bsp)pwr-crt   (bsp)    baudrate=115200
+    ${a}    serial_send    (bsp)pwr-inf   (bsp)    baudrate=115200
+    ${b}    exp_flag_more_query    ${a}    wdg    1    #查看看门狗信息
+    Run Keyword If    '${b}'!='1'    Fail    看门狗状态位错误
+    Run Keyword If    '${b}'=='1'    txtrwx_mid_file_write    TS04_看门狗    PASS    (bsp)pwr-inf    ${a}       
+
+    
+TS11_SRS
+    power_srs_ctrl    open    #打开srs
+    serial_send    (bsp)pwr-crt    (bsp)pwr    baudrate=115200    #创建句柄
+    serial_send    (bsp)gpi-crt-chn3-tick1000-wakv1    (bsp)gpi    baudrate=115200    #创建srs信息查询
+    serial_send    (bsp)gpi-opn-chn3    (bsp)    baudrate=115200    
+    ${a}    serial_send    FF    **srs    baudrate=115200
+    ${srs_value_1}    exp_flag_more_query    ${a}    value    1
+    #${srs_inter_type_1}    exp_flag_more_query    ${a}    inter_type    1
+    ${srs_inter_cnt_1}    exp_flag_more_query    ${a}    inter_cnt    1
+    ${srs_inter_cnt_1}    evaluate    int(${srs_inter_cnt_1})
+    serial_send    (bsp)gpi-cls-chn3    (bsp)    baudrate=115200
+    Run Keyword If    '${srs_value_1}'!='04'    Fail    srs状态位错误
+    ${drv_srs_11}    serial_send    (bsp)pwr-tra-gpi_drv    gpi_drv    baudrate=115200
+    ${drv_srs_21}    exp_serial_str_spilt   ${drv_srs_11}    10
+    ${drv_srs_31}    exp_serial_str_spilt   ${drv_srs_11}    11
+    ${drv_srs_41}    exp_serial_str_spilt   ${drv_srs_11}    12
+    ${drv_srs_41}    return_int    ${drv_srs_41[0]}
+    Run Keyword If    '${drv_srs_21[0]}'!='f'    Fail    srs状态位错误
+    power_srs_ctrl    close
+    sleep    2
+    serial_send    (bsp)gpi-opn-chn3    (bsp)    baudrate=115200
+    ${b}    serial_send    FF    **srs    baudrate=115200
+    ${srs_value_2}    exp_flag_more_query    ${b}    value    1
+    ${srs_inter_type_2}    exp_flag_more_query    ${b}    inter_type    1
+    ${srs_inter_cnt_2}    exp_flag_more_query    ${b}    inter_cnt    1
+    ${srs_inter_cnt_2}    evaluate    int(${srs_inter_cnt_2})
+    ${res_cnt}    evaluate    ${srs_inter_cnt_2}-${srs_inter_cnt_1}
+    serial_send    (bsp)gpi-cls-chn3    (bsp)    baudrate=115200
+    Run Keyword If    '${srs_value_2}'!='01' or '${srs_inter_type_2}'!='02' or ${res_cnt}!=1   Fail    srs状态位错误
+    ${drv_srs_12}    serial_send    (bsp)pwr-tra-gpi_drv    gpi_drv    baudrate=115200
+    ${drv_srs_22}    exp_serial_str_spilt   ${drv_srs_12}    10
+    ${drv_srs_32}    exp_serial_str_spilt   ${drv_srs_12}    11
+    ${drv_srs_42}    exp_serial_str_spilt   ${drv_srs_12}    12
+    ${drv_srs_42}    return_int    ${drv_srs_42[0]}
+    ${res1}    evaluate    ${drv_srs_42}-${drv_srs_41}
+    power_srs_ctrl    open
+    Run Keyword If    '${drv_srs_22[0]}'!='0' or ${res1}!=1 or '${drv_srs_32[0]}'!='fall'   Fail    srs状态位错误
+    sleep    2
+    serial_send    (bsp)gpi-opn-chn3    (bsp)    baudrate=115200
+    ${c}    serial_send    FF    **srs    baudrate=115200
+    ${srs_value_3}    exp_flag_more_query    ${c}    value    1
+    ${srs_inter_type_3}    exp_flag_more_query    ${c}    inter_type    1
+    ${srs_inter_cnt_3}    exp_flag_more_query    ${c}    inter_cnt    1
+    ${srs_inter_cnt_3}    evaluate    int(${srs_inter_cnt_3})
+    ${res_cnt1}    evaluate    ${srs_inter_cnt_3}-${srs_inter_cnt_2}
+    serial_send    (bsp)gpi-cls-chn3    (bsp)    baudrate=115200
+    Run Keyword If    '${srs_value_3}'!='04' or '${srs_inter_type_3}'!='01' or ${res_cnt1}!=1   Fail    srs状态位错误
+    ${drv_srs_13}    serial_send    (bsp)pwr-tra-gpi_drv    gpi_drv    baudrate=115200
+    ${drv_srs_23}    exp_serial_str_spilt   ${drv_srs_13}    10
+    ${drv_srs_33}    exp_serial_str_spilt   ${drv_srs_13}    11
+    ${drv_srs_43}    exp_serial_str_spilt   ${drv_srs_13}    12
+    ${drv_srs_43}    return_int    ${drv_srs_43[0]}
+    ${res2}    evaluate    ${drv_srs_43}-${drv_srs_42}
+    Run Keyword If    '${drv_srs_23[0]}'!='f' or ${res2}!=1 or '${drv_srs_33[0]}'!='rise'    Fail
+    txtrwx_mid_file_write    TS11_SRS    PASS
+
+TS12_TTL
+    serial_send    (bsp)pwr-crt    (bsp)    baudrate=115200
+    serial_send    (bsp)pwr-ctl-arg3    (bsp)    baudrate=115200
+    sleep    2
+    serial_send    (bsp)usart-crt-chn12-baud115200    (bsp)usart    baudrate=115200    #创建串口波特率为115200
+    serial_send    (bsp)usart-opn-chn12        (bsp)usart    baudrate=115200     #打开串口
+    start_serial_ttl
+    sleep    1
+    serial_send    (bsp)usart-snd-chn12-hello    (bsp)usart send    baudrate=115200     #发送串口数据
+    ${r}    txtrwx_read    /home/pi/ttl_send.txt
+    txtrwx_delet    /home/pi/ser_ttl.txt
+    ${a}    exp_belong    ${r}    hello    #使用ama0串口接收数据
+    Run Keyword If    ${a}==0    Fail    error    #做判断
+    serial_ttl_send    nice
+    sleep    2
+    ${r}    txtrwx_read    /home/pi/ttl_send.txt
+    txtrwx_delet    /home/pi/ttl_send.txt
+    ${a}    exp_belong    ${r}    nice    #使用ama0串口接收数据
+    Run Keyword If    ${a}==0    Fail    error    #做判断
+    txtrwx_mid_file_write    TS12_TTL    PASS
+
+TS13_GPS
+    close_jdq
+    serial_send    (bsp)pwr-crt    (bsp)pwr    baudrate=115200
+    ${a}    serial_send    (bsp)pwr-tra-adc_drv    adc    baudrate=115200
+    ${b}    exp_flag_more_query    ${a}    *gnss    1
+    power_ant_open    gnss    open  
+    sleep    5
+    ${c}    serial_send    (bsp)pwr-tra-adc_drv    adc    baudrate=115200
+    ${d}    exp_flag_more_query    ${c}    *gnss    1
+    power_ant_open    gnss    close
+    power_ant_short    gnss    open
+    sleep    5
+    ${e}    serial_send    (bsp)pwr-tra-adc_drv    adc    baudrate=115200
+    ${f}    exp_flag_more_query    ${e}    *gnss    1
+    power_ant_short    gnss    close
+    ${b}    return_int    ${b}
+    ${d}    return_int    ${d}
+    ${f}    return_int    ${f}
+    Run Keyword If    ${b}<2800    Fail    error    #做判断
+    Run Keyword If    ${d}<3200    Fail    error    #做判断
+    Run Keyword If    ${f}>100    Fail    error    #做判断
+    txtrwx_mid_file_write    TS13_GPS    PASS    ${a}  
+    txtrwx_mid_file_write    TS13_GPS    PASS    ${c}
+    txtrwx_mid_file_write    TS13_GPS    PASS    ${e} 
+
+TS14_以太网测试
+    Pass Execution If    ${board_TS10}==0    此项不测试
+    ${e}    ethernet_test
+    log    ${e}
+    Run Keyword If    ${e}==1    log    正确
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    以太网测试失败
+
+GET_END
+    ${time2}    get_local_time
+    #${time3}    round_int    ${time1}    ${time2}
+    txtrwx_mid_file_write    结束时间:${time2}
+    #txtrwx_mid_file_write    耗时:${time3}秒    \n\n    *****************************
+    txtrwx_mid_file_write    \n\n    *****************************
+    txtrwx_transfer    /home/pi/production/mid.txt    /home/pi/production/abox_log.txt
+    txtrwx_delet    /home/pi/production/mid.txt
+
+*** Keywords ***
+clear
+    txtrwx_delet    /home/pi/production/mid.txt
