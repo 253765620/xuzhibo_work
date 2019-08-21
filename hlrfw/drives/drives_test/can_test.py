@@ -24,8 +24,8 @@ time.sleep(5)
 #send can msg
 bus_can0 = can.interface.Bus(channel='can0', bustype='socketcan')
 bus_can1 = can.interface.Bus(channel='can1', bustype='socketcan')
-msg = can.Message(arbitration_id=0x7f,
-                data=[11, 25, 11, 1, 1, 2, 23, 18], 
+msg = can.Message(arbitration_id=0x73,
+                data=[12, 34, 56, 78, 90, 11, 22, 33], 
                 extended_id=False)
 print('can0 send msg')
 bus_can0.send(msg)

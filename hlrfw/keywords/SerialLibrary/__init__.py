@@ -18,6 +18,9 @@ from hlrfw.configs.ip_config import IP_SERIAL_USB0,IP_SERIAL_AMA0,IP_SERIAL_USB3
 from hlrfw.configs.sys_config import SERIAL_LOG_USB0,SERIAL_LOG_USB1,SERIAL_LOG_USB2,SERIAL_LOG_USB3
 from hlrfw.keywords.SerialLibrary.serial_func import split_msg
 from time import sleep
+import threading
+import os
+from hlrfw.keywords.Power import *
 
 class SerialLibrary(object):
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
@@ -158,7 +161,7 @@ class SerialLibrary(object):
                     if self.rsp_data.find('IOT') != -1 and self.rsp_data[-3] == ';':
                         return self.rsp_data[self.rsp_data.find('=')+1:-3]
                     else:
-                        return self.rsp_data[:-2]
+                        return self.rsp_data[:-1]
             elif i < (self.repeat - 1):
                 print('num {0}, time: {1}'.format(i, self._get_local_time()))
             elif i == (self.repeat - 1) and not self.is_error:
@@ -299,7 +302,7 @@ class SerialLibrary(object):
                 print('a error in recv msg')
             if s!='':
                 print(s)
-                with open('/home/pi/ser_ttl.txt','a') as f:
+                with open('/home/pi/ttl.txt','a') as f:
                     f.write(s)
     
     def start_serial_ttl(self):
@@ -307,11 +310,87 @@ class SerialLibrary(object):
         P.daemon = True
         P.start()
         
+    def new_ser2_test(self):
+        t_serial = threading.Thread(target=self.serial_ama0_recv)
+        t_serial.setDaemon(True)
+        t_serial.start()
+        for i in range(5):
+            self.serial_ama0_send('IOT+S1+NATIVE=?'+'\n\r')
+            time.sleep(1)
+            #os.system('sudo chmod 777 /home/pi/ser2.txt')
+            try:
+                with open('/home/pi/ser2.txt','r') as f:
+                   z = f.read()
+                #print(z+'1111')
+                if z != '':
+                    with open('/home/pi/production/log/mid.txt','a') as f:
+                        f.write('<%s>'%('TS04_串口2')+'\n')
+                        f.write('(%s)' % (str(z))+'\n')
+                    os.system('sudo rm -rf /home/pi/ser2.txt')
+                    print(0)
+                    return 0
+            except Exception as e:
+                print(e)
+                continue
+        print(-1)
+        return -1
+    
+    def new_ttl_test(self):
+        t_serial = threading.Thread(target=self.serial_ttl_recv)
+        t_serial.setDaemon(True)
+        t_serial.start()
+        for i in range(5):
+            self.serial_ttl_send('IOT+S1+NATIVE=?'+'\n\r')
+            time.sleep(1)
+            #os.system('sudo chmod 777 /home/pi/ser2.txt')
+            try:
+                with open('/home/pi/ttl.txt','r') as f:
+                   z = f.read()
+                if z != '':
+                    with open('/home/pi/production/log/mid.txt','a') as f:
+                        f.write('<%s>'%('TS03_TTL')+'\n')
+                        f.write('(%s)' % (str(z))+'\n')
+                    os.system('sudo rm -rf /home/pi/ttl.txt')
+                    print(0)
+                    return 0
+            except Exception as e:
+                print(e)
+                continue
+        print(-1)
+        return -1
+        
     def serial_ttl_send(self,data,usb="/dev/USB1"):
         #sleep(3)
         ser = serial.Serial(usb,baudrate=115200,timeout=5)
         ser.write(data.encode())
         
+    def abox_ping_test(self):
+        self.serial_send('IOT-V1+bg.p.lev3.sw=1','IOT')
+        con = False
+        ser = serial.Serial("/dev/USB2",baudrate=115200,timeout=5)
+        get_time_one = time.time()
+        while 1:
+            s = ser.readline()
+            #time.sleep(1)
+            try:
+                s = s.decode('utf-8','ignore')
+            except:
+                print('a error in recv msg')
+            with open('/home/pi/abox_ping.txt','a') as f:
+                f.write(s)
+            j = s.find('192.168.100.1 is connect')
+            get_time_two = time.time()
+            tt = get_time_two-get_time_one
+            if j!=-1 or tt>120:
+                con = True
+                break
+        if con==True and tt<=120:
+            print('0')
+            return 0
+        else:
+            print('-1')
+            return -1
+        
 if __name__ == '__main__':
     a = SerialLibrary()
-    b = a.serial_ama0_recv()
+    a.new_ttl_test()

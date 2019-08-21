@@ -207,11 +207,11 @@ class Power(PinCheck, Pcf8574, Pcf8591, Ad5259):
         wiringpi.pinMode(io_num,1)
         wiringpi.digitalWrite(io_num,status)
         
-
+'''
 try:
     init_voltage = Power()
     init_voltage.volt_adjust(12)
 except:
     print('init voltage failed')
-    
+'''
     

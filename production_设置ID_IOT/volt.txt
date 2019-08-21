@@ -1,8 +1,0 @@
-*** Settings ***
-Library           Power
-*** Test Cases ***
-上电
-    power_volt_adjust    16
-    power_KL30_open
-    power_KL15_open
-    sleep    3

@@ -371,7 +371,33 @@ class EXP(object):
             else:
                 id = abox_c+date+self.exp_generate_pid(pid)
         return id
-
+    
+    def exp_ping(self,url,timeout):
+        these_time = time.time()
+        cmd = "ping -c 1 \"%s\" " % (url)
+        for i in range(int(timeout)):
+            result = os.system(cmd)
+            result >>= 8
+            #print(result)
+            if result:
+                #print('ping fail')
+                last_time = time.time()
+                time_difference = int(last_time - these_time)
+                #print('sub:{}'.format(time_difference))
+                if time_difference >= int(timeout):
+                    #print('sub')
+                    print('ping fail')
+                    result_time  = '{}'.format(time_difference) + 's'
+                    break
+            else:
+                print('ping success')
+                last_time = time.time()
+                time_difference = int(last_time - these_time)
+                #print(time_difference)
+                result_time = '{}'.format(time_difference) + 's'
+                break
+        return (result,result_time ) 
+    
         
 if __name__  ==  "__main__":
     a = EXP()

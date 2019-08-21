@@ -178,7 +178,24 @@ class Txtrwx(object):
             f. write(m)
             f.flush()
         
-            
+    def txtrwx_for_aboxping(self,n,m):
+        n = str(n+1)
+        m = str(m)
+        with open('/home/pi/abox_pingres.txt','a') as f:
+            f.write('第'+n+'次测试时间为:'+m+'\n')
         
+    def txtrwx_write_log_x(self,a,path_,*b):
+        with open(path_,'a') as f:
+            f.write('<%s>'%(a)+'\n')
+            for str_ in b:
+                if str_==b[-1]:
+                    f.write('(%s)' % (str_)+'\n')
+                else:
+                    f.write('(%s)' % (str_) + '\n')
+            #f.write('\n')
+            
+    def txtrwx_x_write(self,a,str_):
+        with open(a,'a') as f:
+            f.write(str(str_)+'\n')     
            
     
