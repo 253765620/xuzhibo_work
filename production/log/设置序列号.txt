@@ -1,0 +1,117 @@
+<开始时间>
+(2019-08-22 10:30:36)
+<IOT_型号日期设置>
+(IOT-S1+ai.m.con.st=?;IOT-S1+ai.m.con.st=1)
+(IOT+D1150511+N.MD=HL685T;IOT+D1150511+N.MD=HL685T)
+(IOT+D1150511+N.P.D=20190806;IOT+D1150511+N.P.D=20190806)
+<IMEI查询>
+(IOT+D1+nw.e01.inf=?IOT+D1+nw.e01.inf=865501042607086)
+<ICCID查询>
+(IOT+L1+nw.e01.r01.ic=?;IOT+L1+nw.e01.r01.ic=89860919730027327520)
+<SIM卡设置>
+(IOT+D1150511+nw.e01.r01.sim=14631650577;IOT+D1150511+nw.e01.r01.sim=14631650577)
+(IOT+D1+nw.e01.r01.sim=?;IOT+D1+nw.e01.r01.sim=14631650577)
+<PID设置>
+(IOT+D1150511+N.SN=6922454;IOT+D1150511+N.SN=6922454)
+<TBOX deviceID 查询>
+(IOT+D1+T3.F1.DIDE=?;IOT+D3+T3.F1.DIDE=010102190869022454)
+<TBOX clientID 查询>
+(IOT+D1+T3.F1.ID=?)
+(IOT+D3+T3.F1.ID=GID_T3_Group@@@010102190869022454)
+<abox触发前deviceID>
+(IOT-D1+ai.m.dev.id=?;IOT-D1+ai.m.dev.id=010202190869022454)
+<abox触发前clientID>
+(IOT-D1+ai.m.cli.id=?;IOT-D1+ai.m.cli.id=GID_T3_Group@@@010202190869022454)
+<触发查询>
+(IOT-V1+ai.m.info.req=;IOT-V1+AI.M.INFO.REQ=successful)
+(abox_deviceID)
+(IOT-D1+ai.m.dev.id=?;IOT-D1+ai.m.dev.id=010202190869022454)
+(IOT-D1+ai.m.cli.id=?;IOT-D1+ai.m.cli.id=GID_T3_Group@@@010202190869022454)
+<设置序列号>
+(IOT+L1+P.CH.FLH.CD=1;IOT+L1+P.CH.FLH.CD=DONE;)
+<切换程序>
+(IOT-V1+ai.app.st=1;IOT-V1+AI.APP.ST=successful)
+(IOT-S1+ai.m.app.ack=?;IOT-S1+ai.m.app.ack=1)
+<ICCID>
+(89860919730027327520)
+<结束时间>
+(2019-08-22 10:31:11)
+***************
+<开始时间>
+(2019-08-22 10:30:36)
+<IOT_型号日期设置>
+(IOT-S1+ai.m.con.st=?;IOT-S1+ai.m.con.st=1)
+(IOT+D1150511+N.MD=HL685T;IOT+D1150511+N.MD=HL685T)
+(IOT+D1150511+N.P.D=20190806;IOT+D1150511+N.P.D=20190806)
+<IMEI查询>
+(IOT+D1+nw.e01.inf=?IOT+D1+nw.e01.inf=865501042607086)
+<ICCID查询>
+(IOT+L1+nw.e01.r01.ic=?;IOT+L1+nw.e01.r01.ic=89860919730027327520)
+<SIM卡设置>
+(IOT+D1150511+nw.e01.r01.sim=14631650577;IOT+D1150511+nw.e01.r01.sim=14631650577)
+(IOT+D1+nw.e01.r01.sim=?;IOT+D1+nw.e01.r01.sim=14631650577)
+<PID设置>
+(IOT+D1150511+N.SN=6922454;IOT+D1150511+N.SN=6922454)
+<TBOX deviceID 查询>
+(IOT+D1+T3.F1.DIDE=?;IOT+D3+T3.F1.DIDE=010102190869022454)
+<TBOX clientID 查询>
+(IOT+D1+T3.F1.ID=?)
+(IOT+D3+T3.F1.ID=GID_T3_Group@@@010102190869022454)
+<abox触发前deviceID>
+(IOT-D1+ai.m.dev.id=?;IOT-D1+ai.m.dev.id=010202190869022454)
+<abox触发前clientID>
+(IOT-D1+ai.m.cli.id=?;IOT-D1+ai.m.cli.id=GID_T3_Group@@@010202190869022454)
+<触发查询>
+(IOT-V1+ai.m.info.req=;IOT-V1+AI.M.INFO.REQ=successful)
+(abox_deviceID)
+(IOT-D1+ai.m.dev.id=?;IOT-D1+ai.m.dev.id=010202190869022454)
+(IOT-D1+ai.m.cli.id=?;IOT-D1+ai.m.cli.id=GID_T3_Group@@@010202190869022454)
+<设置序列号>
+(IOT+L1+P.CH.FLH.CD=1;IOT+L1+P.CH.FLH.CD=DONE;)
+<切换程序>
+(IOT-V1+ai.app.st=1;IOT-V1+AI.APP.ST=successful)
+(IOT-S1+ai.m.app.ack=?;IOT-S1+ai.m.app.ack=1)
+<ICCID>
+(89860919730027327520)
+<结束时间>
+(2019-08-22 10:31:11)
+***************
+<开始时间>
+(2019-08-22 10:34:28)
+<IOT_型号日期设置>
+(IOT-S1+ai.m.con.st=?;IOT-S1+ai.m.con.st=1)
+(IOT+D1150511+N.MD=HL685T;IOT+D1150511+N.MD=HL685T)
+(IOT+D1150511+N.P.D=20190806;IOT+D1150511+N.P.D=20190806)
+<IMEI查询>
+(IOT+D1+nw.e01.inf=?IOT+D1+nw.e01.inf=865501042607086)
+<ICCID查询>
+(IOT+L1+nw.e01.r01.ic=?;IOT+L1+nw.e01.r01.ic=89860919730027327520)
+<SIM卡设置>
+(IOT+D1150511+nw.e01.r01.sim=14631650577;IOT+D1150511+nw.e01.r01.sim=14631650577)
+(IOT+D1+nw.e01.r01.sim=?;IOT+D1+nw.e01.r01.sim=14631650577)
+<PID设置>
+(IOT+D1150511+N.SN=6922455;IOT+D1150511+N.SN=6922455)
+<TBOX deviceID 查询>
+(IOT+D1+T3.F1.DIDE=?;IOT+D3+T3.F1.DIDE=010102190869022455)
+<TBOX clientID 查询>
+(IOT+D1+T3.F1.ID=?)
+(IOT+D3+T3.F1.ID=GID_T3_Group@@@010102190869022455)
+<abox触发前deviceID>
+(IOT-D1+ai.m.dev.id=?;IOT-D1+ai.m.dev.id=010202190869022455)
+<abox触发前clientID>
+(IOT-D1+ai.m.cli.id=?;IOT-D1+ai.m.cli.id=GID_T3_Group@@@010202190869022455)
+<触发查询>
+(IOT-V1+ai.m.info.req=;IOT-V1+AI.M.INFO.REQ=successful)
+(abox_deviceID)
+(IOT-D1+ai.m.dev.id=?;IOT-D1+ai.m.dev.id=010202190869022455)
+(IOT-D1+ai.m.cli.id=?;IOT-D1+ai.m.cli.id=GID_T3_Group@@@010202190869022455)
+<设置序列号>
+(IOT+L1+P.CH.FLH.CD=1;IOT+L1+P.CH.FLH.CD=DONE;)
+<切换程序>
+(IOT-V1+ai.app.st=1;IOT-V1+AI.APP.ST=successful)
+(IOT-S1+ai.m.app.ack=?;IOT-S1+ai.m.app.ack=1)
+<ICCID>
+(89860919730027327520)
+<结束时间>
+(2019-08-22 10:35:04)
+***************

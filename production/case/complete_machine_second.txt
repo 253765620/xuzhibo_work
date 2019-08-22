@@ -1,0 +1,182 @@
+*** Settings ***
+Suite Teardown    clear
+Test Teardown     Run Keyword If Test Failed    Fatal Error
+Library           SerialLibrary
+Library           EXP
+Library           Power
+Library           Collections
+Library           CAN
+Library	     Txtrwx
+Library	     NetTest
+*** Test Cases ***
+
+GET_Ready
+    ${time1}    get_local_time
+    Set Suite Variable    ${time1}
+    serial_send    IOT-S1+ai.m.con.alive=5    IOT-S1+AI.M.CON.ALIVE=5
+    :FOR    ${i}    INRANGE    50
+    \    ${a}    serial_send    IOT-S1+ai.m.con.st=?    IOT
+    \    Exit For Loop If    '${a}'=='1'
+    \    sleep    1
+    Run Keyword If    ${i}==49    Fail   串口状态连接失败
+    serial_send     IOT-V1+ai.lev.switch=0    IOT-V1+AI.LEV.SWITCH=successful;
+    :FOR    ${i}    INRANGE    5
+    \    ${b}    serial_send    IOT-V1+ai.self.check=1    IOT
+    \    sleep    2
+    \    ${c}    serial_send    IOT-S1+ai.m.se.ch.ack=?   IOT
+    \    Exit For Loop If    '${c}'=='1'
+    Run Keyword If    ${i}==4    Fail   发起自检失败
+    serial_send    IOT+D1150511+NL.E01.FAC.CFG=${wifi_open}    IOT+D1150511+NL.E01.FAC.CFG=${wifi_open}
+    txtrwx_write_log_x    准备    /home/pi/production/log/mid.txt    IOT-S1+ai.m.con.alive=5;IOT-S1+AI.M.CON.ALIVE=5    IOT-S1+ai.m.con.st=?;IOT-S1+ai.m.con.st=${a}    IOT-V1+ai.lev.switch=0;IOT-V1+ai.lev.switch=successful;    IOT-V1+ai.self.check=1;IOT-V1+ai.self.check=${b}    IOT-S1+ai.m.se.ch.ack=?;IOT-S1+ai.m.se.ch.ack=${c}
+
+TS01_通信
+    Pass Execution If    ${TONGXIN_TEST}==0    此项不测试
+    ${a}    serial_send    IOT+D1+nw.e01.inf=?    IOT
+    ${b}    exp_serial_str_spilt    ${a}    3  
+    Run Keyword If    '${b[0]}'!='${communication_version}'    Fail    error
+    ${c}    serial_send    IOT+S1+nw.e01.stu=?    IOT    wait_time=6
+    ${d}    exp_serial_str_spilt    ${c}    1
+    ${e}    exp_serial_str_spilt    ${c}    2
+    ${f}    exp_serial_str_spilt    ${c}    3
+    ${g}    exp_serial_str_spilt    ${c}    4
+    ${h}    exp_serial_str_spilt    ${c}    5
+    ${one}    exp_belong    ${communication_1}    ${d[0]}
+    ${two}    exp_belong    ${communication_1}    ${f[0]}
+    Run Keyword If    ${one}!=1 or ${two}!=1 or '${e[0]}'!='${communication_2}' or '${g[0]}'!= '${communication_2}' or '${h[0]}'!='${communication_3}'    Fail    error
+    :FOR    ${I}    INRANGE    30
+    \    ${c}    serial_send    IOT+S1+nw.e01.stu=?    IOT
+    \    ${m}    exp_serial_str_spilt    ${c}    7 
+    \    ${m}    return_int    ${m[0]}  
+    \    Exit For Loop If    ${m}>${signal_value}    
+    Run Keyword If    ${I}==29    Fail    error 
+    ${a1}    serial_send    IOT+S1+nw.e01.rm01.gt01.inf=?     IOT
+    ${a2}    exp_serial_str_spilt    ${a1}    1 
+    Run Keyword If    ${a2[0]}!=1    Fail    error
+    ${ba}    serial_send    IOT+S1+NW.E01.R01.G01.PI.NH=www.baidu.com    IOT    wait_time=5  
+    sleep    5 
+    ${n}    Wait Until Keyword Succeeds    10s    2s    serial_send    IOT+S1+NW.E01.RM01.GT01.PG=?     3 packets transmitted, 3 received, 0% packet loss
+    
+    #:FOR    ${Y}    INRANGE    5
+    #\    ${state}    Run Keyword And Return Status    serial_send    IOT+S1+NW.E01.RM01.GT01.PG=?    3 packets transmitted, 3 received, 0% packet loss    wait_time=5 
+    #\    Exit For Loop If    ${state}==True
+    #\    sleep    0.5
+    #Run Keyword If    ${Y}==4    Fail    error
+    txtrwx_write_log_x    通信    /home/pi/production/log/mid.txt    IOT+D1+nw.e01.inf=?    IOT+D1+nw.e01.inf=${a}    IOT+S1+nw.e01.stu=?    IOT+S1+nw.e01.stu=${c}    IOT+S1+nw.e01.rm01.gt01.inf=?    IOT+S1+nw.e01.rm01.gt01.inf=${a1}    IOT+S1+NW.E01.R01.G01.PI.NH=www.baidu.com    IOT+S1+NW.E01.R01.G01.PI.NH=${ba}    IOT+S1+NW.E01.RM01.GT01.PG=?    IOT+S1+NW.E01.RM01.GT01.PG=${n}   
+
+TS02_定位
+    Pass Execution If    ${GPS_TEST}==0    此项不测试
+    ${p}    serial_send    IOT+S1+GN.NM.SNR=?    IOT
+     #power_ant_short    gnss    open
+    :FOR    ${I}    INRANGE    120
+    \    ${a}    serial_send    IOT+S1+GNSS=?    IOT
+    \    ${k}    exp_serial_str_spilt     ${a}    2
+    \    ${b}    exp_serial_str_spilt     ${a}    3
+    \    ${c}    exp_serial_str_spilt     ${a}    4
+    \    ${d}    exp_serial_str_spilt     ${a}    6
+    \    ${d}    return_int    ${d[0]}
+    \    Exit For Loop If    '${k[0]}'=='${GPS_model}' and '${b[0]}'== '${GPS_version}' and '${c[0]}'=='${GPS_state}' and ${d}>${GPS_number}
+    \    sleep    1
+    Run Keyword If    ${I}==119    Fail    error
+    ${e}    serial_send    IOT+S1+QXWZ=?    IOT
+    ${p}    serial_send    IOT+S1+GN.NM.SNR=?    IOT 
+    txtrwx_write_log_x    定位    /home/pi/production/log/mid.txt    IOT+S1+GN.NM.SNR=?    IOT+S1+GN.NM.SNR=${p}    IOT+S1+GNSS=?    IOT+S1+GNSS=${a}    IOT+S1+QXWZ=?    IOT+S1+QXWZ=${e}   
+
+TS03_串口2
+    Pass Execution If    ${SERIAL_TEST}==0    此项不测试
+    ${res}    new_ser2_test
+    Run Keyword If    ${res}!=0    Fail    error
+
+TS04_WIFI
+    Pass Execution If    ${WIFI_TEST}==0    此项不测试
+    #serial_send    IOT+D1150511+NL.E01.FAC.CFG=${wifi_open}    IOT+D1150511+NL.E01.FAC.CFG=${wifi_open}
+    :FOR    ${i}    INRANGE    100
+    \    ${a}    serial_send    IOT+S1+nl.e01.fac.chk=?    IOT
+    \    ${l}    exp_length    ${a}
+    \    Exit For Loop If    ${l}!= 0
+    \    sleep    1
+    serial_send    IOT+D1150511+NL.E01.FAC.CFG=${wifi_close}    IOT+D1150511+NL.E01.FAC.CFG=${wifi_close} 
+    Run Keyword If    ${i}==99    Fail    接收wifi数据超时
+    ${b}    exp_serial_str_spilt    ${a}    5
+    ${b}    return_int    ${b[0]}
+    ${b}    exp_abs    ${b}
+    Run Keyword If    ${b} >=${wifi_sigl}    Fail    wifi信号弱
+    txtrwx_write_log_x    WIFI    /home/pi/production/log/mid.txt    IOT+D1150511+NL.E01.FAC.CFG=${wifi_open}    IOT+D1150511+NL.E01.FAC.CFG=${wifi_open}    IOT+S1+nl.e01.fac.chk=?    IOT+S1+nl.e01.fac.chk=${a}    
+    
+   
+TS05_ABOX_自检
+    :FOR    ${i}    INRANGE    100
+    \    ${d}    serial_send    IOT-S1+ai.m.ch.re.ack=?    IOT
+    \    Exit For Loop If    '${d}'=='1'
+    \    sleep    1
+    Run Keyword If    ${i}==99    Fail   自检结果查询失败
+    ${e}    serial_send    IOT-C1+ai.sf.ck.r=?    IOT
+    Run Keyword If    '${e}'!='1,1,0,0,0,1,0,0,0,1,0,0,0'    Fail    自检失败
+    txtrwx_mid_file_write    ${e}
+    :FOR    ${i}    INRANGE    5
+    \    serial_send    IOT-V1+ai.fom.nt=01    IOT
+    \    sleep    5
+    \    ${f}    serial_send    IOT-S1+ai.m.ai.fom.ack=?    IOT
+    \    Exit For Loop If    '${f}'=='2'
+    Run Keyword If    ${i}==3    Fail    SD卡格式化失败
+    txtrwx_write_log_x    ABOX_自检    /home/pi/production/log/mid.txt     IOT-S1+ai.m.ch.re.ack=?;IOT-S1+ai.m.ch.re.ack=${d}    IOT-C1+ai.sf.ck.r=?;IOT-C1+ai.sf.ck.r=${e}    IOT-S1+ai.m.ai.fom.ack=?;IOT-S1+ai.m.ai.fom.ack=${f}
+
+TS06_电容
+    Pass Execution If    ${CAP_TEST}==0    此项不测试
+    :FOR    ${i}    INRANGE    180
+    \    ${am}    serial_send    IOT-S1+ENERGY=?    IOT
+    \    ${b}    exp_serial_str_spilt    ${am}    7
+    \    ${bm}    evaluate    int(${b[0]})
+    \    Exit For Loop If    ${bm}>6500 or ${bm}<1000
+    \    sleep    1
+    Run Keyword If    ${i}==99 or ${bm}<4500    Fail    电容电压不足
+    power_kl30_close
+    power_kl15_close
+    sleep    3
+    ${a1}    serial_send    IOT-S1+ENERGY=?    IOT
+    ${m11}    exp_serial_str_spilt    ${a1}    9
+    Run Keyword If    ${m11[0]}!=2    Fail    电容状态错误
+    :FOR    ${i}    INRANGE    30
+    \    ${a1}    serial_send    IOT-S1+ENERGY=?    IOT
+    \    ${a11}    exp_serial_str_spilt    ${a1}    10      
+    \    ${a11}    exp_int_change    ${a11[0]}
+    \    sleep    3
+    \    ${a2}    serial_send    IOT-S1+ENERGY=?    IOT
+    \    ${a21}    exp_serial_str_spilt    ${a2}    10
+    \    ${a21}    exp_int_change    ${a21[0]}
+    \    Exit For Loop If    ${a21}==${a11} and ${a11}>500
+    ${a3}    exp_serial_str_spilt    ${a2}    10
+    ${a3}    exp_int_change    ${a3[0]}
+    power_kl30_open
+    power_kl30_open
+    Run Keyword If    ${a3}<${dianrong_time}    Fail    电容电压不足
+    txtrwx_write_log_x    电容    /home/pi/production/log/mid.txt    IOT-S1+ENERGY=?    IOT-S1+ENERGY=${am}    IOT-S1+ENERGY=?    IOT-S1+ENERGY=${a1}
+TS07_电池
+    Pass Execution If    ${POWER_TEST}==0    此项不测试
+    ${l}    serial_send    IOT-S1+PL.EN.SP=?    IOT
+    ${m}    serial_send    IOT-S1+PL.EN.SP=?    12000,8000,9000,10000,18000,16000
+    :FOR    ${u}    INRANGE    6
+    \    power_kl30_close
+    \    power_kl15_close
+    \    sleep    1
+    \    ${a1}    serial_send    IOT-S1+ENERGY=?    IOT    
+    \    power_kl30_open
+    \    power_kl15_open
+    \    sleep    1
+    \    ${n}    serial_send    IOT-S1+ENERGY=?    IOT
+    txtrwx_write_log_x    电池    /home/pi/production/log/mid.txt    IOT-S1+PL.EN.SP=?    IOT-S1+PL.EN.SP=${l}     IOT-S1+ENERGY=?    IOT-S1+ENERGY=${a1}    IOT-S1+ENERGY=?    IOT-S1+ENERGY=${n}   
+
+
+GET_END
+    ${time2}    get_local_time
+    ${iccid}    serial_send     IOT+L1+nw.e01.r01.ic=?    IOT+L1+NW.E01.R01.IC=
+    txtrwx_x_write    /home/pi/production/log/mid.txt    结束时间:${time2}
+    txtrwx_x_write    /home/pi/production/log/mid.txt    ${iccid}
+    txtrwx_x_write    /home/pi/production/log/mid.txt    *****************************
+    txtrwx_transfer    /home/pi/production/log/mid.txt    /home/pi/production/log/整机检测日志2.txt
+
+*** Keywords ***
+clear
+
+    power_kl30_open
+    power_kl15_open
+    

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.0.4 (Python 3.7.0 on linux)" generated="20190820 17:17:21.759">
+<suite id="s1" name="Volt" source="/home/pi/production/volt.txt">
+<test id="s1-t1" name="上电">
+<kw name="Power Volt Adjust" library="Power">
+<doc>功能:</doc>
+<arguments>
+<arg>16</arg>
+</arguments>
+<status status="PASS" starttime="20190820 17:17:21.995" endtime="20190820 17:17:21.997"></status>
+</kw>
+<kw name="Power KL30 Open" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190820 17:17:21.998" endtime="20190820 17:17:22.000"></status>
+</kw>
+<kw name="Power KL15 Open" library="Power">
+<doc>功能:</doc>
+<status status="PASS" starttime="20190820 17:17:22.001" endtime="20190820 17:17:22.002"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3</arg>
+</arguments>
+<msg timestamp="20190820 17:17:25.006" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20190820 17:17:22.004" endtime="20190820 17:17:25.007"></status>
+</kw>
+<status status="PASS" starttime="20190820 17:17:21.991" endtime="20190820 17:17:25.009" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20190820 17:17:21.764" endtime="20190820 17:17:25.015"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0">Critical Tests</stat>
+<stat pass="1" fail="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" id="s1" name="Volt">Volt</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

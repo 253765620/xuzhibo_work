@@ -1,0 +1,261 @@
+*** Settings ***
+Test Teardown     Run Keyword If Test Failed    Fatal Error
+Library           SerialLibrary
+Library           EXP
+Library           Power
+Library           Collections
+Library	     Txtrwx
+Library	     CAN
+*** Test Cases ***
+TS01_Ready
+    ${time1}    get_local_time
+    txtrwx_x_write    /home/pi/production/log/mid.txt    开始时间:${time1}
+    #power_KL30_open
+    #power_KL15_open
+    power_volt_adjust    14
+    sleep     5
+    #serial_confirm_ter_restart     30    
+    
+
+
+TS01_ACC
+     power_KL15_close    #关ACC
+     ${acc1}    Wait Until Keyword Succeeds    10s    0.5s    serial_send    IOT-S1+bg.p.acc.stat=?    IOT-S1+bg.p.acc.stat=0
+     power_KL15_open    #打开ACC
+     ${acc2}    Wait Until Keyword Succeeds    10s    0.5s    serial_send    IOT-S1+bg.p.acc.stat=?    IOT-S1+bg.p.acc.stat=1     
+     Run Keyword If    '${acc1}'!='0'    Fail    acc拉低失败
+     Run Keyword If    '${acc2}'!='1'    Fail    acc拉高失败
+     txtrwx_write_log_x    ACC检测    /home/pi/production/log/mid.txt    IOT-S1+bg.p.acc.stat=?; IOT-S1+bg.p.acc.stat=${acc1}    IOT-S1+bg.p.acc.stat=?; IOT-S1+bg.p.acc.stat=${acc2}
+     #txtrwx_write_log_x    ACC拉高    /home/pi/production/log/mid.txt    IOT-S1+bg.p.acc.stat=?; IOT-S1+bg.p.acc.stat=${acc2}
+
+     #txtrwx_abox_file_write    TS08_ACC拉低 PASS IOT-S1+bg.p.acc.stat=?; IOT-S1+bg.p.acc.stat=${acc1}
+     #txtrwx_abox_file_write    TS08_ACC拉高 PASS IOT-S1+bg.p.acc.stat=?; IOT-S1+bg.p.acc.stat=${acc2}
+
+TS02_SRS
+    power_srs_ctrl    close    
+    ${srs0}    Wait Until Keyword Succeeds    5s    0.5s    serial_send    IOT-S1+bg.p.srs.stat=?    IOT-S1+bg.p.srs.stat=1
+    power_srs_ctrl    open    #打开srs
+    ${srs1}    Wait Until Keyword Succeeds    5s    0.5s    serial_send    IOT-S1+bg.p.srs.stat=?    IOT-S1+bg.p.srs.stat=0
+    power_srs_ctrl    close    
+    ${srs2}    Wait Until Keyword Succeeds    5s    0.5s    serial_send    IOT-S1+bg.p.srs.stat=?    IOT-S1+bg.p.srs.stat=1
+    Run Keyword If    '${srs0}'!='1'    Fail    srs拉低失败
+    Run Keyword If    '${srs1}'!='0'    Fail    srs拉高失败
+    Run Keyword If    '${srs2}'!='1'    Fail    srs拉低失败  
+    txtrwx_write_log_x    SRS检测    /home/pi/production/log/mid.txt    IOT-S1+bg.p.srs.stat=?; IOT-S1+bg.p.srs.stat=${srs0}    IOT-S1+bg.p.srs.stat=?; IOT-S1+bg.p.srs.stat=${srs1}
+    #txtrwx_write_log_x    SRS拉高    /home/pi/production/log/mid.txt    IOT-S1+bg.p.srs.stat=?; IOT-S1+bg.p.srs.stat=${srs1}
+    #txtrwx_write_log_x    TS09_SRS拉低    /home/pi/production/log/mid.txt    IOT-S1+bg.p.srs.stat=?; IOT-S1+bg.p.srs.stat=${srs2} 
+    #txtrwx_abox_file_write    TS09_SRS拉低 PASS    IOT-S1+bg.p.srs.stat=?; IOT-S1+bg.p.srs.stat=${srs0}  
+    #txtrwx_abox_file_write    TS09_SRS拉高 PASS    IOT-S1+bg.p.srs.stat=?; IOT-S1+bg.p.srs.stat=${srs1}
+    #txtrwx_abox_file_write    TS09_SRS拉低 PASS    IOT-S1+bg.p.srs.stat=?; IOT-S1+bg.p.srs.stat=${srs2} 
+TS03_GPS
+    [Setup]    Run keywords    power_ant_short    gnss    close    AND    power_ant_open    gnss    close
+    ${dw0}    Wait Until Keyword Succeeds    10s    2s    serial_send    IOT-S1+BG.GN.ANT=1,1    IOT-S1+BG.GN.ANT=0
+    ${dw}    exp_str_spilt    ${dw0}    ,
+    power_ant_open    gnss    open
+    sleep    3
+    ${kl0}    Wait Until Keyword Succeeds    10s    2s    serial_send    IOT-S1+BG.GN.ANT=1,1    IOT-S1+BG.GN.ANT=1
+    ${kl}    exp_str_spilt    ${kl0}    ,
+    power_ant_open    gnss    close
+    power_ant_short    gnss    open
+    sleep    3
+    ${dl0}    Wait Until Keyword Succeeds    10s    2s    serial_send    IOT-S1+BG.GN.ANT=1,1    IOT-S1+BG.GN.ANT=2
+    ${dl}    exp_str_spilt    ${dl0}    ,    
+    power_ant_short    gnss    close
+    log    ${dw[1]}
+    log    ${kl[1]}
+    log    ${dl[1]}
+    ${dw_v}    return_int    ${dw[1]}
+    ${kl_v}    return_int    ${kl[1]}
+    ${dl_v}    return_int    ${dl[1]}
+    Run Keyword If    ${dw_v}<2700 or ${dw_v}>3200    Fail    正常天线电压错误，实际电压${dw_v}
+    Run Keyword If    ${kl_v}<3200    Fail    开路天线电压错误，实际电压${kl_v}
+    Run Keyword If    ${dl_v}>500    Fail    短路天线电压错误，实际电压${dl_v}
+    txtrwx_write_log_x     GPS检测    /home/pi/production/log/mid.txt    IOT-S1+BG.GN.ANT=1,1;IOT-S1+BG.GN.ANT=${dw0}    IOT-S1+BG.GN.ANT=1,1; IOT-S1+BG.GN.ANT=${kl0}    IOT-S1+BG.GN.ANT=1,1; IOT-S1+BG.GN.ANT=${dl0} 
+    #txtrwx_abox_file_write    TS07_GPS接天线 PASS IOT-S1+BG.GN.ANT=1,1;IOT-S1+BG.GN.ANT=${dw0} 
+    #txtrwx_write_log_x     GPS开路    /home/pi/production/log/mid.txt    IOT-S1+BG.GN.ANT=1,1; IOT-S1+BG.GN.ANT=${kl0}
+    #txtrwx_abox_file_write    TS07_GPS开路 PASS IOT-S1+BG.GN.ANT=1,1; IOT-S1+BG.GN.ANT=${kl0}
+    #txtrwx_write_log_x     GPS短路    /home/pi/production/log/mid.txt   IOT-S1+BG.GN.ANT=1,1; IOT-S1+BG.GN.ANT=${dl0}
+    #txtrwx_abox_file_write     TS07_GPS短路 PASS IOT-S1+BG.GN.ANT=1,1; IOT-S1+BG.GN.ANT=${dl0}
+    #[Teardown]    Run keywords    power_ant_short    gnss    close    AND    power_ant_open    gnss    close 
+
+TS03_版本核对
+   #fbt版本
+    ${fbt0}    serial_send    IOT-S1+PL.VERSION=?    IOT-S1+PL.VERSION=
+    ${fbt}    exp_str_spilt    ${fbt0}    ,
+    ${hw_tbox}    Set Variable    ${fbt[0]}
+    ${mcu_tbox}     Set Variable    ${fbt[1]}
+    ${sw_tbox}     Set Variable    ${fbt[2]}
+    ${fbt_ver_tbox}     Set Variable    ${fbt[3]}
+    ${fbt_chk}     Set Variable    ${fbt[4]}
+    ${app_ver_tbox}     Set Variable    ${fbt[5]}
+    ${app_chk}     Set Variable    ${fbt[6]}
+    Run Keyword If    '${hw_tbox}'=='${hw}'    log    hw校对成功     ELSE    Fail    hw校对失败，实际为${hw_tbox} 
+    Run keyword If    '${mcu_tbox}'=='${mcu}'    log    mcu校对成功     ELSE    Fail    mcu校对失败，实际为${mcu_tbox}
+    Run keyword If    '${sw_tbox}'=='${sw}'    log    sw校对成功     ELSE    Fail    sw校对失败，实际为${sw_tbox}
+    Run keyword If    '${fbt_ver_tbox}'=='${fbt_ver}' and '${fbt_chk}'=='1'    log    fbt校对成功    ELSE    Fail    fbt校对失败，实际为${fbt_ver_tbox};${fbt_chk}
+    Run keyword If    '${app_ver_tbox}'=='${app_ver}' and '${app_chk}'=='1'    log    app校对成功    ELSE    Fail    app校对失败，实际为${app_ver_tbox};${app_chk}
+    #晶振
+    ${cap0}    serial_send    IOT-S1+PL.DEV=?    IOT-S1+PL.DEV=
+    ${cap}    exp_str_spilt    ${cap0}    ,
+    ${cap_status}    Set Variable    ${cap[0]}
+    ${cap_rate}    Set Variable    ${cap[1]}
+    Run keyword If    '${cap_status}'=='1' and '${cap_rate}'=='${cry}'    log    晶振校对成功    ELSE    Fail    晶振校对失败，实际为${cap_status};${cap_rate}
+   #spiflash
+    ${spi0}    serial_send    IOT-S1+PLATIO=?    IOT-S1+PLATIO=
+    ${spi}    exp_str_spilt    ${spi0}    ,
+    ${spi_nme}    Set Variable    ${spi[3]}
+    ${spi_siz}    Set Variable    ${spi[4]}
+    Run keyword If    '${spi_name}'=='${spi_nme}'    log    spi型号校对成功     ELSE    Fail    spi型号${spi_nme}
+    Run keyword If    '${spi_size}'=='${spi_siz}'    log    spi内存校对成功     ELSE    Fail    spi内存${spi_siz}
+   #BAT
+    ${bat}    serial_send    IOT-S1+ENERGY=?    IOT-S1+ENERGY
+    ${bat_status}    exp_str_spilt    ${bat}    ,
+    Run keyword If    '${bat_status[0]}'!='0'    log    非外部供电;实际为${bat_status[0]}    WARN
+    Run keyword If    '${pwr_vl}'<'${bat_status[2]}'<'${pwr_vh}'    log   pwr电源电压值正常     ELSE    Fail    pwr电源电压值异常；实际为${bat_status[2]}mv 
+    Run Keyword If    '${bat_status[4]}'=='3'    log    电池接入状态校对成功     ELSE    Fail    电池接入校对失败,实际状态${bat_status[4]}
+    Run Keyword If    '${bat_vl}'<'${bat_status[5]}'    log   bat电压值正常     ELSE    Fail    bat电压值异常；实际为${bat_volt[5]}    
+    Run Keyword If    '${bat_status[7]}'=='2'    log    电池类型校对成功     ELSE    Fail    电池类型校对失败,实际为${bat_status[7]}
+   #native
+    ${native1}    Wait Until Keyword Succeeds    30s    2s    serial_send    IOT+S1+NATIVE=?     IOT+S1+NATIVE=
+    ${xu_1}    exp_belong    ${native1}    ${mods}
+    ${xu_2}    exp_belong    ${native1}    ${mcus}  
+    #${native1}    Wait Until Keyword Succeeds    30s    2s    serial_send    IOT+S1+NATIVE=?     IOT+S1+NATIVE=
+    #${mods0}    Set Variable    ${native1[:55]}
+    #${mcus0}    Set Variable    ${native1[79:116]}
+    Run Keyword If    '${xu_1}==1'    log    模块系统校对成功     ELSE    Fail    native模块程序校对失败，实际为${mods0}
+    Run Keyword If    '${xu_2}==1'    log    mcu系统校对成功     ELSE    Fail    native mcu程序校对失败，实际为${mcus0}
+   #ker
+    ${ker0}    serial_send    IOT+V1+n.ker.v=1    IOT+V1+n.ker.v=
+    ${ker_tbox}    Set Variable    ${ker0[15:39]}
+    Run Keyword If    '${ker}'=='${ker_tbox}'    log    模块固件版本校对成功     ELSE    Fail    内核校对失败,实际为${ker0}
+   #wdg
+    ${xu_1}    serial_send    IOT-V1+PL.WDG.OUT.EN=1    IOT-V1+PL.WDG.OUT.EN=1
+    sleep    3
+    ${wdg0}    serial_send    IOT-V1+PL.WDG.OUT=?    IOT-V1+PL.WDG.OUT=
+    ${wdg}    exp_str_spilt    ${wdg0}    ,
+    ${wdg_s}    Set Variable    ${wdg[0]}
+    ${wdg_reset_time}    Set Variable    ${wdg[1]}
+    ${wdg_reset_time}    return_int    ${wdg_reset_time}
+    Run Keyword If    '${wdg_s}'=='1' and ${wdg_reset_time}>1000 and ${wdg_reset_time}<2000    log    WDG已短接    ELSE    Fail    WDG未短接
+    txtrwx_write_log_x    版本核对    /home/pi/production/log/mid.txt    fbt版本    IOT-S1+PL.VERSION=?;IOT-S1+PL.VERSION=${fbt0}    晶振    IOT-S1+PL.DEV=?;IOT-S1+PL.DEV=${cap0}    spiflash    IOT-S1+PLATIO=?;IOT-S1+PLATIO=${spi0}    BAT   IOT-S1+ENERGY=?;IOT-S1+ENERGY=${bat}    native    IOT+S1+NATIVE=?;IOT+S1+NATIVE=${native1}    ker    IOT+V1+n.ker.v=1;${ker0}    wdg    IOT-V1+PL.WDG.OUT.EN=1;IOT-V1+PL.WDG.OUT.EN=${xu_1}    IOT-V1+PL.WDG.OUT=?;IOT-V1+PL.WDG.OUT=${wdg0}     
+
+TS04_设置bat
+    ${result}    serial_send    IOT-S1+ENERGY=?    IOT-S1+ENERGY
+    ${bat_type}    exp_str_spilt    ${result}    ,
+    Run Keyword If    '${bat_type[7]}'!='2'    serial_send    IOT-V1+pl.en.bat.kd=2    IOT-V1+pl.en.bat.kd=
+    txtrwx_x_write    设置bat    IOT-V1+pl.en.bat.kd=2;IOT-V1+pl.en.bat.kd=${bat_type}
+
+
+TS06_CAN1
+    #${can1b} can1 before   ${can1a}  can1 after
+    CAN_channel_choice    can1
+    ${can1b}    serial_send    IOT-S1+bg.can.s=?    IOT-S1+BG.CAN.S=
+    ${can11}    exp_str_spilt    ${can1b}    ,
+    ${recv_befor}    Set Variable    ${can11[0]}
+    ${send_befor}    Set Variable    ${can11[1]}
+    ${send_fail_befor}    Set Variable    ${can11[2]}
+    ${can1_baud}    Set Variable    ${can11[3]}
+    :FOR    ${i}    INRANGE    10
+    \    CAN_send_and_rec    73    12 34 56 78 90 AA BB CC    73    12 34 56 78 90 AA BB CC
+    #\    ${a}    txtrwx_read   /home/pi/can_testlog.txt 
+    #\    txtrwx_abox_file_write    TS04_CAN1发 PASS    can1发送73 12 34 56 78 90 AA BB CC，收73 12 34 56 78 90 AA BB CC
+    #\    txtrwx_delet    /home/pi/can_testlog.txt    
+    #\    ${b}    exp_flag_more_query    ${a}    id    1    #查询can收canid
+    #\    ${c}    exp_flag_more_query    ${a}    data    1    #查询can收candata
+    #\    ${id_j}    exp_belong    ${b}    11
+    #\    ${data_j}    exp_belong    ${c}    1234567890BB66AA
+    #\    Run Keyword If    ${id_j}!=1 or ${data_j}!=1    Fail    can1_error
+    ${can1a}    serial_send    IOT-S1+bg.can.s=?    IOT-S1+BG.CAN.S=
+    ${can12}    exp_str_spilt    ${can1a}    ,
+    ${recv_after}    Set Variable    ${can12[0]}
+    ${send_after}    Set Variable    ${can12[1]}
+    ${send_fail_after}    Set Variable    ${can12[2]}
+    ${sub_recv}    Evaluate   ${recv_after}- ${recv_befor}
+    ${sub_send}    Evaluate    ${send_after}-${send_befor}
+    ${sub_send_fail}     Evaluate    ${send_fail_after}-${send_fail_befor}
+    Run Keyword If    ${sub_recv}<10    Fail    can1_recv_error:${sub_recv} 
+    Run Keyword If    ${sub_send}<10    Fail    can1_send_error:${sub_send}
+    Run Keyword If    ${sub_send_fail}!=0    Fail    can1_recv_error:${sub_send_fail}
+    txtrwx_write_log_x    CAN1    /home/pi/production/log/mid.txt    IOT-S1+bg.can.s=?; IOT-S1+bg.can.s=${can1b}    IOT-S1+bg.can.s=?; IOT-S1+bg.can.s=${can1a}  
+    #txtrwx_abox_file_write    TS05_CAN1收 PASS    IOT-S1+bg.can.s=?; IOT-S1+bg.can.s=${can1b}
+    #txtrwx_abox_file_write    TS05_CAN1收 PASS    IOT-S1+bg.can.s=?; IOT-S1+bg.can.s=${can1a}    
+    
+TS07_CAN2
+   #${can2b} can2 before   ${can2a}  can2 after
+    CAN_channel_choice    can2
+    ${can2b}    serial_send    IOT-S1+bg.can.s=?    IOT-S1+BG.CAN.S=
+    ${can21}    exp_str_spilt    ${can2b}    ,
+    ${recv_befor}    Set Variable    ${can21[4]}
+    ${send_befor}    Set Variable    ${can21[5]}
+    ${send_fail_befor}    Set Variable    ${can21[6]}
+    ${can2_baud}    Set Variable    ${can21[7]}
+    :FOR    ${i}    INRANGE    10
+    \    CAN_send_and_rec    73    12 34 56 78 90 AA BB CC    73    12 34 56 78 90 AA BB CC
+    #\    txtrwx_abox_file_write    TS04_can2发 PASS    can2发送73 12 34 56 78 90 AA BB CC，收73 12 34 56 78 90 AA BB CC
+    ${can2a}    serial_send    IOT-S1+bg.can.s=?    IOT-S1+BG.CAN.S=
+    ${can22}    exp_str_spilt    ${can2a}    ,
+    ${recv_after}    Set Variable    ${can22[4]}
+    ${send_after}    Set Variable    ${can22[5]}
+    ${send_fail_after}    Set Variable    ${can22[6]}
+    ${sub_recv}    Evaluate   ${recv_after}- ${recv_befor}
+    ${sub_send}    Evaluate    ${send_after}-${send_befor}
+    ${sub_send_fail}     Evaluate    ${send_fail_after}-${send_fail_befor}
+    Run Keyword If    ${sub_recv}<10    Fail    can2_recv_error:${sub_recv} 
+    Run Keyword If    ${sub_send}<10    Fail    can2_send_error:${sub_send}
+    Run Keyword If    ${sub_send_fail}!=0    Fail    can2_recv_error:${sub_send_fail}
+    txtrwx_write_log_x    can2    /home/pi/production/log/mid.txt    IOT-S1+bg.can.s=?; IOT-S1+bg.can.s=${can2b}    IOT-S1+bg.can.s=?; IOT-S1+bg.can.s=${can2a}
+    #txtrwx_abox_file_write    TS05_can2收 PASS    IOT-S1+bg.can.s=?; IOT-S1+bg.can.s=${can2b}
+    #txtrwx_abox_file_write    TS05_can2收 PASS    IOT-S1+bg.can.s=?; IOT-S1+bg.can.s=${can2a}    
+
+
+TS08_BLE
+#   comment    蓝牙版本校对无IOT指令
+    sleep    3
+    serial_send    IOT-C1+bg.p.ble.sw=1    IOT-C1+BG.P.BLE.SW=successful;
+    Serial_send    FF    BT    wait_time=30
+    ${btver0}    Wait Until Keyword Succeeds    10s    3s    serial_send    IOT-C1+bg.p.ble.send=1    BTVER
+    ${btver}    exp_str_spilt    ${btver0}    ,
+    ${btver}    Set Variable    ${btver[0]}
+    Run keyword If    '${btver}'!='${ble_ver}'    Fail     版本校对失败；实际为${btver} 
+    #txtrwx_abox_file_write    蓝牙版本校对 pass    IOT-C1+bg.p.ble.send=1; ${btver0}
+ #  comment    蓝牙信标检测  
+    :FOR    ${i}    INRANGE    4
+    \    serial_send    IOT-C1+bg.p.ble.send=0    IOT-C1+BG.P.BLE.SEND=successful;
+    \    ${state}    Run Keyword And Return Status     serial_send    FF    ${BLES_1}    wait_time=30
+    \    Exit For Loop If    ${state}==True
+    \    sleep    3
+    Run keyword If    ${i}==3    Fail    error
+    serial_send    IOT-C1+bg.p.ble.send=0    IOT-C1+BG.P.BLE.SEND=successful;
+    ${ble_recv}    serial_send    FF    ${BLES_1}    wait_time=30
+    log     搜到指定蓝牙，蓝牙为${ble_recv}
+    ${ble_recv_spilt}    exp_str_spilt    ${ble_recv}    ,
+    ${ble_sigl_name}    Set Variable    ${ble_recv_spilt[0]}
+    ${ble_beacon}    Evaluate    int(abs(${ble_recv_spilt[-1]}))
+    Run Keyword If    ${ble_beacon}>80    Fail     DB值不正常，实际为${ble_beacon}
+    serial_send    IOT-C1+bg.p.ble.sw=0    IOT-C1+BG.P.BLE.SW=successful;
+    txtrwx_write_log_x    蓝牙信标检测    /home/pi/production/log/mid.txt    IOT-C1+bg.p.ble.sw=1;IOT-C1+BG.P.BLE.SW=successful    IOT-C1+bg.p.ble.send=1;IOT-C1+bg.p.ble.send=${btver0}    IOT-C1+bg.p.ble.send=0; IOT-C1+BG.P.BLE.SEND=successful; ${ble_recv}       
+
+TS09_恢复出厂设置
+    ${N.SN}    serial_send    IOT+D1+N.SN=?    IOT+D3+N.SN=
+    Run keyword if    '${N.SN}'!=''    Fail    终端已检测
+    ...    ELSE    serial send    IOT+D1150511+RESTORE.D=DEVICE    IOT+D1150511+RESTORE.D=DONE
+    sleep    30
+    serial_confirm_ter_restart    30
+    ${iccid}    serial_send     IOT+L1+nw.e01.r01.ic=?    IOT+L1+NW.E01.R01.IC=
+    Set Suite Variable    ${iccid}
+    txtrwx_write_log_x    恢复出厂设置     /home/pi/production/log/mid.txt    IOT+D1150511+RESTORE.D=DEVICE;IOT+D1150511+RESTORE.D=DONE   
+    #txtrwx_abox_file_write    恢复出厂设置    pass    ${iccid}
+
+TS10_掉电关机
+    power_KL30_close
+    power_KL15_close
+    serial_send     IOT+S1+SHUTDOWN=1    IOT 
+
+GET_END
+    Run keywords    power_ant_short    gnss    close    AND    power_ant_open    gnss    close 
+    ${time2}    get_local_time
+    txtrwx_x_write    /home/pi/production/log/mid.txt    结束时间:${time2}
+    txtrwx_x_write    /home/pi/production/log/mid.txt    ${iccid}
+    txtrwx_x_write    /home/pi/production/log/mid.txt    *****************************
+    txtrwx_transfer    /home/pi/production/log/mid.txt    /home/pi/production/log/主板检测日志1.txt
+

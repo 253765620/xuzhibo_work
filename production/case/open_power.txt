@@ -1,0 +1,8 @@
+*** Settings ***
+Library           SerialLibrary
+Library           Power
+*** Test Cases ***
+1
+    power_kl30_open
+    power_kl15_open
+    

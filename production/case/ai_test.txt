@@ -1,0 +1,120 @@
+*** Settings ***
+Suite Teardown    clear
+Test Teardown     Run Keyword If Test Failed    Fatal Error
+Library           SerialLibrary
+Library           EXP
+Library           Power
+Library           Collections
+Library           CAN
+Library	     Txtrwx
+*** Test Cases ***
+GET_Ready
+    ${time1}    get_local_time
+    Set Suite Variable    ${time1}
+    txtrwx_write_log_x    开始时间    /home/pi/production/log/mid.txt    ${time1}
+    serial_confirm_ter_restart    80
+    #${time3}    get_local_timesss
+    #Set Suite Variable    ${time3}
+
+IOT_型号日期设置
+    Pass Execution If    ${DATA_TEST}==0    此项不测试
+    :FOR    ${i}    INRANGE    50
+    \    ${a}    serial_send    IOT-S1+ai.m.con.st=?    IOT
+    \    Exit For Loop If    '${a}'=='1'
+    \    sleep    1
+    Run Keyword If    ${i}==49    Fail   串口状态连接失败
+    #serial_confirm_ter_restart    wait_time=20
+    ${m}    serial_send    IOT+D1150511+N.MD=${Equipment_type}    IOT+D1150511+N.MD=
+    txtrwx_mid_file_write    s:IOT+D1150511+N.MD=${Equipment_type}    r:IOT+D1150511+N.MD=${m}
+    ${d}    serial_send    IOT+D1+N.MD=?    IOT
+    Run Keyword If    '${d}'!='${Equipment_type}'   Fail      型号设置失败
+    ${n}    serial_send    IOT+D1150511+N.P.D=${date}    IOT+D1150511+N.P.D
+    ${b}    serial_send    IOT+D1+N.P.D=?   IOT
+    Run Keyword If    '${b}'!='${date}'   Fail      日期设置失败
+    txtrwx_write_log_x    IOT_型号日期设置    /home/pi/production/log/mid.txt    IOT-S1+ai.m.con.st=?;IOT-S1+ai.m.con.st=${a}    IOT+D1150511+N.MD=${Equipment_type};IOT+D1150511+N.MD=${m}    IOT+D1150511+N.P.D=${date};IOT+D1150511+N.P.D=${n} 
+
+IOT_PID设置
+    Pass Execution If    ${PID_TEST}==0    此项不测试
+    ${IMEI_1}    serial_send    IOT+D1+nw.e01.inf=?    IOT   
+    ${IMEI}    exp_serial_str_spilt    ${IMEI_1}   1
+    ${IMEI}    evaluate    '${IMEI[0]}'
+    txtrwx_write_log_x    IMEI查询    /home/pi/production/log/mid.txt    IOT+D1+nw.e01.inf=?IOT+D1+nw.e01.inf=${IMEI_1}
+    sleep    1
+    ${ICCID_1}    serial_send    IOT+L1+nw.e01.r01.ic=?    IOT
+    txtrwx_write_log_x    ICCID查询    /home/pi/production/log/mid.txt    IOT+L1+nw.e01.r01.ic=?;IOT+L1+nw.e01.r01.ic=${ICCID_1}
+    ${sim}    Set Variable    ${ICCID_SIM['${ICCID_1}']}
+    sleep    1
+    ${d}    serial send    IOT+D1150511+nw.e01.r01.sim=${sim}    IOT
+    sleep    1
+    Run Keyword If    '${sim}'!='${d}'    fail    sim设置错误
+    ${ss}    serial_send    IOT+D1+nw.e01.r01.sim=?    IOT
+    Run Keyword If    '${sim}'!='${sim}'    fail    sim查询错误
+    txtrwx_write_log_x    SIM卡设置    /home/pi/production/log/mid.txt    IOT+D1150511+nw.e01.r01.sim=${sim};IOT+D1150511+nw.e01.r01.sim=${d}    IOT+D1+nw.e01.r01.sim=?;IOT+D1+nw.e01.r01.sim=${ss}
+    
+    ${pid_zhong}    serial send    IOT+D1150511+N.SN=${pid_start}    IOT+D1150511+N.SN=${pid_start}
+    txtrwx_write_log_x    PID设置     /home/pi/production/log/mid.txt    IOT+D1150511+N.SN=${pid_start};IOT+D1150511+N.SN=${pid_zhong}    
+    sleep    1
+    ${pid_zhongji}    serial send    IOT+D1+N.SN=?    IOT+D3+N.SN=${pid_start}    #PID查询
+    ${date_}    serial_send    IOT+D1+N.P.D=?    IOT 	
+    ${tdid}    exp_generate_id    t    d    ${date}    ${pid_start}
+    ${tcid}    exp_generate_id    t    c    ${date}    ${pid_start}
+    ${adid}    exp_generate_id    a    d    ${date}    ${pid_start}
+    ${acid}    exp_generate_id    a    c    ${date}    ${pid_start}
+    ${tdid_zhongji}    serial_send    IOT+D1+T3.F1.DIDE=?    IOT+D3+T3.F1.DIDE=${tdid}
+    txtrwx_write_log_x    TBOX deviceID 查询     /home/pi/production/log/mid.txt    IOT+D1+T3.F1.DIDE=?;IOT+D3+T3.F1.DIDE=${tdid}
+    ${tcid_zhongji}    serial_send    IOT+D1+T3.F1.ID=?    IOT+D3+T3.F1.ID=${tcid}
+    txtrwx_write_log_x    TBOX clientID 查询     /home/pi/production/log/mid.txt    IOT+D1+T3.F1.ID=?    IOT+D3+T3.F1.ID=${tcid}
+    ${aboxdid_bf}    serial_send    IOT-D1+ai.m.dev.id=?    IOT-D3
+    txtrwx_write_log_x    abox触发前deviceID    /home/pi/production/log/mid.txt    IOT-D1+ai.m.dev.id=?;IOT-D1+ai.m.dev.id=${aboxdid_bf}  
+    ${aboxcid_bf}    serial_send    IOT-D1+ai.m.cli.id=?    IOT-D3
+    txtrwx_write_log_x    abox触发前clientID    /home/pi/production/log/mid.txt    IOT-D1+ai.m.cli.id=?;IOT-D1+ai.m.cli.id=${aboxcid_bf}
+    Run Keyword If    '${adid}'!='${aboxdid_bf}' and '${aboxcid_bf}'!='${acid}'   Fail   触发查询前校验失败    
+    :FOR    ${i}    inrange    5
+    \    serial_send    IOT-V1+ai.m.info.req=    IOT-V1+AI.M.INFO.REQ=successful
+    \    sleep    5
+    \    ${y}    serial_send    IOT-D1+ai.m.dev.id=?    IOT-D3
+    \    ${z}    serial_send    IOT-D1+ai.m.cli.id=?    IOT-D3
+    \    Exit For Loop If    '${adid}'=='${y}' and '${acid}'=='${z}'
+    Run Keyword If    ${i}==4    Fail    adid fail
+    txtrwx_write_log_x    触发查询    /home/pi/production/log/mid.txt    IOT-V1+ai.m.info.req=;IOT-V1+AI.M.INFO.REQ=successful    abox_deviceID    IOT-D1+ai.m.dev.id=?;IOT-D1+ai.m.dev.id=${y}    IOT-D1+ai.m.cli.id=?;IOT-D1+ai.m.cli.id=${z}
+    #Run Keyword If    ${i}==4    txtrwx_setid_file_write    abox not id
+    :FOR    ${I}    INRANGE    10
+    \    ${x}    Run Keyword And Return Status    serial_send    IOT+L1+P.CH.FLH.CD=1    IOT+L1+P.CH.FLH.CD=DONE;
+    \    Exit For Loop If    ${x}==True
+    \    sleep    1
+    Run Keyword If    ${i}==9    Fail    ERROR
+    txtrwx_write_log_x    设置序列号    /home/pi/production/log/mid.txt    IOT+L1+P.CH.FLH.CD=1;IOT+L1+P.CH.FLH.CD=DONE;
+    :FOR    ${i}    INRANGE    5
+    \    serial_send    IOT-V1+ai.app.st=1    IOT-V1+AI.APP.ST=successful
+    \    sleep    2
+    \    ${a}    serial_send    IOT-S1+ai.m.app.ack=?    IOT
+    \    Exit For Loop If    '${a}'=='1'
+    Run Keyword If    ${i}==4    Fail    切换程序失败
+    txtrwx_write_log_x    切换程序    /home/pi/production/log/mid.txt    IOT-V1+ai.app.st=1;IOT-V1+AI.APP.ST=successful    IOT-S1+ai.m.app.ack=?;IOT-S1+ai.m.app.ack=${a}
+    #Run Keyword If    ${i}==4    txtrwx_setid_file_write    qiehuan shibai
+    txtrwx_pid_set    ${pid_start}
+    txtrwx_setid_file_write    ${ICCID_1}
+    txtrwx_setid_file_write    ${IMEI}
+    txtrwx_setid_file_write    ${d}
+    txtrwx_setid_file_write    ${pid_zhongji}
+    txtrwx_setid_file_write    ${tdid_zhongji}
+    txtrwx_setid_file_write    ${y}    
+    txtrwx_setid_file_write    ${aboxdid_bf}
+    txtrwx_setid_file_write    ${aboxcid_bf}    \n
+    
+GET_END
+    ${ICCID_}    serial_send    IOT+L1+nw.e01.r01.ic=?    IOT
+    ${time2}    get_local_time
+    #${time3}    round_int    ${time1}    ${time2}
+    txtrwx_write_log_x    ICCID     /home/pi/production/log/mid.txt    ${ICCID_}
+    txtrwx_write_log_x    结束时间     /home/pi/production/log/mid.txt     ${time2}
+    txtrwx_x_write     /home/pi/production/log/mid.txt    ***************
+    txtrwx_transfer    /home/pi/production/log/mid.txt    /home/pi/production/log/设置序列号.txt
+
+*** Keywords ***
+clear
+    log    1
+    #serial_send    IOT+D1150511+NL.E01.FAC.CFG=${wifi_close}    IOT+D1150511+NL.E01.FAC.CFG=${wifi_close}
+    #power_KL30_close
+    #power_KL15_close
+    
